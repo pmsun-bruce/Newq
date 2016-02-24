@@ -1,0 +1,235 @@
+﻿namespace Newq
+{
+    using System;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class SelectStatement : Statement
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="relatedTables"></param>
+        public SelectStatement(DbTable table) : base(table)
+        {
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsDistinct { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int TopNumber { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsPercent { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Paginator Paginator { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return string.Format("SELECT {0}{1} FROM {2} ", GetParameters(), GetTarget(), DbContext[0]);
+        }
+
+        public override string ToSql()
+        {
+            var sql = base.ToSql();
+
+            if (Paginator != null)
+            {
+                var startIndex = Paginator.CurrentRowNumber;
+                var endIndex = Paginator.CurrentPage * Paginator.PageSize;
+                var subQuery = string.Empty;
+                var index = sql.IndexOf(" ORDER BY ");
+                var rowNumberClause = string.Empty;
+
+                if (index > -1)
+                {
+                    var orderByClause = sql.Substring(index).Trim();
+
+                    rowNumberClause = string.Format(", ROW_NUMBER() OVER({0}) AS [ROW_NUMBER]", orderByClause);
+                    subQuery = sql.Substring(0, index + 1).Insert(sql.IndexOf(" FROM "), rowNumberClause);
+                }
+                else
+                {
+                    var primaryKey = DbContext[0].PrimaryKey ?? DbContext[0].Columns[0];
+
+                    rowNumberClause = string.Format(", ROW_NUMBER() OVER(ORDER BY {0}) AS [ROW_NUMBER]", primaryKey);
+                    subQuery = sql.Insert(sql.IndexOf(" FROM "), rowNumberClause);
+                }
+
+                sql = string.Format(
+                    "SELECT {0}{1} FROM ({2}) AS [PAGINATOR] WHERE [PAGINATOR].[ROW_NUMBER] BETWEEN {3} AND {4} ",
+                    GetParameters(), GetTargetAlias(), subQuery.Trim(), startIndex, endIndex);
+            }
+
+            return sql;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string GetTarget()
+        {
+            var target = string.Empty;
+            var items = Target.GetTargetObjects();
+
+            if (items.Count == 0)
+            {
+                foreach (var tab in DbContext.Tables)
+                {
+                    foreach (var col in tab.Columns)
+                    {
+                        target += string.Format("{0} AS {1}, ", col, col.Alias);
+                    }
+                }
+            }
+            else
+            {
+                DbColumn column;
+                Function function;
+
+                foreach (var item in items)
+                {
+                    if (item is DbColumn)
+                    {
+                        column = item as DbColumn;
+                        target += string.Format("{0} AS {1}, ", column, column.Alias);
+                    }
+                    else if (item is Function)
+                    {
+                        function = item as Function;
+                        target += string.Format("{0} AS {1}, ", function, function.Alias);
+                    }
+                }
+            }
+
+            return target.Remove(target.Length - 2);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        protected string GetTargetAlias()
+        {
+            var target = string.Empty;
+            var alias = string.Empty;
+            var items = Target.GetTargetObjects();
+
+            if (items.Count == 0)
+            {
+                foreach (var tab in DbContext.Tables)
+                {
+                    foreach (var col in tab.Columns)
+                    {
+                        alias = col.Alias;
+                        target += string.Format("{0}, ", alias);
+                    }
+                }
+            }
+            else
+            {
+                foreach (var item in items)
+                {
+                    if (item is DbColumn)
+                    {
+                        alias = (item as DbColumn).Alias;
+                    }
+                    else if (item is Function)
+                    {
+                        alias = (item as Function).Alias;
+                    }
+
+                    target += string.Format("{0}, ", alias);
+                }
+            }
+
+            return target.Remove(target.Length - 2);
+        }
+
+        private string GetParameters()
+        {
+            var distinct = IsDistinct ? "DISTINCT " : string.Empty;
+            var topClause = string.Empty;
+
+            if (TopNumber > 0)
+            {
+                topClause = IsPercent
+                    ? string.Format("TOP({0}) PERCENT ", TopNumber)
+                    : string.Format("TOP({0}) ", TopNumber);
+            }
+
+            return distinct + topClause;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="setFilter"></param>
+        /// <returns></returns>
+        public SelectStatement Join<T>(Action<Filter> setFilter)
+        {
+            return Provider.Join<T>(this, JoinType.InnerJoin, setFilter) as SelectStatement;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="type"></param>
+        /// <param name="setFilter"></param>
+        /// <returns></returns>
+        public SelectStatement Join<T>(JoinType type, Action<Filter> setFilter)
+        {
+            return Provider.Join<T>(this, type, setFilter) as SelectStatement;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="setFilter"></param>
+        /// <returns></returns>
+        public SelectWhereClause Where(Action<Filter> setFilter)
+        {
+            return Provider.Filtrate(new SelectWhereClause(this), setFilter) as SelectWhereClause;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="setTarget"></param>
+        /// <returns></returns>
+        public GroupByClause GroupBy(Action<TargetColumns> setTarget)
+        {
+            return Provider.SetTarget(new GroupByClause(this), setTarget) as GroupByClause;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="setTarget"></param>
+        /// <returns></returns>
+        public OrderByClause OrderBy(Action<TargetColumns> setTarget)
+        {
+            return Provider.SetTarget(new OrderByClause(this), setTarget) as OrderByClause;
+        }
+    }
+}
