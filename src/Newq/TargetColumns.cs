@@ -70,9 +70,13 @@
         {
             var target = string.Empty;
 
-            items.ForEach(item => target += string.Format("{0}, ", item));
+            if (items.Count > 0)
+            {
+                items.ForEach(item => target += string.Format("{0}, ", item));
+                target = target.Remove(target.Length - 2);
+            }
 
-            return target.Remove(target.Length - 2);
+            return target;
         }
 
         /// <summary>

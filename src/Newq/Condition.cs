@@ -130,7 +130,16 @@ namespace Newq
     /// </summary>
     public enum LogicalOperator
     {
+        /// <summary>
+        /// The AND operator displays a record
+        /// if both the first condition AND the second condition are true.
+        /// </summary>
         And,
+
+        /// <summary>
+        /// The OR operator displays a record
+        /// if either the first condition OR the second condition is true.
+        /// </summary>
         Or,
     }
 }

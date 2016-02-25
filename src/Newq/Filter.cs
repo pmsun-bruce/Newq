@@ -31,9 +31,13 @@
         {
             var conditions = string.Empty;
 
-            Conditions.ForEach(con => conditions += string.Format("{0} AND ", con));
+            if (Conditions.Count > 0)
+            {
+                Conditions.ForEach(con => conditions += string.Format("{0} AND ", con));
+                conditions = conditions.Remove(conditions.Length - 5);
+            }
 
-            return conditions.Remove(conditions.Length - 5);
+            return conditions;
         }
 
         /// <summary>

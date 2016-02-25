@@ -36,7 +36,8 @@ namespace Newq
         NotEqualTo,
 
         /// <summary>
-        /// 
+        /// The LIKE operator is used to
+        /// search for a specified pattern in a column.
         /// </summary>
         Like,
 
@@ -66,7 +67,8 @@ namespace Newq
         NotEndWith,
 
         /// <summary>
-        /// 
+        /// The IN operator allows you to
+        /// specify multiple values in a WHERE clause.
         /// </summary>
         In,
 
@@ -76,12 +78,14 @@ namespace Newq
         NotIn,
 
         /// <summary>
-        /// 
+        /// The BETWEEN operator selects values within a range.
+        /// The values can be numbers, text, or dates.
         /// </summary>
         Between,
 
         /// <summary>
-        /// 
+        /// The NOT BETWEEN operator selects values not within a range.
+        /// The values can be numbers, text, or dates.
         /// </summary>
         NotBetween,
     }

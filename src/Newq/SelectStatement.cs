@@ -18,7 +18,8 @@
         }
 
         /// <summary>
-        /// 
+        /// The DISTINCT keyword can be used to
+        /// return only distinct (different) values.
         /// </summary>
         public bool IsDistinct { get; set; }
 
