@@ -1,7 +1,8 @@
 ﻿namespace Newq
 {
     /// <summary>
-    /// 
+    /// The INSERT INTO statement is used to
+    /// insert new records in a table.
     /// </summary>
     public class InsertStatement : Statement
     {

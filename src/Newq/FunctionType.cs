@@ -7,9 +7,34 @@ namespace Newq
     {
         /* Aggregate Functions */
 
+        /// <summary>
+        /// 
+        /// </summary>
         MAX,
+
+        /// <summary>
+        /// 
+        /// </summary>
         MIN,
+
+        /// <summary>
+        /// <para>
+        /// The COUNT(column_name) function returns the number of
+        /// values (NULL values will not be counted) of the specified column.
+        /// </para>
+        /// <para>
+        /// The COUNT(*) function returns the number of records in a table.
+        /// </para>
+        /// <para>
+        /// The COUNT(DISTINCT column_name) function returns the number of
+        /// distinct values of the specified column
+        /// </para>
+        /// </summary>
         COUNT,
+
+        /// <summary>
+        /// 
+        /// </summary>
         COUNT_BIG,
         AVG,
         SUM,

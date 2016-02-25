@@ -3,7 +3,8 @@
     using System;
 
     /// <summary>
-    /// 
+    /// The UPDATE statement is used to
+    /// update existing records in a table.
     /// </summary>
     public class UpdateStatement : Statement
     {
@@ -31,11 +32,42 @@
 
             setClause = setClause.Remove(setClause.Length - 2);
 
-            return string.Format("UPDATE {0} SET {1} FROM {0}", DbContext[0], setClause);
+            return string.Format("UPDATE {0} SET {1} ", DbContext[0], setClause);
         }
 
         /// <summary>
         /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToSql()
+        {
+            var sql = this.ToString();
+
+            if (Clauses.Count > 0)
+            {
+                var isFirstJoinClause = true;
+
+                foreach (var cls in Clauses)
+                {
+                    if (cls is JoinClause && isFirstJoinClause)
+                    {
+                        sql += string.Format("FROM {0} ", DbContext[0]);
+                        isFirstJoinClause = false;
+                    }
+
+                    sql += cls.ToSql();
+                }
+            }
+
+            return sql;
+        }
+
+        /// <summary>
+        /// UPDATE table_name
+        /// SET column1 = value, column2 = value,...
+        /// FROM table_name
+        /// INNER JOIN table_name2
+        /// ON table_name1.column_name=table_name2.column_name
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="setFilter"></param>
@@ -46,7 +78,11 @@
         }
 
         /// <summary>
-        /// 
+        /// UPDATE table_name
+        /// SET column1 = value, column2 = value,...
+        /// FROM table_name
+        /// JOIN table_name2
+        /// ON table_name1.column_name=table_name2.column_name
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="type"></param>
@@ -58,7 +94,9 @@
         }
 
         /// <summary>
-        /// 
+        /// UPDATE table_name
+        /// SET column1 = value, column2 = value,...
+        /// WHERE column_name operator value
         /// </summary>
         /// <param name="setFilter"></param>
         /// <returns></returns>

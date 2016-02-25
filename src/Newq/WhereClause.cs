@@ -1,7 +1,8 @@
 ﻿namespace Newq
 {
     /// <summary>
-    /// 
+    /// The WHERE clause is used to
+    /// extract only those records that fulfill a specified criterion.
     /// </summary>
     public class WhereClause : Clause
     {

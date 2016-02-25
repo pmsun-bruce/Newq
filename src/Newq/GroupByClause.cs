@@ -3,7 +3,8 @@
     using System;
 
     /// <summary>
-    /// 
+    /// The GROUP BY clause is used in conjunction with
+    /// the aggregate functions to group the result-set by one or more columns.
     /// </summary>
     public class GroupByClause : Clause
     {
@@ -26,7 +27,11 @@
         }
 
         /// <summary>
-        /// 
+        /// SELECT column_name, aggregate_function(column_name)
+        /// FROM table_name
+        /// WHERE column_name operator value
+        /// GROUP BY column_name
+        /// HAVING aggregate_function(column_name) operator value
         /// </summary>
         /// <param name="setFilter"></param>
         /// <returns></returns>
@@ -36,7 +41,11 @@
         }
 
         /// <summary>
-        /// 
+        /// SELECT column_name, aggregate_function(column_name)
+        /// FROM table_name
+        /// WHERE column_name operator value
+        /// GROUP BY column_name
+        /// ORDER BY column_name [ASC|DESC]
         /// </summary>
         /// <param name="setTarget"></param>
         /// <returns></returns>

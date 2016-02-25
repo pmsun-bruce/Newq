@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// 
+    /// The SELECT statement is used to select data from a database.
     /// </summary>
     public class SelectStatement : Statement
     {
@@ -180,7 +180,10 @@
         }
 
         /// <summary>
-        /// 
+        /// SELECT column_name(s)
+        /// FROM table_name1
+        /// INNER JOIN table_name2
+        /// ON table_name1.column_name=table_name2.column_name
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="setFilter"></param>
@@ -191,7 +194,10 @@
         }
 
         /// <summary>
-        /// 
+        /// SELECT column_name(s)
+        /// FROM table_name1
+        /// JOIN table_name2
+        /// ON table_name1.column_name=table_name2.column_name
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="type"></param>
@@ -203,7 +209,9 @@
         }
 
         /// <summary>
-        /// 
+        /// SELECT column_name(s)
+        /// FROM table_name
+        /// WHERE column_name operator value
         /// </summary>
         /// <param name="setFilter"></param>
         /// <returns></returns>
@@ -213,7 +221,10 @@
         }
 
         /// <summary>
-        /// 
+        /// SELECT column_name, aggregate_function(column_name)
+        /// FROM table_name
+        /// WHERE column_name operator value
+        /// GROUP BY column_name
         /// </summary>
         /// <param name="setTarget"></param>
         /// <returns></returns>
@@ -223,7 +234,9 @@
         }
 
         /// <summary>
-        /// 
+        /// SELECT column_name(s)
+        /// FROM table_name
+        /// ORDER BY column_name[ASC | DESC]
         /// </summary>
         /// <param name="setTarget"></param>
         /// <returns></returns>

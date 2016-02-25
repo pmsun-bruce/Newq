@@ -1,10 +1,6 @@
 ﻿namespace Newq
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// 
@@ -52,7 +48,8 @@
         }
 
         /// <summary>
-        /// 
+        /// SELECT column_name(s)
+        /// FROM table_name
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
@@ -62,7 +59,8 @@
         }
 
         /// <summary>
-        /// 
+        /// SELECT TOP number|percent column_name(s)
+        /// FROM table_name
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="topNumber"></param>
@@ -74,7 +72,8 @@
         }
 
         /// <summary>
-        /// 
+        /// SELECT column_name(s)
+        /// FROM table_name
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="setTarget"></param>
@@ -85,7 +84,8 @@
         }
 
         /// <summary>
-        /// 
+        /// SELECT DISTINCT TOP number column_name(s)
+        /// FROM table_name
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="topNumber"></param>
@@ -97,7 +97,8 @@
         }
 
         /// <summary>
-        /// 
+        /// SELECT TOP number|percent column_name(s)
+        /// FROM table_name
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="topNumber"></param>
@@ -110,7 +111,8 @@
         }
 
         /// <summary>
-        /// 
+        /// SELECT DISTINCT TOP number|percent column_name(s)
+        /// FROM table_name
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="isDistinct"></param>
@@ -132,7 +134,8 @@
         }
 
         /// <summary>
-        /// 
+        /// SELECT DISTINCT column_name(s)
+        /// FROM table_name
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
@@ -142,7 +145,8 @@
         }
 
         /// <summary>
-        /// 
+        /// SELECT DISTINCT TOP number|percent column_name(s)
+        /// FROM table_name
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="topNumber"></param>
@@ -154,7 +158,8 @@
         }
 
         /// <summary>
-        /// 
+        /// SELECT DISTINCT TOP number column_name(s)
+        /// FROM table_name
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="topNumber"></param>
@@ -166,7 +171,8 @@
         }
 
         /// <summary>
-        /// 
+        /// SELECT DISTINCT TOP number|percent column_name(s)
+        /// FROM table_name
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="topNumber"></param>
@@ -179,7 +185,8 @@
         }
 
         /// <summary>
-        /// 
+        /// UPDATE table_name
+        /// SET column1 = value, column2 = value,...
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="entity"></param>
@@ -194,7 +201,9 @@
         }
 
         /// <summary>
-        /// 
+        /// INSERT INTO table_name
+        /// (column1, column2, column3,...)
+        /// VALUES(value1, value2, value3,....)
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="entity"></param>
@@ -209,7 +218,7 @@
         }
 
         /// <summary>
-        /// 
+        /// DELETE FROM table_name 
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
@@ -219,7 +228,7 @@
         }
 
         /// <summary>
-        /// 
+        /// DELETE TOP number|percent FROM table_name 
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="topNumber"></param>

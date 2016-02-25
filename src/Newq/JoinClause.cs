@@ -1,7 +1,9 @@
 ﻿namespace Newq
 {
     /// <summary>
-    /// 
+    /// The JOIN clause is used to
+    /// combine rows from two or more tables,
+    /// based on a common field between them.
     /// </summary>
     public class JoinClause : Clause
     {

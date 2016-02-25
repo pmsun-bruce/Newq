@@ -3,7 +3,8 @@
     using System;
 
     /// <summary>
-    /// 
+    /// The DELETE statement is used to
+    /// delete rows in a table.
     /// </summary>
     public class DeleteStatement : Statement
     {
@@ -32,7 +33,7 @@
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("DELETE {0}{1} FROM {1} ", GetParameters(), DbContext[0]);
+            return string.Format("DELETE {0} FROM {1} ", GetParameters(), DbContext[0]);
         }
 
         private string GetParameters()
@@ -50,7 +51,10 @@
         }
 
         /// <summary>
-        /// 
+        /// DELETE
+        /// FROM table_name1
+        /// INNER JOIN table_name2
+        /// ON table_name1.column_name=table_name2.column_name
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="setFilter"></param>
@@ -61,7 +65,10 @@
         }
 
         /// <summary>
-        /// 
+        /// DELETE
+        /// FROM table_name1
+        /// JOIN table_name2
+        /// ON table_name1.column_name=table_name2.column_name
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="type"></param>
@@ -73,23 +80,15 @@
         }
 
         /// <summary>
-        /// 
+        /// DELETE
+        /// FROM table_name
+        /// WHERE column_name operator value
         /// </summary>
         /// <param name="setFilter"></param>
         /// <returns></returns>
         public WhereClause Where(Action<Filter> setFilter)
         {
             return Provider.Filtrate(new WhereClause(this), setFilter) as WhereClause;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="setTarget"></param>
-        /// <returns></returns>
-        public OrderByClause OrderBy(Action<TargetColumns> setTarget)
-        {
-            return Provider.SetTarget(new OrderByClause(this), setTarget) as OrderByClause;
         }
     }
 }

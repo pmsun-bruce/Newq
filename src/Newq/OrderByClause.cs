@@ -1,7 +1,8 @@
 ﻿namespace Newq
 {
     /// <summary>
-    /// 
+    /// The ORDER BY clause is used to
+    /// sort the result-set by one or more columns.
     /// </summary>
     public class OrderByClause : Clause
     {
