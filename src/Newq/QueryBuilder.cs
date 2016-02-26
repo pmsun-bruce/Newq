@@ -3,12 +3,12 @@
     using System;
 
     /// <summary>
-    /// 
+    /// Used to build SQL statement
     /// </summary>
     public class QueryBuilder
     {
         /// <summary>
-        /// 
+        /// Constructor
         /// </summary>
         public QueryBuilder()
         {
@@ -16,12 +16,12 @@
         }
 
         /// <summary>
-        /// 
+        /// Record different statement
         /// </summary>
         public Statement Statement { get; private set; }
 
         /// <summary>
-        /// 
+        /// Override ToString function
         /// </summary>
         /// <returns></returns>
         public override string ToString()
@@ -30,10 +30,10 @@
         }
 
         /// <summary>
-        /// 
+        /// Define whether the statement is paginable
         /// </summary>
-        /// <param name="paginator"></param>
-        /// <returns></returns>
+        /// <param name="paginator">instance of Paginator</param>
+        /// <returns>true when the statement is select statement, false if not</returns>
         public bool Paginate(Paginator paginator)
         {
             var isPaginable = false;
@@ -51,8 +51,12 @@
         /// SELECT column_name(s)
         /// FROM table_name
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
+        /// <typeparam name="T">Any class</typeparam>
+        /// <returns>
+        /// SelectStatement to select all records
+        /// from the certain table
+        /// without the keyword distinct
+        /// </returns>
         public SelectStatement Select<T>()
         {
             return Select<T>(false, 0, false, col => { });
@@ -62,10 +66,16 @@
         /// SELECT TOP number|percent column_name(s)
         /// FROM table_name
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="topNumber"></param>
-        /// <param name="isPercent"></param>
-        /// <returns></returns>
+        /// <typeparam name="T">Any class</typeparam>
+        /// <param name="topNumber">Number of the top records to select</param>
+        /// <param name="isPercent">
+        /// Determine whether the topNumber represent the percentage,
+        /// default is false
+        /// </param>
+        /// <returns>
+        /// SelectStatement to select certain quantity(percentage if isPercent is true)
+        /// of the top records from the table
+        /// </returns>
         public SelectStatement Select<T>(int topNumber, bool isPercent = false)
         {
             return Select<T>(false, topNumber, false, target => { });
@@ -75,9 +85,9 @@
         /// SELECT column_name(s)
         /// FROM table_name
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="setTarget"></param>
-        /// <returns></returns>
+        /// <typeparam name="T">Any class</typeparam>
+        /// <param name="setTarget">Determine which column(s) to be selected from the table</param>
+        /// <returns>SelectStatement to select all records within certain columns from the table without the keyword distinct</returns>
         public SelectStatement Select<T>(Action<TargetColumns> setTarget)
         {
             return Select<T>(false, 0, false, setTarget);
@@ -87,7 +97,7 @@
         /// SELECT DISTINCT TOP number column_name(s)
         /// FROM table_name
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">Any class</typeparam>
         /// <param name="topNumber"></param>
         /// <param name="setTarget"></param>
         /// <returns></returns>
