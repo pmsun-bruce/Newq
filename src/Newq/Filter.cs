@@ -19,7 +19,7 @@
         public DbContext DbContext { get; private set; }
 
         /// <summary>
-        /// 
+        /// Filter conditions
         /// </summary>
         public List<Condition> Conditions { get; private set; }
 

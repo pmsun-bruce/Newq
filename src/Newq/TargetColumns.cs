@@ -7,7 +7,7 @@
     using System.Threading.Tasks;
 
     /// <summary>
-    /// 
+    /// Target columns of a statement or clause.
     /// </summary>
     public class TargetColumns
     {

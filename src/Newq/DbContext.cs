@@ -5,7 +5,7 @@
     using System.Linq;
 
     /// <summary>
-    /// 
+    /// Database context for statement or clause.
     /// </summary>
     public class DbContext
     {
@@ -95,7 +95,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Add a table to current database context.
         /// </summary>
         /// <param name="table"></param>
         public void Add(DbTable table)
