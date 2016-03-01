@@ -88,7 +88,7 @@
         /// <typeparam name="T">Any class</typeparam>
         /// <param name="setTarget">Determine which column(s) to be selected from the table</param>
         /// <returns>SelectStatement to select all records within certain columns from the table without the keyword distinct</returns>
-        public SelectStatement Select<T>(Action<TargetColumns> setTarget)
+        public SelectStatement Select<T>(Action<Target> setTarget)
         {
             return Select<T>(false, 0, false, setTarget);
         }
@@ -101,7 +101,7 @@
         /// <param name="topNumber"></param>
         /// <param name="setTarget"></param>
         /// <returns></returns>
-        public SelectStatement Select<T>(int topNumber, Action<TargetColumns> setTarget)
+        public SelectStatement Select<T>(int topNumber, Action<Target> setTarget)
         {
             return Select<T>(false, topNumber, false, setTarget);
         }
@@ -115,7 +115,7 @@
         /// <param name="isPercent"></param>
         /// <param name="setTarget"></param>
         /// <returns></returns>
-        public SelectStatement Select<T>(int topNumber, bool isPercent, Action<TargetColumns> setTarget)
+        public SelectStatement Select<T>(int topNumber, bool isPercent, Action<Target> setTarget)
         {
             return Select<T>(false, topNumber, isPercent, setTarget);
         }
@@ -130,7 +130,7 @@
         /// <param name="isPercent"></param>
         /// <param name="setTarget"></param>
         /// <returns></returns>
-        public SelectStatement Select<T>(bool isDistinct, int topNumber, bool isPercent, Action<TargetColumns> setTarget)
+        public SelectStatement Select<T>(bool isDistinct, int topNumber, bool isPercent, Action<Target> setTarget)
         {
             var statement = new SelectStatement(new DbTable(typeof(T)));
 
@@ -175,7 +175,7 @@
         /// <param name="topNumber"></param>
         /// <param name="setTarget"></param>
         /// <returns></returns>
-        public SelectStatement SelectDistinct<T>(int topNumber, Action<TargetColumns> setTarget)
+        public SelectStatement SelectDistinct<T>(int topNumber, Action<Target> setTarget)
         {
             return Select<T>(true, topNumber, false, setTarget);
         }
@@ -189,7 +189,7 @@
         /// <param name="isPercent"></param>
         /// <param name="setTarget"></param>
         /// <returns></returns>
-        public SelectStatement SelectDistinct<T>(int topNumber, bool isPercent, Action<TargetColumns> setTarget)
+        public SelectStatement SelectDistinct<T>(int topNumber, bool isPercent, Action<Target> setTarget)
         {
             return Select<T>(true, topNumber, isPercent, setTarget);
         }
@@ -206,6 +206,23 @@
             var statement = new UpdateStatement(new DbTable(entity));
 
             Statement = statement;
+
+            return statement;
+        }
+
+        /// <summary>
+        /// UPDATE table_name
+        /// SET column1 = value, column2 = value,...
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public UpdateStatement Update<T>(Action<Target> setTarget)
+        {
+            var statement = new UpdateStatement(new DbTable(typeof(T)));
+
+            Statement = statement;
+            setTarget(statement.Target);
 
             return statement;
         }

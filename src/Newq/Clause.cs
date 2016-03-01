@@ -13,7 +13,7 @@
         {
             Statement = statement;
             DbContext = statement.DbContext;
-            Target = new TargetColumns(DbContext);
+            Target = new Target(DbContext);
             Filter = new Filter(DbContext);
         }
 

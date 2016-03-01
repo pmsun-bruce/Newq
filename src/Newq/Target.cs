@@ -1,15 +1,11 @@
 ﻿namespace Newq
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     /// <summary>
-    /// Target columns of a statement or clause.
+    /// Target collection of statement or clause.
     /// </summary>
-    public class TargetColumns
+    public class Target
     {
         /// <summary>
         /// 
@@ -25,7 +21,7 @@
         /// 
         /// </summary>
         /// <param name="dbContext"></param>
-        public TargetColumns(DbContext dbContext)
+        public Target(DbContext dbContext)
         {
             DbContext = dbContext;
             items = new List<object>();

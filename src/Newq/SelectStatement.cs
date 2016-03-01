@@ -229,7 +229,7 @@
         /// </summary>
         /// <param name="setTarget"></param>
         /// <returns></returns>
-        public GroupByClause GroupBy(Action<TargetColumns> setTarget)
+        public GroupByClause GroupBy(Action<Target> setTarget)
         {
             return Provider.SetTarget(new GroupByClause(this), setTarget) as GroupByClause;
         }
@@ -241,7 +241,7 @@
         /// </summary>
         /// <param name="setTarget"></param>
         /// <returns></returns>
-        public OrderByClause OrderBy(Action<TargetColumns> setTarget)
+        public OrderByClause OrderBy(Action<Target> setTarget)
         {
             return Provider.SetTarget(new OrderByClause(this), setTarget) as OrderByClause;
         }

@@ -33,26 +33,26 @@ namespace Newq
 
             DbContext = new DbContext(table);
             Clauses = new List<Clause>();
-            Target = new TargetColumns(DbContext);
+            Target = new Target(DbContext);
         }
 
         /// <summary>
-        /// Database context
+        /// Database context of statement.
         /// </summary>
         public DbContext DbContext { get; protected set; }
 
         /// <summary>
-        /// Clauses of this Statement
+        /// Clauses of statement.
         /// </summary>
         public List<Clause> Clauses { get; protected set; }
 
         /// <summary>
-        /// 
+        /// Target of statement.
         /// </summary>
-        public TargetColumns Target { get; protected set; }
+        public Target Target { get; protected set; }
 
         /// <summary>
-        /// 
+        /// Returns SQL statement.
         /// </summary>
         /// <returns></returns>
         public virtual string ToSql()
@@ -68,7 +68,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// 
+        /// Gets the target of statement.
         /// </summary>
         /// <returns></returns>
         protected virtual string GetTarget()
@@ -77,7 +77,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// 
+        /// Provide sql methods.
         /// </summary>
         protected static class Provider
         {
@@ -130,7 +130,7 @@ namespace Newq
             /// <param name="clause"></param>
             /// <param name="setTarget"></param>
             /// <returns></returns>
-            public static Clause SetTarget(Clause clause, Action<TargetColumns> setTarget)
+            public static Clause SetTarget(Clause clause, Action<Target> setTarget)
             {
                 clause.Statement.Clauses.Add(clause);
                 setTarget(clause.Target);

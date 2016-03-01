@@ -49,7 +49,7 @@
         /// </summary>
         /// <param name="setTarget"></param>
         /// <returns></returns>
-        public OrderByClause OrderBy(Action<TargetColumns> setTarget)
+        public OrderByClause OrderBy(Action<Target> setTarget)
         {
             return Provider.SetTarget(new OrderByClause(this), setTarget) as OrderByClause;
         }

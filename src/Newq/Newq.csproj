@@ -54,7 +54,7 @@
     <Compile Include="GroupByClause.cs" />
     <Compile Include="ObjectExtensions.cs" />
     <Compile Include="QueryBuilder.cs" />
-    <Compile Include="TargetColumns.cs" />
+    <Compile Include="Target.cs" />
     <Compile Include="UpdateStatement.cs" />
     <Compile Include="InsertStatement.cs" />
     <Compile Include="JoinClause.cs" />
