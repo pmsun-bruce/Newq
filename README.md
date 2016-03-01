@@ -1,8 +1,5 @@
 # Newq
-A new query builder for CSharp
-
-# Contains:
-1. QueryBuilder
+New query builder for CSharp
 
 ```csharp
 var queryBuilder = new QueryBuilder();
