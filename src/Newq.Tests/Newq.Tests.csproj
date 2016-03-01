@@ -56,8 +56,13 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Entitites\Customer.cs" />
+    <Compile Include="Entitites\Provider.cs" />
     <Compile Include="Model.cs" />
-    <Compile Include="QueryBuilderTest.cs" />
+    <Compile Include="SelectStatementTests.cs" />
+    <Compile Include="InsertStatement.cs" />
+    <Compile Include="DeleteStatement.cs" />
+    <Compile Include="UpdateStatementTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Newq\Newq.csproj">

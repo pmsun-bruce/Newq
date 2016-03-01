@@ -71,7 +71,7 @@ namespace Newq
         /// 
         /// </summary>
         /// <returns></returns>
-        public virtual string GetTarget()
+        protected virtual string GetTarget()
         {
             return Target.ToString();
         }

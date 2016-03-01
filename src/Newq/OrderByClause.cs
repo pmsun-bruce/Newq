@@ -28,7 +28,7 @@
         /// 
         /// </summary>
         /// <returns></returns>
-        public override string GetTarget()
+        protected override string GetTarget()
         {
             var target = string.Empty;
             var items = Target.GetTargetColumns();

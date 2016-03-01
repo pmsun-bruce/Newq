@@ -23,16 +23,7 @@
         /// <returns></returns>
         public override string ToString()
         {
-            var setClause = string.Empty;
-
-            foreach (var col in DbContext[0].Columns)
-            {
-                setClause += string.Format("{0} = {1}, ", col, col.Value.ToSqlValue());
-            }
-
-            setClause = setClause.Remove(setClause.Length - 2);
-
-            return string.Format("UPDATE {0} SET {1} ", DbContext[0], setClause);
+            return string.Format("UPDATE {0} SET {1} ", DbContext[0], GetTarget());
         }
 
         /// <summary>
@@ -60,6 +51,35 @@
             }
 
             return sql;
+        }
+
+        protected override string GetTarget()
+        {
+            var target = string.Empty;
+            var items = Target.GetTargetObjects();
+
+            if (items.Count == 0)
+            {
+                foreach (var col in DbContext[0].Columns)
+                {
+                    target += string.Format("{0} = {1}, ", col, col.Value.ToSqlValue());
+                }
+            }
+            else
+            {
+                DbColumn col = null;
+
+                foreach (var item in items)
+                {
+                    if (item is DbColumn)
+                    {
+                        col = item as DbColumn;
+                        target += string.Format("{0} = {1}, ", col, col.Value.ToSqlValue());
+                    }
+                }
+            }
+
+            return target.Remove(target.Length - 2);
         }
 
         /// <summary>
