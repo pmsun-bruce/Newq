@@ -9,7 +9,7 @@
     public class Function
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="Function"/> class.
         /// </summary>
         /// <param name="name"></param>
         /// <param name="parameter"></param>

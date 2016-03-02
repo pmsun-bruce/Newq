@@ -9,7 +9,7 @@
     public class SelectWhereClause : WhereClause
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="SelectWhereClause"/> class.
         /// </summary>
         /// <param name="statement"></param>
         public SelectWhereClause(Statement statement) : base(statement)

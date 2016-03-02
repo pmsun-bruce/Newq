@@ -15,9 +15,9 @@
         private Dictionary<string, DbTable> tables;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="DbContext"/> class.
         /// </summary>
-        /// <param name="tables"></param>
+        /// <param name="table"></param>
         public DbContext(DbTable table)
         {
             if (table == null)

@@ -1,5 +1,7 @@
 ﻿namespace Newq
 {
+    using Newq.Extensions;
+
     /// <summary>
     /// The INSERT INTO statement is used to
     /// insert new records in a table.
@@ -7,7 +9,7 @@
     public class InsertStatement : Statement
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="InsertStatement"/> class.
         /// </summary>
         /// <param name="table"></param>
         public InsertStatement(DbTable table) : base(table)
@@ -16,7 +18,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Returns a SQL-string that represents the current object.
         /// </summary>
         /// <returns></returns>
         public override string ToString()

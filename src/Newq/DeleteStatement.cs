@@ -9,7 +9,7 @@
     public class DeleteStatement : Statement
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="DeleteStatement"/> class.
         /// </summary>
         /// <param name="table"></param>
         public DeleteStatement(DbTable table) : base(table)
@@ -28,7 +28,7 @@
         public bool IsPercent { get; set; }
 
         /// <summary>
-        /// 
+        /// Returns a SQL-string that represents the current object.
         /// </summary>
         /// <returns></returns>
         public override string ToString()

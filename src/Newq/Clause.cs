@@ -6,7 +6,7 @@
     public abstract class Clause : Statement
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="Clause"/> class.
         /// </summary>
         /// <param name="statement"></param>
         protected Clause(Statement statement)
@@ -22,8 +22,16 @@
         /// </summary>
         public Statement Statement { get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Filter Filter { get; protected set; }
 
+
+        /// <summary>
+        /// Returns a SQL-string that represents the current object.
+        /// </summary>
+        /// <returns></returns>
         public override string ToSql()
         {
             return ToString();

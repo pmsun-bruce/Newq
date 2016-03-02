@@ -15,7 +15,7 @@
         private Dictionary<string, DbColumn> columns;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="DbTable"/> class.
         /// </summary>
         /// <param name="type"></param>
         public DbTable(Type type)
@@ -26,7 +26,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="DbTable"/> class.
         /// </summary>
         /// <param name="entity"></param>
         public DbTable(object entity)
@@ -39,7 +39,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="DbTable"/> class.
         /// </summary>
         /// <param name="name"></param>
         internal DbTable(string name)

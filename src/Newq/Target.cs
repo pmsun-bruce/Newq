@@ -18,7 +18,7 @@
         private List<SortOrder> itemOrders;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="Target"/> class.
         /// </summary>
         /// <param name="dbContext"></param>
         public Target(DbContext dbContext)

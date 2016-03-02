@@ -6,7 +6,7 @@
     public class Paginator
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="Paginator"/> class.
         /// </summary>
         public Paginator()
         {

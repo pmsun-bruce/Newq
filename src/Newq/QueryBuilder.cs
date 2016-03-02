@@ -8,7 +8,7 @@
     public class QueryBuilder
     {
         /// <summary>
-        /// Constructor
+        /// Initializes a new instance of the <see cref="QueryBuilder"/> class.
         /// </summary>
         public QueryBuilder()
         {
@@ -21,7 +21,7 @@
         public Statement Statement { get; private set; }
 
         /// <summary>
-        /// Override ToString function
+        /// Returns a SQL-string that represents the current object.
         /// </summary>
         /// <returns></returns>
         public override string ToString()
@@ -215,7 +215,7 @@
         /// SET column1 = value, column2 = value,...
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="entity"></param>
+        /// <param name="setTarget"></param>
         /// <returns></returns>
         public UpdateStatement Update<T>(Action<Target> setTarget)
         {

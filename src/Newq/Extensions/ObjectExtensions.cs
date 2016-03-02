@@ -1,4 +1,4 @@
-﻿namespace Newq
+﻿namespace Newq.Extensions
 {
     using System;
 

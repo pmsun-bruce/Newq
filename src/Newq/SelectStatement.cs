@@ -8,7 +8,7 @@
     public class SelectStatement : Statement
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="SelectStatement"/> class.
         /// </summary>
         /// <param name="table"></param>
         /// <param name="relatedTables"></param>
@@ -39,7 +39,7 @@
         public Paginator Paginator { get; set; }
 
         /// <summary>
-        /// 
+        /// Returns a SQL-string that represents the current object.
         /// </summary>
         /// <returns></returns>
         public override string ToString()
@@ -47,6 +47,10 @@
             return string.Format("SELECT {0}{1} FROM {2} ", GetParameters(), GetTarget(), DbContext[0]);
         }
 
+        /// <summary>
+        /// /// Returns a SQL-string that represents the current object.
+        /// </summary>
+        /// <returns></returns>
         public override string ToSql()
         {
             var sql = base.ToSql();

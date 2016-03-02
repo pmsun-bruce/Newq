@@ -8,7 +8,7 @@ namespace Newq
     public class DbColumn
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="DbColumn"/> class.
         /// </summary>
         /// <param name="table"></param>
         /// <param name="name"></param>

@@ -9,7 +9,7 @@
     public class GroupByClause : Clause
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="GroupByClause"/> class.
         /// </summary>
         /// <param name="statement"></param>
         public GroupByClause(Statement statement) : base(statement)
@@ -18,7 +18,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Returns a SQL-string that represents the current object.
         /// </summary>
         /// <returns></returns>
         public override string ToString()

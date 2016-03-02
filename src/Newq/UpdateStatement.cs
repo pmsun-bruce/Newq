@@ -1,6 +1,7 @@
 ﻿namespace Newq
 {
     using System;
+    using Newq.Extensions;
 
     /// <summary>
     /// The UPDATE statement is used to
@@ -9,7 +10,7 @@
     public class UpdateStatement : Statement
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="UpdateStatement"/> class.
         /// </summary>
         /// <param name="table"></param>
         public UpdateStatement(DbTable table) : base(table)
@@ -18,7 +19,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Returns a SQL-string that represents the current object.
         /// </summary>
         /// <returns></returns>
         public override string ToString()

@@ -6,7 +6,7 @@ namespace Newq
     public class Condition
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="Condition"/> class.
         /// </summary>
         /// <param name="source"></param>
         /// <param name="target"></param>

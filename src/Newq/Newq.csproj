@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Newq.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -52,7 +53,7 @@
     <Compile Include="Statement.cs" />
     <Compile Include="HavingClause.cs" />
     <Compile Include="GroupByClause.cs" />
-    <Compile Include="ObjectExtensions.cs" />
+    <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="QueryBuilder.cs" />
     <Compile Include="Target.cs" />
     <Compile Include="UpdateStatement.cs" />

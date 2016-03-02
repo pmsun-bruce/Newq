@@ -8,7 +8,7 @@
     public class JoinClause : Clause
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="JoinClause"/> class.
         /// </summary>
         /// <param name="statement"></param>
         /// <param name="table"></param>
@@ -68,7 +68,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Returns a SQL-string that represents the current object.
         /// </summary>
         /// <returns></returns>
         public override string ToString()

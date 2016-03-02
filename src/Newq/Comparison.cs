@@ -2,6 +2,7 @@ namespace Newq
 {
     using System;
     using System.Collections.Generic;
+    using Newq.Extensions;
 
     /// <summary>
     /// 
@@ -9,7 +10,7 @@ namespace Newq
     public class Comparison
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="Comparison"/> class.
         /// </summary>
         /// <param name="column"></param>
         /// <param name="comparisonOperator"></param>

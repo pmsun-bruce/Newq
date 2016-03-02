@@ -12,7 +12,7 @@ namespace Newq
     public abstract class Statement
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="Statement"/> class.
         /// </summary>
         protected Statement()
         {
@@ -20,10 +20,9 @@ namespace Newq
         }
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="Statement"/> class.
         /// </summary>
         /// <param name="table"></param>
-        /// <param name="relatedTables"></param>
         protected Statement(DbTable table)
         {
             if (table == null)
@@ -52,7 +51,7 @@ namespace Newq
         public Target Target { get; protected set; }
 
         /// <summary>
-        /// Returns SQL statement.
+        /// Returns a SQL-string that represents the current object.
         /// </summary>
         /// <returns></returns>
         public virtual string ToSql()
