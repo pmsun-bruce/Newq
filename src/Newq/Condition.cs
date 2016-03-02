@@ -123,6 +123,50 @@ namespace Newq
         {
             return new Condition(this, condition, LogicalOperator.Or);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static Condition operator &(Condition source, Comparison target)
+        {
+            return source.And(target);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static Condition operator &(Condition source, Condition target)
+        {
+            return source.And(target);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static Condition operator |(Condition source, Comparison target)
+        {
+            return source.Or(target);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static Condition operator |(Condition source, Condition target)
+        {
+            return source.Or(target);
+        }
     }
 
     /// <summary>

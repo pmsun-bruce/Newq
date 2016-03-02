@@ -69,5 +69,31 @@
         {
             Conditions.Clear();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <param name="condition"></param>
+        /// <returns></returns>
+        public static Filter operator +(Filter filter, Condition condition)
+        {
+            filter.Add(condition);
+
+            return filter;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <param name="condition"></param>
+        /// <returns></returns>
+        public static Filter operator -(Filter filter, Condition condition)
+        {
+            filter.Remove(condition);
+
+            return filter;
+        }
     }
 }

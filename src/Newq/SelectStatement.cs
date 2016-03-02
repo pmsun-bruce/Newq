@@ -57,8 +57,6 @@
 
             if (Paginator != null)
             {
-                var startIndex = Paginator.CurrentRowNumber;
-                var endIndex = Paginator.CurrentPage * Paginator.PageSize;
                 var subQuery = string.Empty;
                 var index = sql.IndexOf(" ORDER BY ");
                 var rowNumberClause = string.Empty;
@@ -80,7 +78,7 @@
 
                 sql = string.Format(
                     "SELECT {0}{1} FROM ({2}) AS [PAGINATOR] WHERE [PAGINATOR].[ROW_NUMBER] BETWEEN {3} AND {4} ",
-                    GetParameters(), GetTargetAlias(), subQuery.Trim(), startIndex, endIndex);
+                    GetParameters(), GetTargetAlias(), subQuery.Trim(), Paginator.BeginRowNumber, Paginator.EndRowNumber);
             }
 
             return sql;
@@ -95,7 +93,7 @@
             var target = string.Empty;
             var items = Target.GetTargetObjects();
 
-            if (items.Count == 0)
+            if (items.Length == 0)
             {
                 foreach (var tab in DbContext.Tables)
                 {
@@ -138,7 +136,7 @@
             var alias = string.Empty;
             var items = Target.GetTargetObjects();
 
-            if (items.Count == 0)
+            if (items.Length == 0)
             {
                 foreach (var tab in DbContext.Tables)
                 {

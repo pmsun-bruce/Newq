@@ -54,12 +54,16 @@
             return sql;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         protected override string GetTarget()
         {
             var target = string.Empty;
             var items = Target.GetTargetObjects();
 
-            if (items.Count == 0)
+            if (items.Length == 0)
             {
                 foreach (var col in DbContext[0].Columns)
                 {
