@@ -18,12 +18,12 @@
         }
 
         /// <summary>
-        /// 
+        /// Gets or sets <see cref="TopNumber"/>.
         /// </summary>
         public int TopNumber { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets <see cref="IsPercent"/>.
         /// </summary>
         public bool IsPercent { get; set; }
 

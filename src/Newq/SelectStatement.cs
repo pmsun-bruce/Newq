@@ -48,7 +48,7 @@
         }
 
         /// <summary>
-        /// /// Returns a SQL-string that represents the current object.
+        /// Returns a SQL-string that represents the current object.
         /// </summary>
         /// <returns></returns>
         public override string ToSql()
@@ -239,7 +239,7 @@
         /// <summary>
         /// SELECT column_name(s)
         /// FROM table_name
-        /// ORDER BY column_name[ASC | DESC]
+        /// ORDER BY column_name[ASC|DESC]
         /// </summary>
         /// <param name="setTarget"></param>
         /// <returns></returns>

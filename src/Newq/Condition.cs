@@ -55,9 +55,9 @@ namespace Newq
         {
             return logicalOperator == LogicalOperator.And ? "AND" : "OR";
         }
-        
+
         /// <summary>
-        /// 
+        /// Returns a string that represents the current object.
         /// </summary>
         /// <returns></returns>
         public override string ToString()

@@ -23,7 +23,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="DbColumn"/> class.
         /// </summary>
         /// <param name="tableName"></param>
         /// <param name="columnName"></param>
@@ -34,27 +34,27 @@ namespace Newq
         }
 
         /// <summary>
-        /// 
+        /// Gets or sets table.
         /// </summary>
         public DbTable Table { get; private set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets name.
         /// </summary>
         public string Name { get; private set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets value.
         /// </summary>
         public object Value { get; private set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets type.
         /// </summary>
         public SqlDbType? Type { get; private set; }
 
         /// <summary>
-        /// 
+        /// Gets the alias.
         /// </summary>
         public string Alias
         {
@@ -62,7 +62,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// 
+        /// Returns a string that represents the current object.
         /// </summary>
         /// <returns></returns>
         public override string ToString()

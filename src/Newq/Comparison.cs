@@ -24,17 +24,17 @@ namespace Newq
         }
 
         /// <summary>
-        /// 
+        /// Gets or sets <see cref="Column"/>.
         /// </summary>
         public DbColumn Column { get; private set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets <see cref="Operator"/>.
         /// </summary>
         public ComparisonOperator? Operator { get; private set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets <see cref="Values"/>.
         /// </summary>
         public IReadOnlyList<object> Values { get; private set; }
 
@@ -64,7 +64,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// 
+        /// Returns a string that represents the current object.
         /// </summary>
         /// <returns></returns>
         public override string ToString()
