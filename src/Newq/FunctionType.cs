@@ -84,6 +84,9 @@ namespace Newq
 
         /* Conversion Functions */
 
+        /// <summary>
+        /// 
+        /// </summary>
         CAST,
 
         /// <summary>

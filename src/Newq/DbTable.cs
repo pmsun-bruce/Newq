@@ -105,12 +105,10 @@ namespace Newq
                 throw new ArgumentNullException(nameof(type));
             }
 
-            // an entity used to be added to list
             DbColumn column = null;
-            // used to record name of each property
             var columnName = string.Empty;
-            // whether the corresponding class has property named Id
             var hasId = false;
+
             // only properties that can be set is needed(except "Id")
             var properties = type.GetProperties().Where(p => {
                 if (p.Name == "Id")
@@ -149,14 +147,11 @@ namespace Newq
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            // an entity used to be added to list
             DbColumn column = null;
-            // used to record name of each property
             var columnName = string.Empty;
-            // whether the corresponding class has property named Id
             var hasId = false;
-            // used to record the value of each property
             object columnValue = null;
+
             // only properties that can be set is needed(except "Id")
             var properties = entity.GetType().GetProperties().Where(p => {
                 if (p.Name == "Id")

@@ -49,6 +49,8 @@
     <Compile Include="JoinType.cs" />
     <Compile Include="ComparisonOperator.cs" />
     <Compile Include="Paginator.cs" />
+    <Compile Include="Pattern.cs" />
+    <Compile Include="PatternType.cs" />
     <Compile Include="SortOrder.cs" />
     <Compile Include="Statement.cs" />
     <Compile Include="HavingClause.cs" />

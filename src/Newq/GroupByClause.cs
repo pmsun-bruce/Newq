@@ -23,7 +23,9 @@
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("GROUP BY {0} ", Target);
+            return Target.ToString().Length > 0
+                ? string.Format("GROUP BY {0} ", Target)
+                : string.Empty;
         }
 
         /// <summary>

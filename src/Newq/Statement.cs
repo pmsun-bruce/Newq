@@ -84,6 +84,7 @@ namespace Newq
             /// 
             /// </summary>
             /// <typeparam name="T"></typeparam>
+            /// <param name="statement"></param>
             /// <param name="type"></param>
             /// <param name="setFilter"></param>
             /// <returns></returns>

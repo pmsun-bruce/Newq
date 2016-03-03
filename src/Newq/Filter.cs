@@ -71,7 +71,7 @@
         }
 
         /// <summary>
-        /// 
+        /// <see cref="Add(Condition)"/>
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="condition"></param>
@@ -84,7 +84,7 @@
         }
 
         /// <summary>
-        /// 
+        /// <see cref="Remove(Condition)"/>
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="condition"></param>

@@ -62,6 +62,25 @@ namespace Newq
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        /// <summary>
         /// Returns a string that represents the current object.
         /// </summary>
         /// <returns></returns>
@@ -75,12 +94,43 @@ namespace Newq
         /// </summary>
         /// <param name="comparisonOperator"></param>
         /// <param name="value"></param>
-        /// <param name="otherValues"></param>
         /// <returns></returns>
-        private Condition Compare(ComparisonOperator comparisonOperator, object value, params object[] otherValues)
+        private Condition Compare(ComparisonOperator comparisonOperator, object value)
         {
-            var comparison = new Comparison(this, comparisonOperator, value, otherValues);
+            var comparison = new Comparison(this, comparisonOperator, value);
+
             return new Condition(comparison, comparison);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="comparisonOperator"></param>
+        /// <param name="values"></param>
+        /// <returns></returns>
+        private Condition Compare(ComparisonOperator comparisonOperator, object[] values)
+        {
+            var comparison = new Comparison(this, comparisonOperator, values);
+
+            return new Condition(comparison, comparison);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string IsNull()
+        {
+            return string.Format("{0} IS NULL", this);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string IsNotNull()
+        {
+            return string.Format("{0} IS NOT NULL", this);
         }
 
         /// <summary>
@@ -147,82 +197,64 @@ namespace Newq
         /// 
         /// </summary>
         /// <param name="value"></param>
+        /// <param name="type"></param>
+        /// <param name="escape"></param>
         /// <returns></returns>
-        public Condition Like(object value)
+        public Condition Like(object value, PatternType type = PatternType.Fuzzy, char escape = ' ')
         {
-            return Compare(ComparisonOperator.Like, value);
+            return Compare(ComparisonOperator.Like, new Pattern(value, type, escape));
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="value"></param>
+        /// <param name="type"></param>
+        /// <param name="escape"></param>
         /// <returns></returns>
-        public Condition NotLike(object value)
+        public Condition NotLike(object value, PatternType type = PatternType.Fuzzy, char escape = ' ')
         {
-            return Compare(ComparisonOperator.NotLike, value);
+            return Compare(ComparisonOperator.NotLike, new Pattern(value, type, escape));
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="values"></param>
         /// <returns></returns>
-        public Condition BeginWith(object value)
+        public Condition In(object[] values)
         {
-            return Compare(ComparisonOperator.BeginWith, value);
+            return Compare(ComparisonOperator.In, values);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="subQuery"></param>
         /// <returns></returns>
-        public Condition NotBeginWith(object value)
+        public Condition In(QueryBuilder subQuery)
         {
-            return Compare(ComparisonOperator.NotBeginWith, value);
+            return Compare(ComparisonOperator.In, subQuery);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="values"></param>
         /// <returns></returns>
-        public Condition EndWith(object value)
+        public Condition NotIn(object[] values)
         {
-            return Compare(ComparisonOperator.EndWith, value);
+            return Compare(ComparisonOperator.NotIn, values);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="subQuery"></param>
         /// <returns></returns>
-        public Condition NotEndWith(object value)
+        public Condition NotIn(QueryBuilder subQuery)
         {
-            return Compare(ComparisonOperator.NotEndWith, value);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="otherValues"></param>
-        /// <returns></returns>
-        public Condition In(object value, params object[] otherValues)
-        {
-            return Compare(ComparisonOperator.In, value, otherValues);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="otherValues"></param>
-        /// <returns></returns>
-        public Condition NotIn(object value, params object[] otherValues)
-        {
-            return Compare(ComparisonOperator.NotIn, value, otherValues);
+            return Compare(ComparisonOperator.NotIn, subQuery);
         }
 
         /// <summary>
@@ -233,7 +265,7 @@ namespace Newq
         /// <returns></returns>
         public Condition Between(object value1, object value2)
         {
-            return Compare(ComparisonOperator.Between, value1, value2);
+            return Compare(ComparisonOperator.Between, new object[] { value1, value2 });
         }
 
         /// <summary>
@@ -244,7 +276,73 @@ namespace Newq
         /// <returns></returns>
         public Condition NotBetween(object value1, object value2)
         {
-            return Compare(ComparisonOperator.Between, value1, value2);
+            return Compare(ComparisonOperator.NotBetween, new object[] { value1, value2 });
+        }
+
+        /// <summary>
+        /// <see cref="EqualTo(object)"/>
+        /// </summary>
+        /// <param name="column"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static Condition operator ==(DbColumn column, object value)
+        {
+            return column.EqualTo(value);
+        }
+
+        /// <summary>
+        /// <see cref="NotEqualTo(object)"/>
+        /// </summary>
+        /// <param name="column"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static Condition operator !=(DbColumn column, object value)
+        {
+            return column.NotEqualTo(value);
+        }
+
+        /// <summary>
+        /// <see cref="GreaterThan(object)"/>
+        /// </summary>
+        /// <param name="column"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static Condition operator >(DbColumn column, object value)
+        {
+            return column.GreaterThan(value);
+        }
+
+        /// <summary>
+        /// <see cref="LessThan(object)"/>
+        /// </summary>
+        /// <param name="column"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static Condition operator <(DbColumn column, object value)
+        {
+            return column.LessThan(value);
+        }
+
+        /// <summary>
+        /// <see cref="GreaterThanOrEqualTo(object)"/>
+        /// </summary>
+        /// <param name="column"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static Condition operator >=(DbColumn column, object value)
+        {
+            return column.GreaterThanOrEqualTo(value);
+        }
+
+        /// <summary>
+        /// <see cref="LessThanOrEqualTo(object)"/>
+        /// </summary>
+        /// <param name="column"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static Condition operator <=(DbColumn column, object value)
+        {
+            return column.LessThanOrEqualTo(value);
         }
     }
 }

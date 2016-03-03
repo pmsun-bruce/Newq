@@ -1,5 +1,7 @@
 namespace Newq
 {
+    using System;
+
     /// <summary>
     /// 
     /// </summary>
@@ -13,6 +15,11 @@ namespace Newq
         /// <param name="logicalOperator"></param>
         public Condition(Comparison source, Comparison target, LogicalOperator logicalOperator = LogicalOperator.And)
         {
+            if (source == null || target == null)
+            {
+                throw new ArgumentNullException("source or target is null");
+            }
+
             Source = source;
             Target = target;
             LogicalOperator = logicalOperator;
@@ -26,6 +33,11 @@ namespace Newq
         /// <param name="logicalOperator"></param>
         public Condition(Condition source, Condition target, LogicalOperator logicalOperator = LogicalOperator.And)
         {
+            if (source == null || target == null)
+            {
+                throw new ArgumentNullException("source or target is null");
+            }
+
             Source = source;
             Target = target;
             LogicalOperator = logicalOperator;
@@ -34,17 +46,17 @@ namespace Newq
         /// <summary>
         /// 
         /// </summary>
-        public object Source { get; private set; }
+        public object Source { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public object Target { get; private set; }
+        public object Target { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public LogicalOperator LogicalOperator { get; private set; }
+        public LogicalOperator LogicalOperator { get; set; }
         
         /// <summary>
         /// 
@@ -76,9 +88,7 @@ namespace Newq
             else
             {
                 condition = string.Format("({0} {1} {2})",
-                    Source.ToString(),
-                    GetLinkType(LogicalOperator),
-                    Target.ToString());
+                    Source, GetLinkType(LogicalOperator), Target);
             }
             
             return condition;
@@ -125,7 +135,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// 
+        /// <see cref="And(Comparison)"/>
         /// </summary>
         /// <param name="source"></param>
         /// <param name="target"></param>
@@ -136,7 +146,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// 
+        /// <see cref="And(Condition)"/>
         /// </summary>
         /// <param name="source"></param>
         /// <param name="target"></param>
@@ -147,7 +157,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// 
+        /// <see cref="Or(Comparison)"/>
         /// </summary>
         /// <param name="source"></param>
         /// <param name="target"></param>
@@ -158,7 +168,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// 
+        /// <see cref="Or(Condition)"/>
         /// </summary>
         /// <param name="source"></param>
         /// <param name="target"></param>

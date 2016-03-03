@@ -11,7 +11,6 @@
         /// Initializes a new instance of the <see cref="SelectStatement"/> class.
         /// </summary>
         /// <param name="table"></param>
-        /// <param name="relatedTables"></param>
         public SelectStatement(DbTable table) : base(table)
         {
 

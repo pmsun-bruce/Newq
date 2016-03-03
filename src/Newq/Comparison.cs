@@ -15,52 +15,123 @@ namespace Newq
         /// <param name="column"></param>
         /// <param name="comparisonOperator"></param>
         /// <param name="value"></param>
-        /// <param name="otherValues"></param>
-        public Comparison(DbColumn column, ComparisonOperator comparisonOperator, object value, params object[] otherValues)
+        public Comparison(DbColumn column, ComparisonOperator comparisonOperator, object value)
         {
+            if ((object)column == null || value == null)
+            {
+                throw new ArgumentException();
+            }
+
             Column = column;
             Operator = comparisonOperator;
-            SetValues(value, otherValues);
+            Values = new List<object> { value };
         }
 
         /// <summary>
-        /// Gets or sets <see cref="Column"/>.
+        /// Initializes a new instance of the <see cref="Comparison"/> class.
         /// </summary>
-        public DbColumn Column { get; private set; }
+        /// <param name="column"></param>
+        /// <param name="comparisonOperator"></param>
+        /// <param name="values"></param>
+        public Comparison(DbColumn column, ComparisonOperator comparisonOperator, object[] values)
+        {
+            if ((object)column == null || values == null || values.Length == 0)
+            {
+                throw new ArgumentException();
+            }
+
+            Column = column;
+            Operator = comparisonOperator;
+            Values = new List<object>();
+
+            foreach (var obj in values)
+            {
+                Values.Add(obj);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Comparison"/> class.
+        /// </summary>
+        /// <param name="column"></param>
+        /// <param name="comparisonOperator"></param>
+        /// <param name="values"></param>
+        public Comparison(DbColumn column, ComparisonOperator comparisonOperator, List<object> values)
+        {
+            if ((object)column == null || values == null || values.Count == 0)
+            {
+                throw new ArgumentException();
+            }
+
+            Column = column;
+            Operator = comparisonOperator;
+            Values = values;
+        }
+
+        /// <summary>
+        /// Gets <see cref="Column"/>.
+        /// </summary>
+        public DbColumn Column { get; }
 
         /// <summary>
         /// Gets or sets <see cref="Operator"/>.
         /// </summary>
-        public ComparisonOperator? Operator { get; private set; }
+        public ComparisonOperator Operator { get; set; }
 
         /// <summary>
         /// Gets or sets <see cref="Values"/>.
         /// </summary>
-        public IReadOnlyList<object> Values { get; private set; }
+        public List<object> Values { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="value"></param>
-        /// <param name="otherValues"></param>
-        private void SetValues(object value, params object[] otherValues)
+        /// <returns></returns>
+        private string GetFirstValue()
         {
-            if (value == null)
+            var value = Values[0].ToSqlValue();
+
+            if (value.Length < 2)
             {
-                throw new ArgumentNullException(nameof(value));
+                throw new Exception("value is null");
             }
 
-            var values = new List<object> { value };
+            return Values[0].ToSqlValue();
+        }
 
-            if (otherValues.Length > 0)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private string GetInValues()
+        {
+            var values = string.Empty;
+
+            Values.ForEach(v => values += v.ToSqlValue() + ", ");
+
+            if (values.Length < 3)
             {
-                foreach (var val in otherValues)
-                {
-                    values.Add(val);
-                }
+                throw new Exception("values are null");
             }
 
-            Values = values;
+            return values.Remove(values.Length - 2);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private string GetBetweenValues()
+        {
+            var value1 = Values[0].ToSqlValue();
+            var value2 = Values[1].ToSqlValue();
+
+            if (value1.Length == 0 || value2.Length == 0)
+            {
+                throw new Exception("value is null");
+            }
+
+            return string.Format("{0} AND {1}", value1, value2);
         }
 
         /// <summary>
@@ -69,75 +140,35 @@ namespace Newq
         /// <returns></returns>
         public override string ToString()
         {
-            var comparison = string.Empty;
-
             switch (Operator)
             {
                 case ComparisonOperator.GreaterThan:
-                    comparison = string.Format("{0} > {1}", Column, Values[0].ToSqlValue());
-                    break;
+                    return string.Format("{0} > {1}", Column, GetFirstValue());
                 case ComparisonOperator.GreaterThanOrEqualTo:
-                    comparison = string.Format("{0} >= {1}", Column, Values[0].ToSqlValue());
-                    break;
+                    return string.Format("{0} >= {1}", Column, GetFirstValue());
                 case ComparisonOperator.LessThan:
-                    comparison = string.Format("{0} < {1}", Column, Values[0].ToSqlValue());
-                    break;
+                    return string.Format("{0} < {1}", Column, GetFirstValue());
                 case ComparisonOperator.LessThanOrEqualTo:
-                    comparison = string.Format("{0} <= {1}", Column, Values[0].ToSqlValue());
-                    break;
+                    return string.Format("{0} <= {1}", Column, GetFirstValue());
                 case ComparisonOperator.EqualTo:
-                    comparison = string.Format("{0} = {1}", Column, Values[0].ToSqlValue());
-                    break;
+                    return string.Format("{0} = {1}", Column, GetFirstValue());
                 case ComparisonOperator.NotEqualTo:
-                    comparison = string.Format("{0} > {1}", Column, Values[0].ToSqlValue());
-                    break;
+                    return string.Format("{0} != {1}", Column, GetFirstValue());
                 case ComparisonOperator.Like:
-                    comparison = string.Format("{0} LIKE {1}", Column, Values[0].ToSqlValue(ComparisonOperator.Like));
-                    break;
+                    return string.Format("{0} LIKE {1}", Column, GetFirstValue());
                 case ComparisonOperator.NotLike:
-                    comparison = string.Format("{0} NOT LIKE {1}", Column, Values[0].ToSqlValue(ComparisonOperator.NotLike));
-                    break;
-                case ComparisonOperator.BeginWith:
-                    comparison = string.Format("{0} LIKE {1}", Column, Values[0].ToSqlValue(ComparisonOperator.BeginWith));
-                    break;
-                case ComparisonOperator.NotBeginWith:
-                    comparison = string.Format("{0} NOT LIKE {1}", Column, Values[0].ToSqlValue(ComparisonOperator.NotBeginWith));
-                    break;
-                case ComparisonOperator.EndWith:
-                    comparison = string.Format("{0} LIKE {1}", Column, Values[0].ToSqlValue(ComparisonOperator.EndWith));
-                    break;
-                case ComparisonOperator.NotEndWith:
-                    comparison = string.Format("{0} NOT LIKE {1}", Column, Values[0].ToSqlValue(ComparisonOperator.NotEndWith));
-                    break;
+                    return string.Format("{0} NOT LIKE {1}", Column, GetFirstValue());
                 case ComparisonOperator.In:
-                    foreach (var val in Values)
-                    {
-                        comparison += string.Concat(val.ToSqlValue(), ", ");
-                    }
-
-                    comparison = string.Format("{0} IN ({1})", Column, comparison.Remove(comparison.Length - 2));
-                    break;
+                    return string.Format("{0} IN ({1})", Column, GetInValues());
                 case ComparisonOperator.NotIn:
-                    foreach (var val in Values)
-                    {
-                        comparison += string.Concat(val.ToSqlValue(), ", ");
-                    }
-
-                    comparison = string.Format("{0} NOT IN ({1})", Column, comparison.Remove(comparison.Length - 2));
-                    break;
+                    return string.Format("{0} NOT IN ({1})", Column, GetInValues());
                 case ComparisonOperator.Between:
-                    comparison = string.Format("{0} BETWEEN {1} AND {2}",
-                        Column, Values[0].ToSqlValue(), Values[1].ToSqlValue());
-                    break;
+                    return string.Format("{0} BETWEEN {1}", Column, GetBetweenValues());
                 case ComparisonOperator.NotBetween:
-                    comparison = string.Format("{0} NOT BETWEEN {1} AND {2}",
-                        Column, Values[0].ToSqlValue(), Values[1].ToSqlValue());
-                    break;
+                    return string.Format("{0} NOT BETWEEN {1}", Column, GetBetweenValues());
                 default:
-                    break;
+                    return string.Empty;
             }
-
-            return comparison;
         }
     }
 }

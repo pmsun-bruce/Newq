@@ -73,7 +73,9 @@
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("{0} {1} ON {2} ", GetJoinType(), JoinTable, Filter);
+            return Filter.ToString().Length > 0
+                ? string.Format("{0} {1} ON {2} ", GetJoinType(), JoinTable, Filter)
+                : string.Empty;
         }
     }
 }

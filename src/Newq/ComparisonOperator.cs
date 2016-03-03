@@ -6,32 +6,32 @@ namespace Newq
     public enum ComparisonOperator
     {
         /// <summary>
-        /// 
+        /// Greater than a specified value.
         /// </summary>
         GreaterThan,
 
         /// <summary>
-        /// 
+        /// Greater than or equal to a specified value.
         /// </summary>
         GreaterThanOrEqualTo,
 
         /// <summary>
-        /// 
+        /// Less than a specified value.
         /// </summary>
         LessThan,
 
         /// <summary>
-        /// 
+        /// Less than or equal to a specified value.
         /// </summary>
         LessThanOrEqualTo,
 
         /// <summary>
-        /// 
+        /// Equal to a specified value.
         /// </summary>
         EqualTo,
 
         /// <summary>
-        /// 
+        /// Not equal to a specified value.
         /// </summary>
         NotEqualTo,
 
@@ -42,29 +42,10 @@ namespace Newq
         Like,
 
         /// <summary>
-        /// 
+        /// The NOT LIKE operator is used to
+        /// search for not match a specified pattern in a column.
         /// </summary>
         NotLike,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        BeginWith,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        NotBeginWith,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        EndWith,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        NotEndWith,
 
         /// <summary>
         /// The IN operator allows you to
@@ -73,7 +54,8 @@ namespace Newq
         In,
 
         /// <summary>
-        /// 
+        /// The NOT IN operator allows you to
+        /// specify multiple values in a WHERE clause.
         /// </summary>
         NotIn,
 
