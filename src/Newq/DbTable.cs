@@ -15,7 +15,7 @@ namespace Newq
         private Dictionary<string, DbColumn> columns;
 
         /// <summary>
-        /// Constructor
+        /// Initializes a new instance of the <see cref="DbTable"/> class.
         /// </summary>
         /// <param name="type">Type of the corresponding class</param>
         public DbTable(Type type)
@@ -26,7 +26,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// Constructor
+        /// Initializes a new instance of the <see cref="DbTable"/> class.
         /// </summary>
         /// <param name="entity">An entity of the corresponding class</param>
         public DbTable(object entity)
@@ -39,7 +39,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// Constructor
+        /// Initializes a new instance of the <see cref="DbTable"/> class.
         /// </summary>
         /// <param name="name">Name of the corresponding class</param>
         internal DbTable(string name)
@@ -77,7 +77,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// Get an certain entity of column by its name with an indexer
+        /// Gets an certain entity of column by its name with an indexer
         /// </summary>
         /// <param name="columnName">name of the column</param>
         /// <returns>an entity of column</returns>
@@ -186,7 +186,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// Override ToString
+        /// Returns a string that represents the current object.
         /// </summary>
         /// <returns>Name of this with a pair of square brackets</returns>
         public override string ToString()
