@@ -128,7 +128,7 @@ namespace Newq.Tests
                         [Provider].[Name] NOT LIKE '%New%'
                 ) AS [$PAGINATOR] 
                 WHERE 
-                    [$PAGINATOR].[ROW_NUMBER] BETWEEN 0 AND 10 
+                    [$PAGINATOR].[ROW_NUMBER] BETWEEN 1 AND 10 
             */
         }
     }

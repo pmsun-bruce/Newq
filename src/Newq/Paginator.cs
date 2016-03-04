@@ -49,7 +49,7 @@
         /// </summary>
         public int BeginRowNumber
         {
-            get { return (CurrentPage - 1) * PageSize; }
+            get { return (CurrentPage - 1) * PageSize + 1; }
         }
 
         /// <summary>
