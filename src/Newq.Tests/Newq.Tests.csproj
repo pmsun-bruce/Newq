@@ -56,8 +56,8 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Entitites\Customer.cs" />
-    <Compile Include="Entitites\Provider.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Provider.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="SelectStatementTests.cs" />
     <Compile Include="InsertStatement.cs" />

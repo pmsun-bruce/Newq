@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newq.Tests.Entitites;
+using Newq.Tests.Models;
 
 namespace Newq.Tests
 {
@@ -47,7 +47,7 @@ namespace Newq.Tests
 
             queryBuilder
                 .Update(customer)
-                .Join<Provider>(filter => filter.Add(filter.DbContext[0]["Name"].EqualTo(filter.DbContext[1]["Name"])));
+                .Join<Provider>(filter => filter.Add(filter.Context[0]["Name"].EqualTo(filter.Context[1]["Name"])));
 
             var query = queryBuilder.ToString();
 

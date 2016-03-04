@@ -12,7 +12,7 @@
         /// Initializes a new instance of the <see cref="InsertStatement"/> class.
         /// </summary>
         /// <param name="table"></param>
-        public InsertStatement(DbTable table) : base(table)
+        public InsertStatement(Table table) : base(table)
         {
 
         }
@@ -26,7 +26,7 @@
             var columns = string.Empty;
             var values = string.Empty;
 
-            foreach (var col in DbContext[0].Columns)
+            foreach (var col in Context[0].Columns)
             {
                 columns += string.Format("{0}, ", col);
                 values += string.Format("{0}, ", col.Value.ToSqlValue());
@@ -36,7 +36,7 @@
                 columns.Remove(columns.Length - 2),
                 values.Remove(values.Length - 2));
 
-            return string.Format("INSERT INTO {0} {1} ", DbContext[0], valueClause);
+            return string.Format("INSERT INTO {0} {1} ", Context[0], valueClause);
         }
     }
 }

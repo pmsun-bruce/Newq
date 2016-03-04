@@ -2,9 +2,6 @@ namespace Newq
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// SQL Statement
@@ -23,22 +20,22 @@ namespace Newq
         /// Initializes a new instance of the <see cref="Statement"/> class.
         /// </summary>
         /// <param name="table"></param>
-        protected Statement(DbTable table)
+        protected Statement(Table table)
         {
             if (table == null)
             {
                 throw new ArgumentNullException(nameof(table));
             }
 
-            DbContext = new DbContext(table);
+            Context = new Context(table);
             Clauses = new List<Clause>();
-            Target = new Target(DbContext);
+            Target = new Target(Context);
         }
 
         /// <summary>
         /// Database context of statement.
         /// </summary>
-        public DbContext DbContext { get; protected set; }
+        public Context Context { get; protected set; }
 
         /// <summary>
         /// Clauses of statement.
@@ -93,14 +90,14 @@ namespace Newq
                 var tableName = typeof(T).Name;
                 JoinClause clause = null;
 
-                if (statement.DbContext.Contains(tableName))
+                if (statement.Context.Contains(tableName))
                 {
-                    clause = new JoinClause(statement, statement.DbContext[tableName], type);
+                    clause = new JoinClause(statement, statement.Context[tableName], type);
                 }
                 else
                 {
-                    var table = new DbTable(typeof(T));
-                    statement.DbContext.Add(table);
+                    var table = new Table(typeof(T));
+                    statement.Context.Add(table);
                     clause = new JoinClause(statement, table, type);
                 }
 

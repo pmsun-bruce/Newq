@@ -32,19 +32,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Clause.cs" />
-    <Compile Include="DbColumn.cs" />
+    <Compile Include="Column.cs" />
     <Compile Include="Comparison.cs" />
-    <Compile Include="DbContext.cs" />
+    <Compile Include="Context.cs" />
     <Compile Include="Filter.cs" />
     <Compile Include="OrderByClause.cs" />
-    <Compile Include="FunctionType.cs" />
     <Compile Include="Function.cs" />
     <Compile Include="JoinType.cs" />
     <Compile Include="ComparisonOperator.cs" />
@@ -65,7 +63,7 @@
     <Compile Include="WhereClause.cs" />
     <Compile Include="DeleteStatement.cs" />
     <Compile Include="SelectStatement.cs" />
-    <Compile Include="DbTable.cs" />
+    <Compile Include="Table.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Condition.cs" />

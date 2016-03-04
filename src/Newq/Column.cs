@@ -1,42 +1,41 @@
 namespace Newq
 {
-    using System.Data;
+    using System.Collections.Generic;
 
     /// <summary>
     /// 
     /// </summary>
-    public class DbColumn
+    public class Column
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="DbColumn"/> class.
+        /// Initializes a new instance of the <see cref="Column"/> class.
         /// </summary>
         /// <param name="table"></param>
         /// <param name="name"></param>
         /// <param name="value"></param>
         /// <param name="type"></param>
-        public DbColumn(DbTable table, string name, object value = null, SqlDbType? type = null)
+        public Column(Table table, string name, object value = null)
         {
             Table = table;
             Name = name;
             Value = value;
-            Type = type;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DbColumn"/> class.
+        /// Initializes a new instance of the <see cref="Column"/> class.
         /// </summary>
         /// <param name="tableName"></param>
         /// <param name="columnName"></param>
-        internal DbColumn(string tableName, string columnName)
+        internal Column(string tableName, string columnName)
         {
-            Table = new DbTable(tableName);
+            Table = new Table(tableName);
             Name = columnName;
         }
 
         /// <summary>
         /// Gets or sets table.
         /// </summary>
-        public DbTable Table { get; private set; }
+        public Table Table { get; private set; }
 
         /// <summary>
         /// Gets or sets name.
@@ -47,11 +46,6 @@ namespace Newq
         /// Gets or sets value.
         /// </summary>
         public object Value { get; private set; }
-
-        /// <summary>
-        /// Gets or sets type.
-        /// </summary>
-        public SqlDbType? Type { get; private set; }
 
         /// <summary>
         /// Gets the alias.
@@ -92,6 +86,15 @@ namespace Newq
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        public Function Count()
+        {
+            return new Function("COUNT", this);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="comparisonOperator"></param>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -118,19 +121,14 @@ namespace Newq
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="comparisonOperator"></param>
+        /// <param name="values"></param>
         /// <returns></returns>
-        public string IsNull()
+        private Condition Compare(ComparisonOperator comparisonOperator, List<object> values)
         {
-            return string.Format("{0} IS NULL", this);
-        }
+            var comparison = new Comparison(this, comparisonOperator, values);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public string IsNotNull()
-        {
-            return string.Format("{0} IS NOT NULL", this);
+            return new Condition(comparison, comparison);
         }
 
         /// <summary>
@@ -230,6 +228,16 @@ namespace Newq
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="values"></param>
+        /// <returns></returns>
+        public Condition In(List<object> values)
+        {
+            return Compare(ComparisonOperator.In, values);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="subQuery"></param>
         /// <returns></returns>
         public Condition In(QueryBuilder subQuery)
@@ -243,6 +251,16 @@ namespace Newq
         /// <param name="values"></param>
         /// <returns></returns>
         public Condition NotIn(object[] values)
+        {
+            return Compare(ComparisonOperator.NotIn, values);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="values"></param>
+        /// <returns></returns>
+        public Condition NotIn(List<object> values)
         {
             return Compare(ComparisonOperator.NotIn, values);
         }
@@ -285,7 +303,7 @@ namespace Newq
         /// <param name="column"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static Condition operator ==(DbColumn column, object value)
+        public static Condition operator ==(Column column, object value)
         {
             return column.EqualTo(value);
         }
@@ -296,7 +314,7 @@ namespace Newq
         /// <param name="column"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static Condition operator !=(DbColumn column, object value)
+        public static Condition operator !=(Column column, object value)
         {
             return column.NotEqualTo(value);
         }
@@ -307,7 +325,7 @@ namespace Newq
         /// <param name="column"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static Condition operator >(DbColumn column, object value)
+        public static Condition operator >(Column column, object value)
         {
             return column.GreaterThan(value);
         }
@@ -318,7 +336,7 @@ namespace Newq
         /// <param name="column"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static Condition operator <(DbColumn column, object value)
+        public static Condition operator <(Column column, object value)
         {
             return column.LessThan(value);
         }
@@ -329,7 +347,7 @@ namespace Newq
         /// <param name="column"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static Condition operator >=(DbColumn column, object value)
+        public static Condition operator >=(Column column, object value)
         {
             return column.GreaterThanOrEqualTo(value);
         }
@@ -340,7 +358,7 @@ namespace Newq
         /// <param name="column"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static Condition operator <=(DbColumn column, object value)
+        public static Condition operator <=(Column column, object value)
         {
             return column.LessThanOrEqualTo(value);
         }

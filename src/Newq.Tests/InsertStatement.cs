@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newq.Tests.Entitites;
+using Newq.Tests.Models;
 
 namespace Newq.Tests
 {

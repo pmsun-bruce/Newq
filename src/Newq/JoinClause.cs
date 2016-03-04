@@ -13,7 +13,7 @@
         /// <param name="statement"></param>
         /// <param name="table"></param>
         /// <param name="type"></param>
-        public JoinClause(Statement statement, DbTable table, JoinType type = JoinType.InnerJoin) : base(statement)
+        public JoinClause(Statement statement, Table table, JoinType type = JoinType.InnerJoin) : base(statement)
         {
             JoinTable = table;
             JoinType = type;
@@ -22,7 +22,7 @@
         /// <summary>
         /// 
         /// </summary>
-        public DbTable JoinTable { get; }
+        public Table JoinTable { get; }
 
         /// <summary>
         /// 

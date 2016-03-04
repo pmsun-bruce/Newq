@@ -11,7 +11,7 @@
         /// Initializes a new instance of the <see cref="SelectStatement"/> class.
         /// </summary>
         /// <param name="table"></param>
-        public SelectStatement(DbTable table) : base(table)
+        public SelectStatement(Table table) : base(table)
         {
 
         }
@@ -43,7 +43,7 @@
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("SELECT {0}{1} FROM {2} ", GetParameters(), GetTarget(), DbContext[0]);
+            return string.Format("SELECT {0}{1} FROM {2} ", GetParameters(), GetTarget(), Context[0]);
         }
 
         /// <summary>
@@ -69,9 +69,7 @@
                 }
                 else
                 {
-                    var primaryKey = DbContext[0].PrimaryKey ?? DbContext[0].Columns[0];
-
-                    rowNumberClause = string.Format(", ROW_NUMBER() OVER(ORDER BY {0}) AS [ROW_NUMBER]", primaryKey);
+                    rowNumberClause = string.Format(", ROW_NUMBER() OVER(ORDER BY {0}) AS [ROW_NUMBER]", Context[0].GetPrimaryKey());
                     subQuery = sql.Insert(sql.IndexOf(" FROM "), rowNumberClause);
                 }
 
@@ -94,7 +92,7 @@
 
             if (items.Length == 0)
             {
-                foreach (var tab in DbContext.Tables)
+                foreach (var tab in Context.Tables)
                 {
                     foreach (var col in tab.Columns)
                     {
@@ -104,14 +102,14 @@
             }
             else
             {
-                DbColumn column;
+                Column column;
                 Function function;
 
                 foreach (var item in items)
                 {
-                    if (item is DbColumn)
+                    if (item is Column)
                     {
-                        column = item as DbColumn;
+                        column = item as Column;
                         target += string.Format("{0} AS {1}, ", column, column.Alias);
                     }
                     else if (item is Function)
@@ -137,7 +135,7 @@
 
             if (items.Length == 0)
             {
-                foreach (var tab in DbContext.Tables)
+                foreach (var tab in Context.Tables)
                 {
                     foreach (var col in tab.Columns)
                     {
@@ -150,9 +148,9 @@
             {
                 foreach (var item in items)
                 {
-                    if (item is DbColumn)
+                    if (item is Column)
                     {
-                        alias = (item as DbColumn).Alias;
+                        alias = (item as Column).Alias;
                     }
                     else if (item is Function)
                     {

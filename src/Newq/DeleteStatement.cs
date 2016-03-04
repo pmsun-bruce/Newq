@@ -12,7 +12,7 @@
         /// Initializes a new instance of the <see cref="DeleteStatement"/> class.
         /// </summary>
         /// <param name="table"></param>
-        public DeleteStatement(DbTable table) : base(table)
+        public DeleteStatement(Table table) : base(table)
         {
 
         }
@@ -33,7 +33,7 @@
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("DELETE {0} FROM {1} ", GetParameters(), DbContext[0]);
+            return string.Format("DELETE {0} FROM {1} ", GetParameters(), Context[0]);
         }
 
         private string GetParameters()

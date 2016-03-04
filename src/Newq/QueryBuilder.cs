@@ -132,7 +132,7 @@
         /// <returns></returns>
         public SelectStatement Select<T>(bool isDistinct, int topNumber, bool isPercent, Action<Target> setTarget)
         {
-            var statement = new SelectStatement(new DbTable(typeof(T)));
+            var statement = new SelectStatement(new Table(typeof(T)));
 
             Statement = statement;
             statement.IsDistinct = isDistinct;
@@ -199,11 +199,11 @@
         /// SET column1 = value, column2 = value,...
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="entity"></param>
+        /// <param name="obj"></param>
         /// <returns></returns>
-        public UpdateStatement Update<T>(T entity)
+        public UpdateStatement Update<T>(T obj)
         {
-            var statement = new UpdateStatement(new DbTable(entity));
+            var statement = new UpdateStatement(new Table(obj));
 
             Statement = statement;
 
@@ -219,7 +219,7 @@
         /// <returns></returns>
         public UpdateStatement Update<T>(Action<Target> setTarget)
         {
-            var statement = new UpdateStatement(new DbTable(typeof(T)));
+            var statement = new UpdateStatement(new Table(typeof(T)));
 
             Statement = statement;
             setTarget(statement.Target);
@@ -233,11 +233,11 @@
         /// VALUES(value1, value2, value3,....)
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="entity"></param>
+        /// <param name="obj"></param>
         /// <returns></returns>
-        public InsertStatement Insert<T>(T entity)
+        public InsertStatement Insert<T>(T obj)
         {
-            var statement = new InsertStatement(new DbTable(entity));
+            var statement = new InsertStatement(new Table(obj));
 
             Statement = statement;
 
@@ -263,7 +263,7 @@
         /// <returns></returns>
         public DeleteStatement Delete<T>(int topNumber, bool isPercent = false)
         {
-            var statement = new DeleteStatement(new DbTable(typeof(T)));
+            var statement = new DeleteStatement(new Table(typeof(T)));
 
             Statement = statement;
             statement.TopNumber = topNumber;

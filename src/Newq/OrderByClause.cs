@@ -21,7 +21,7 @@
         /// <returns></returns>
         public override string ToString()
         {
-            return Target.ToString().Length > 0
+            return GetTarget().Length > 0
                 ? string.Format("ORDER BY {0} ", GetTarget())
                 : string.Empty;
         }

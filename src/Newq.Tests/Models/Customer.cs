@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Newq.Tests.Entitites
+namespace Newq.Tests.Models
 {
-    public class Provider
+    public class Customer : Model
     {
         public string Name { get; set; }
-        public string Products { get; set; }
+        public string City { get; set; }
     }
 }

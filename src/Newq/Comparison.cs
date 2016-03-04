@@ -15,7 +15,7 @@ namespace Newq
         /// <param name="column"></param>
         /// <param name="comparisonOperator"></param>
         /// <param name="value"></param>
-        public Comparison(DbColumn column, ComparisonOperator comparisonOperator, object value)
+        public Comparison(Column column, ComparisonOperator comparisonOperator, object value)
         {
             if ((object)column == null || value == null)
             {
@@ -33,7 +33,7 @@ namespace Newq
         /// <param name="column"></param>
         /// <param name="comparisonOperator"></param>
         /// <param name="values"></param>
-        public Comparison(DbColumn column, ComparisonOperator comparisonOperator, object[] values)
+        public Comparison(Column column, ComparisonOperator comparisonOperator, object[] values)
         {
             if ((object)column == null || values == null || values.Length == 0)
             {
@@ -56,7 +56,7 @@ namespace Newq
         /// <param name="column"></param>
         /// <param name="comparisonOperator"></param>
         /// <param name="values"></param>
-        public Comparison(DbColumn column, ComparisonOperator comparisonOperator, List<object> values)
+        public Comparison(Column column, ComparisonOperator comparisonOperator, List<object> values)
         {
             if ((object)column == null || values == null || values.Count == 0)
             {
@@ -71,7 +71,7 @@ namespace Newq
         /// <summary>
         /// Gets <see cref="Column"/>.
         /// </summary>
-        public DbColumn Column { get; }
+        public Column Column { get; }
 
         /// <summary>
         /// Gets or sets <see cref="Operator"/>.

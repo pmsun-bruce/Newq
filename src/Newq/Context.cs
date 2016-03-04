@@ -7,32 +7,32 @@
     /// <summary>
     /// Database context for statement or clause.
     /// </summary>
-    public class DbContext
+    public class Context
     {
         /// <summary>
         /// 
         /// </summary>
-        private Dictionary<string, DbTable> tables;
+        private Dictionary<string, Table> tables;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DbContext"/> class.
+        /// Initializes a new instance of the <see cref="Context"/> class.
         /// </summary>
         /// <param name="table"></param>
-        public DbContext(DbTable table)
+        public Context(Table table)
         {
             if (table == null)
             {
                 throw new ArgumentNullException(nameof(table));
             }
 
-            tables = new Dictionary<string, DbTable>();
+            tables = new Dictionary<string, Table>();
             tables.Add(table.Name, table);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public IReadOnlyList<DbTable> Tables
+        public IReadOnlyList<Table> Tables
         {
             get { return tables.Values.ToList(); }
         }
@@ -42,7 +42,7 @@
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public DbTable this[int index]
+        public Table this[int index]
         {
             get { return Tables[index]; }
         }
@@ -52,13 +52,13 @@
         /// </summary>
         /// <param name="tableName"></param>
         /// <returns></returns>
-        public DbTable this[string tableName]
+        public Table this[string tableName]
         {
             get
             {
                 if (!Contains(tableName))
                 {
-                    return new DbTable(tableName);
+                    return new Table(tableName);
                 }
 
                 return tables[tableName];
@@ -71,13 +71,13 @@
         /// <param name="tableName"></param>
         /// <param name="columnName"></param>
         /// <returns></returns>
-        public DbColumn this[string tableName, string columnName]
+        public Column this[string tableName, string columnName]
         {
             get
             {
                 if (!Contains(tableName))
                 {
-                    return new DbColumn(tableName, columnName);
+                    return new Column(tableName, columnName);
                 }
 
                 return tables[tableName][columnName];
@@ -98,7 +98,7 @@
         /// Add a table to current database context.
         /// </summary>
         /// <param name="table"></param>
-        public void Add(DbTable table)
+        public void Add(Table table)
         {
             tables.Add(table.Name, table);
         }

@@ -23,7 +23,7 @@
         /// <returns></returns>
         public override string ToString()
         {
-            return Target.ToString().Length > 0
+            return Filter.ToString().Length > 0
                 ? string.Format("Having {0} ", Filter)
                 : string.Empty;
         }

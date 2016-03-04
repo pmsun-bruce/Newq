@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// 
@@ -13,42 +14,80 @@
         /// </summary>
         /// <param name="name"></param>
         /// <param name="parameter"></param>
-        /// <param name="otherParameters"></param>
-        public Function(FunctionType name, object parameter, params object[] otherParameters)
+        public Function(string name, object parameter)
         {
             if (parameter == null)
             {
                 throw new ArgumentNullException(nameof(parameter));
             }
 
-            Name = name;
+            Name = name.ToUpper();
             Parameters = new List<object> { parameter };
-
-            if (otherParameters.Length > 0)
+        }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Function"/> class.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="parameters"></param>
+        public Function(string name, object[] parameters)
+        {
+            if (parameters == null)
             {
-                foreach (var item in otherParameters)
-                {
-                    Parameters.Add(item);
-                }
+                throw new ArgumentNullException(nameof(parameters));
             }
+
+            Name = name.ToUpper();
+            Parameters = parameters.ToList();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Function"/> class.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="parameters"></param>
+        public Function(string name, List<object> parameters)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            Name = name.ToUpper();
+            Parameters = parameters;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public FunctionType Name { get; private set; }
+        public string Name { get; }
 
         /// <summary>
         /// 
         /// </summary>
-        public List<object> Parameters { get; private set; }
+        public List<object> Parameters { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         public string Alias
         {
-            get { return string.Format("[{0}]", Name); }
+            get
+            {
+                var alias = string.Empty;
+
+                if (Parameters.Count > 0 && Parameters[0] is Column)
+                {
+                    var column = Parameters[0] as Column;
+
+                    alias = string.Format("[{0}.{1}.{2}]", Name, column.Table.Name, column.Name);
+                }
+                else
+                {
+                    alias = string.Format("[{0}]", Name);
+                }
+
+                return alias;
+            }
         }
 
         /// <summary>
@@ -57,7 +96,24 @@
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("{0}({1})");
+            return string.Format("{0}({1})", Name, GetParameters());
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private string GetParameters()
+        {
+            var param = string.Empty;
+
+            if (Parameters != null && Parameters.Count > 0)
+            {
+                Parameters.ForEach(p => param += string.Format("{0}, ", p));
+                param.Remove(param.Length - 2);
+            }
+
+            return param;
         }
     }
 }

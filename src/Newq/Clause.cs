@@ -12,9 +12,9 @@
         protected Clause(Statement statement)
         {
             Statement = statement;
-            DbContext = statement.DbContext;
-            Target = new Target(DbContext);
-            Filter = new Filter(DbContext);
+            Context = statement.Context;
+            Target = new Target(Context);
+            Filter = new Filter(Context);
         }
 
         /// <summary>

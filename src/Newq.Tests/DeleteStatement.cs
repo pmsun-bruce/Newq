@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newq.Tests.Entitites;
+using Newq.Tests.Models;
 
 namespace Newq.Tests
 {
@@ -15,7 +15,7 @@ namespace Newq.Tests
             queryBuilder
                 .Delete<Customer>()
                 .Where(con => {
-                    var cust = con.DbContext["Customer"];
+                    var cust = con.Context["Customer"];
 
                     con.Add(cust["City"].Between("New York", "Landon"));
                     con.Add(cust["Name"].Like("Google").Or(cust["Name"].Like("Apple", PatternType.BeginWith)));

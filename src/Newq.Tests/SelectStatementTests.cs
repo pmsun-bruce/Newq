@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newq.Tests.Entitites;
+using Newq.Tests.Models;
 
 namespace Newq.Tests
 {
@@ -14,27 +14,27 @@ namespace Newq.Tests
 
             queryBuilder
                 .Select<Customer>(target => {
-                    target.Add(target.DbContext["Provider", "Products"]);
+                    target.Add(target.Context["Provider", "Products"]);
                 })
 
                 .Join<Provider>(JoinType.LeftJoin, filter => {
-                    filter.Add(filter.DbContext["Customer", "Name"].EqualTo(filter.DbContext["Provider", "Name"]));
+                    filter.Add(filter.Context["Customer", "Name"].EqualTo(filter.Context["Provider", "Name"]));
                 })
 
                 .Where(filter => {
-                    filter.Add(filter.DbContext["Customer", "City"].Like("New"));
+                    filter.Add(filter.Context["Customer", "City"].Like("New"));
                 })
 
                 .GroupBy(target => {
-                    target.Add(target.DbContext["Provider", "Products"]);
+                    target.Add(target.Context["Provider", "Products"]);
                 })
 
                 .Having(filter => {
-                    filter.Add(filter.DbContext["Provider", "Name"].NotLike("New"));
+                    filter.Add(filter.Context["Provider", "Name"].NotLike("New"));
                 })
 
                 .OrderBy(target => {
-                    target.Add(target.DbContext["Customer", "Name"], SortOrder.Desc);
+                    target.Add(target.Context["Customer", "Name"], SortOrder.Desc);
                 });
 
             queryBuilder.Paginate(new Paginator());
@@ -64,6 +64,12 @@ namespace Newq.Tests
                 WHERE 
                     [PAGINATOR].[ROW_NUMBER] BETWEEN 1 AND 10 
             */
+        }
+
+        [TestMethod]
+        public void Select2()
+        {
+            var t = new Table(typeof(Customer));
         }
     }
 }

@@ -13,7 +13,7 @@
         /// Initializes a new instance of the <see cref="UpdateStatement"/> class.
         /// </summary>
         /// <param name="table"></param>
-        public UpdateStatement(DbTable table) : base(table)
+        public UpdateStatement(Table table) : base(table)
         {
 
         }
@@ -24,7 +24,7 @@
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("UPDATE {0} SET {1} ", DbContext[0], GetTarget());
+            return string.Format("UPDATE {0} SET {1} ", Context[0], GetTarget());
         }
 
         /// <summary>
@@ -43,7 +43,7 @@
                 {
                     if (cls is JoinClause && isFirstJoinClause)
                     {
-                        sql += string.Format("FROM {0} ", DbContext[0]);
+                        sql += string.Format("FROM {0} ", Context[0]);
                         isFirstJoinClause = false;
                     }
 
@@ -65,20 +65,20 @@
 
             if (items.Length == 0)
             {
-                foreach (var col in DbContext[0].Columns)
+                foreach (var col in Context[0].Columns)
                 {
                     target += string.Format("{0} = {1}, ", col, col.Value.ToSqlValue());
                 }
             }
             else
             {
-                DbColumn col = null;
+                Column col = null;
 
                 foreach (var item in items)
                 {
-                    if (item is DbColumn)
+                    if (item is Column)
                     {
-                        col = item as DbColumn;
+                        col = item as Column;
                         target += string.Format("{0} = {1}, ", col, col.Value.ToSqlValue());
                     }
                 }

@@ -10,17 +10,17 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="Filter"/> class.
         /// </summary>
-        /// <param name="dbContext"></param>
-        public Filter(DbContext dbContext)
+        /// <param name="context"></param>
+        public Filter(Context context)
         {
-            DbContext = dbContext;
+            Context = context;
             Conditions = new List<Condition>();
         }
 
         /// <summary>
         /// Gets or sets database context.
         /// </summary>
-        public DbContext DbContext { get; private set; }
+        public Context Context { get; private set; }
 
         /// <summary>
         /// Filter conditions.

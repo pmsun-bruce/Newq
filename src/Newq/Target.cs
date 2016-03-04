@@ -16,17 +16,17 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="Target"/> class.
         /// </summary>
-        /// <param name="dbContext"></param>
-        public Target(DbContext dbContext)
+        /// <param name="context"></param>
+        public Target(Context context)
         {
-            DbContext = dbContext;
+            Context = context;
             items = new Dictionary<object, SortOrder>();
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public DbContext DbContext { get; }
+        public Context Context { get; }
 
         /// <summary>
         /// 
