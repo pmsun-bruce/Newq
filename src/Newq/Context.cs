@@ -88,6 +88,28 @@
         /// 
         /// </summary>
         /// <param name="tableName"></param>
+        /// <param name="columnName"></param>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        public KeyValuePair<Column, SortOrder> this[string tableName, string columnName, SortOrder order]
+        {
+            get
+            {
+                if (!Contains(tableName))
+                {
+                    var column = new Column(tableName, columnName);
+
+                    return new KeyValuePair<Column, SortOrder>(column, order);
+                }
+
+                return tables[tableName][columnName, order];
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tableName"></param>
         /// <returns></returns>
         public bool Contains(string tableName)
         {

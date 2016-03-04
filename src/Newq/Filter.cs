@@ -20,7 +20,7 @@
         /// <summary>
         /// Gets or sets database context.
         /// </summary>
-        public Context Context { get; private set; }
+        public Context Context { get; protected set; }
 
         /// <summary>
         /// Filter conditions.

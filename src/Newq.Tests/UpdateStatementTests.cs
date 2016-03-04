@@ -8,7 +8,7 @@ namespace Newq.Tests
     public class UpdateStatementTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void Update1()
         {
             var customer = new Customer();
             customer.City = "New York";
@@ -37,7 +37,7 @@ namespace Newq.Tests
         }
 
         [TestMethod]
-        public void TestMethod2()
+        public void Update2()
         {
             var customer = new Customer();
             customer.City = "New York";

@@ -8,7 +8,7 @@ namespace Newq.Tests
     public class InsertStatement
     {
         [TestMethod]
-        public void TestMethod1()
+        public void Insert1()
         {
             var customer = new Customer();
             customer.City = "New York";

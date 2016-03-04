@@ -8,7 +8,7 @@ namespace Newq.Tests
     public class DeleteStatement
     {
         [TestMethod]
-        public void TestMethod1()
+        public void Delete1()
         {
             var queryBuilder = new QueryBuilder();
 

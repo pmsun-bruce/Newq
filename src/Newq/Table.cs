@@ -99,6 +99,26 @@ namespace Newq
         }
 
         /// <summary>
+        /// Gets an certain entity of column by its name with an indexer
+        /// </summary>
+        /// <param name="columnName">name of the column</param>
+        /// <returns>an entity of column</returns>
+        public KeyValuePair<Column, SortOrder> this[string columnName, SortOrder order]
+        {
+            get
+            {
+                if (!columns.ContainsKey(columnName))
+                {
+                    var column = new Column(this, columnName);
+
+                    return new KeyValuePair<Column, SortOrder>(column, order);
+                }
+
+                return new KeyValuePair<Column, SortOrder>(columns[columnName], order);
+            }
+        }
+
+        /// <summary>
         /// Insert all columns and set primary key if needed
         /// </summary>
         /// <param name="type">Type of the corresponding class</param>

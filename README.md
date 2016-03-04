@@ -6,30 +6,57 @@ var queryBuilder = new QueryBuilder();
 
 queryBuilder
     .Select<Customer>(target => {
-        target.Add(target.DbContext["Provider", "Products"]);
+        target += target.Context["Provider", "Products"];
     })
 
     .Join<Provider>(JoinType.LeftJoin, filter => {
-        filter.Add(filter.DbContext["Customer", "Name"].EqualTo(filter.DbContext["Provider", "Name"]));
+        filter += filter.Context["Customer", "Name"] == filter.Context["Provider", "Name"];
     })
 
     .Where(filter => {
-        filter.Add(filter.DbContext["Customer", "City"].Like("New"));
+        filter += filter.Context["Customer", "City"].Like("New");
     })
 
     .GroupBy(target => {
-        target.Add(target.DbContext["Provider", "Products"]);
+        target += target.Context["Provider", "Products"];
     })
 
     .Having(filter => {
-        filter.Add(filter.DbContext["Provider", "Name"].NotLike("New"));
+        filter += filter.Context["Provider", "Name"].NotLike("New");
     })
 
     .OrderBy(target => {
-        target.Add(target.DbContext["Customer", "Name"], SortOrder.Desc);
+        target += target.Context["Customer", "Name", SortOrder.Desc];
+        target += new KeyValuePair<Column, SortOrder>(target.Context["Customer", "Id"], SortOrder.Desc);
     });
 
+queryBuilder.Paginate(new Paginator());
+
 var query = queryBuilder.ToString();
+
+/*  Result:
+    SELECT
+        [Provider.Products]
+    FROM (
+        SELECT
+            [Provider].[Products] AS [Provider.Products]
+            , ROW_NUMBER() OVER(ORDER BY [Customer].[Name] DESC, [Customer].[Id] DESC) AS [ROW_NUMBER]
+        FROM
+            [Customer]
+        LEFT JOIN
+            [Provider]
+        ON
+            [Customer].[Name] = [Provider].[Name]
+        WHERE
+            [Customer].[City] LIKE '%New%'
+        GROUP BY
+            [Provider].[Products]
+        Having
+            [Provider].[Name] NOT LIKE '%New%'
+    ) AS [$PAGINATOR]
+    WHERE
+        [$PAGINATOR].[ROW_NUMBER] BETWEEN 0 AND 10
+*/
 ```
 
 # License

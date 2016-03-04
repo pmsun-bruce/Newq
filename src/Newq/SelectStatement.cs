@@ -74,7 +74,7 @@
                 }
 
                 sql = string.Format(
-                    "SELECT {0}{1} FROM ({2}) AS [PAGINATOR] WHERE [PAGINATOR].[ROW_NUMBER] BETWEEN {3} AND {4} ",
+                    "SELECT {0}{1} FROM ({2}) AS [$PAGINATOR] WHERE [$PAGINATOR].[ROW_NUMBER] BETWEEN {3} AND {4} ",
                     GetParameters(), GetTargetAlias(), subQuery.Trim(), Paginator.BeginRowNumber, Paginator.EndRowNumber);
             }
 

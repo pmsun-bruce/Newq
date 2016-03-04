@@ -26,7 +26,7 @@
         /// <summary>
         /// 
         /// </summary>
-        public Context Context { get; }
+        public Context Context { get; protected set; }
 
         /// <summary>
         /// 
@@ -113,7 +113,7 @@
         /// <param name="target"></param>
         /// <param name="item"></param>
         /// <returns></returns>
-        public static Target operator +(Target target, KeyValuePair<object, SortOrder> item)
+        public static Target operator +(Target target, KeyValuePair<Column, SortOrder> item)
         {
             target.Add(item.Key, item.Value);
 
