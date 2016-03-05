@@ -33,22 +33,22 @@ namespace Newq
         }
 
         /// <summary>
-        /// Gets or sets table.
+        /// Gets or sets <see cref="Table"/>.
         /// </summary>
-        public Table Table { get; private set; }
+        public Table Table { get; protected set; }
 
         /// <summary>
-        /// Gets or sets name.
+        /// Gets or sets <see cref="Name"/>.
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; protected set; }
 
         /// <summary>
-        /// Gets or sets value.
+        /// Gets or sets <see cref="Value"/>.
         /// </summary>
-        public object Value { get; private set; }
+        public object Value { get; protected set; }
 
         /// <summary>
-        /// Gets the alias.
+        /// Gets <see cref="Alias"/>.
         /// </summary>
         public string Alias
         {
@@ -95,6 +95,42 @@ namespace Newq
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        public Function Max()
+        {
+            return new Function("MAX", this);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public Function Min()
+        {
+            return new Function("MIN", this);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public Function Avg()
+        {
+            return new Function("Avg", this);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public Function Sum()
+        {
+            return new Function("SUM", this);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="comparisonOperator"></param>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -132,7 +168,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// 
+        /// Returns a <see cref="Condition"/> that greater than a specified value.
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -142,7 +178,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// 
+        /// Returns a <see cref="Condition"/> that greater than or equal to a specified value.
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -152,7 +188,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// 
+        /// Returns a <see cref="Condition"/> that less than a specified value.
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -162,7 +198,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// 
+        /// Returns a <see cref="Condition"/> that less than or equal to a specified value.
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -172,7 +208,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// 
+        /// Returns a <see cref="Condition"/> that equal to a specified value.
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -182,7 +218,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// 
+        /// Returns a <see cref="Condition"/> that not equal to a specified value.
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -192,7 +228,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// 
+        /// Returns a <see cref="Condition"/> that search for a specified pattern.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="type"></param>
@@ -204,7 +240,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// 
+        /// Returns a <see cref="Condition"/> that search for not match a specified pattern.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="type"></param>
@@ -216,7 +252,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// 
+        /// Returns a <see cref="Condition"/> that specify multiple values.
         /// </summary>
         /// <param name="values"></param>
         /// <returns></returns>
@@ -226,7 +262,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// 
+        /// Returns a <see cref="Condition"/> that specify multiple values.
         /// </summary>
         /// <param name="values"></param>
         /// <returns></returns>
@@ -236,7 +272,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// 
+        /// Returns a <see cref="Condition"/> that specify multiple values.
         /// </summary>
         /// <param name="subQuery"></param>
         /// <returns></returns>
@@ -246,7 +282,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// 
+        /// Returns a <see cref="Condition"/> that specify multiple exceptive values.
         /// </summary>
         /// <param name="values"></param>
         /// <returns></returns>
@@ -256,7 +292,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// 
+        /// Returns a <see cref="Condition"/> that specify multiple exceptive values.
         /// </summary>
         /// <param name="values"></param>
         /// <returns></returns>
@@ -266,7 +302,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// 
+        /// Returns a <see cref="Condition"/> that specify multiple exceptive values.
         /// </summary>
         /// <param name="subQuery"></param>
         /// <returns></returns>
@@ -276,7 +312,8 @@ namespace Newq
         }
 
         /// <summary>
-        /// 
+        /// Returns a <see cref="Condition"/> that selects values within a range.
+        /// The values can be numbers, text, or dates.
         /// </summary>
         /// <param name="value1"></param>
         /// <param name="value2"></param>
@@ -287,7 +324,8 @@ namespace Newq
         }
 
         /// <summary>
-        /// 
+        /// Returns a <see cref="Condition"/> that selects values not within a range.
+        /// The values can be numbers, text, or dates.
         /// </summary>
         /// <param name="value1"></param>
         /// <param name="value2"></param>
@@ -298,7 +336,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// <see cref="EqualTo(object)"/>
+        /// <see cref="EqualTo(object)"/>.
         /// </summary>
         /// <param name="column"></param>
         /// <param name="value"></param>
@@ -309,7 +347,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// <see cref="NotEqualTo(object)"/>
+        /// <see cref="NotEqualTo(object)"/>.
         /// </summary>
         /// <param name="column"></param>
         /// <param name="value"></param>
@@ -320,7 +358,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// <see cref="GreaterThan(object)"/>
+        /// <see cref="GreaterThan(object)"/>.
         /// </summary>
         /// <param name="column"></param>
         /// <param name="value"></param>
@@ -331,7 +369,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// <see cref="LessThan(object)"/>
+        /// <see cref="LessThan(object)"/>.
         /// </summary>
         /// <param name="column"></param>
         /// <param name="value"></param>
@@ -342,7 +380,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// <see cref="GreaterThanOrEqualTo(object)"/>
+        /// <see cref="GreaterThanOrEqualTo(object)"/>.
         /// </summary>
         /// <param name="column"></param>
         /// <param name="value"></param>
@@ -353,7 +391,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// <see cref="LessThanOrEqualTo(object)"/>
+        /// <see cref="LessThanOrEqualTo(object)"/>.
         /// </summary>
         /// <param name="column"></param>
         /// <param name="value"></param>

@@ -6,32 +6,32 @@ namespace Newq
     public enum ComparisonOperator
     {
         /// <summary>
-        /// Greater than a specified value.
+        /// A comparison operator for greater than a specified value.
         /// </summary>
         GreaterThan,
 
         /// <summary>
-        /// Greater than or equal to a specified value.
+        /// A comparison operator for greater than or equal to a specified value.
         /// </summary>
         GreaterThanOrEqualTo,
 
         /// <summary>
-        /// Less than a specified value.
+        /// A comparison operator for less than a specified value.
         /// </summary>
         LessThan,
 
         /// <summary>
-        /// Less than or equal to a specified value.
+        /// A comparison operator for less than or equal to a specified value.
         /// </summary>
         LessThanOrEqualTo,
 
         /// <summary>
-        /// Equal to a specified value.
+        /// A comparison operator for equal to a specified value.
         /// </summary>
         EqualTo,
 
         /// <summary>
-        /// Not equal to a specified value.
+        /// A comparison operator for not equal to a specified value.
         /// </summary>
         NotEqualTo,
 
@@ -55,7 +55,7 @@ namespace Newq
 
         /// <summary>
         /// The NOT IN operator allows you to
-        /// specify multiple values in a WHERE clause.
+        /// specify multiple exceptive values in a WHERE clause.
         /// </summary>
         NotIn,
 

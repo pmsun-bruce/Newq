@@ -10,12 +10,12 @@ namespace Newq
     public class Table
     {
         /// <summary>
-        /// An dictionary used to get columns in the table
+        /// An dictionary used to get columns in the table.
         /// </summary>
         private Dictionary<string, Column> columns;
 
         /// <summary>
-        /// 
+        /// Default primary key.
         /// </summary>
         public static string DefaultPrimaryKey = "Id";
 
@@ -53,9 +53,9 @@ namespace Newq
         }
 
         /// <summary>
-        /// Name of this
+        /// Gets or sets <see cref="Name"/>.
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; protected set; }
 
         /// <summary>
         /// Define which column in this should be the primary key.
@@ -63,7 +63,7 @@ namespace Newq
         public List<Column> PrimaryKey { get; set; }
 
         /// <summary>
-        /// A read-only list contains the columns in this
+        /// A read-only list contains the columns in this.
         /// </summary>
         public IReadOnlyList<Column> Columns
         {
@@ -81,7 +81,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// Gets an certain entity of column by its name with an indexer
+        /// Gets <see cref="Column"/> by column name.
         /// </summary>
         /// <param name="columnName">name of the column</param>
         /// <returns>an entity of column</returns>
@@ -99,9 +99,10 @@ namespace Newq
         }
 
         /// <summary>
-        /// Gets an certain entity of column by its name with an indexer
+        /// Gets <see cref="KeyValuePair{TKey, TValue}"/> by column name and sort order.
         /// </summary>
         /// <param name="columnName">name of the column</param>
+        /// <param name="order"></param>
         /// <returns>an entity of column</returns>
         public KeyValuePair<Column, SortOrder> this[string columnName, SortOrder order]
         {

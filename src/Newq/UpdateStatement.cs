@@ -28,7 +28,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Returns a SQL-string that represents the current object.
         /// </summary>
         /// <returns></returns>
         public override string ToSql()
@@ -55,7 +55,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Returns a string that represents the current statement target.
         /// </summary>
         /// <returns></returns>
         protected override string GetTarget()

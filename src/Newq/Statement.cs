@@ -64,7 +64,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// Gets the target of statement.
+        /// Returns a string that represents the current statement target.
         /// </summary>
         /// <returns></returns>
         protected virtual string GetTarget()

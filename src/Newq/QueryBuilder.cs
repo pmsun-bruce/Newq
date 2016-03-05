@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// Used to build SQL statement
+    /// Used to build SQL statement.
     /// </summary>
     public class QueryBuilder
     {
@@ -16,9 +16,9 @@
         }
 
         /// <summary>
-        /// Record different statement
+        /// Gets or sets <see cref="Statement"/>.
         /// </summary>
-        public Statement Statement { get; private set; }
+        public Statement Statement { get; protected set; }
 
         /// <summary>
         /// Returns a SQL-string that represents the current object.

@@ -47,7 +47,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Returns a string that represents the current object.
         /// </summary>
         /// <returns></returns>
         public override string ToString()
@@ -68,7 +68,7 @@
         }
 
         /// <summary>
-        /// Adds an condition to the end of the target.
+        /// Adds a object to the end of the target.
         /// </summary>
         /// <param name="item"></param>
         /// <param name="order"></param>
@@ -87,7 +87,7 @@
         }
 
         /// <summary>
-        /// Removes all conditions from the target.
+        /// Removes all objects from the target.
         /// </summary>
         public void Clear()
         {
@@ -95,7 +95,7 @@
         }
 
         /// <summary>
-        /// 
+        /// <see cref="Add(object, SortOrder)"/>
         /// </summary>
         /// <param name="target"></param>
         /// <param name="item"></param>
@@ -108,7 +108,7 @@
         }
 
         /// <summary>
-        /// 
+        /// <see cref="Add(object, SortOrder)"/>
         /// </summary>
         /// <param name="target"></param>
         /// <param name="item"></param>
@@ -121,7 +121,7 @@
         }
 
         /// <summary>
-        /// 
+        /// <see cref="Remove(object)"/>
         /// </summary>
         /// <param name="target"></param>
         /// <param name="item"></param>

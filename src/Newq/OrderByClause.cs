@@ -27,7 +27,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Returns a string that represents the current clause target.
         /// </summary>
         /// <returns></returns>
         protected override string GetTarget()

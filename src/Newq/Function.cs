@@ -24,6 +24,7 @@
             Name = name.ToUpper();
             Parameters = new List<object> { parameter };
         }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Function"/> class.
         /// </summary>
@@ -57,7 +58,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Gets <see cref="Name"/>.
         /// </summary>
         public string Name { get; }
 

@@ -20,12 +20,12 @@
         }
 
         /// <summary>
-        /// 
+        /// Gets <see cref="JoinTable"/>.
         /// </summary>
         public Table JoinTable { get; }
 
         /// <summary>
-        /// 
+        /// Gets <see cref="JoinType"/>.
         /// </summary>
         public JoinType JoinType { get; }
 

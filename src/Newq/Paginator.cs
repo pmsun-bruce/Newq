@@ -16,12 +16,12 @@
         }
 
         /// <summary>
-        /// 
+        /// Gets or sets <see cref="TotalRows"/>.
         /// </summary>
         public int TotalRows { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets <see cref="TotalPages"/>.
         /// </summary>
         public int TotalPages
         {
@@ -35,17 +35,17 @@
         }
 
         /// <summary>
-        /// 
+        /// Gets or sets <see cref="PageSize"/>.
         /// </summary>
         public int PageSize { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets <see cref="CurrentPage"/>.
         /// </summary>
         public int CurrentPage { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets <see cref="BeginRowNumber"/>.
         /// </summary>
         public int BeginRowNumber
         {
@@ -53,7 +53,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Gets <see cref="EndRowNumber"/>.
         /// </summary>
         public int EndRowNumber
         {

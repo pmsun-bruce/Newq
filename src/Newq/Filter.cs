@@ -18,17 +18,17 @@
         }
 
         /// <summary>
-        /// Gets or sets database context.
+        /// Gets or sets <see cref="Context"/>
         /// </summary>
         public Context Context { get; protected set; }
 
         /// <summary>
-        /// Filter conditions.
+        /// Gets or sets <see cref="Conditions"/>
         /// </summary>
-        public List<Condition> Conditions { get; private set; }
+        public List<Condition> Conditions { get; protected set; }
 
         /// <summary>
-        /// 
+        /// Returns a string that represents the current object.
         /// </summary>
         /// <returns></returns>
         public override string ToString()
@@ -45,7 +45,7 @@
         }
 
         /// <summary>
-        /// Adds an condition to the end of the filter.
+        /// Adds a <see cref="Condition"/> to the end of the filter.
         /// </summary>
         /// <param name="condition"></param>
         public void Add(Condition condition)
@@ -54,7 +54,7 @@
         }
 
         /// <summary>
-        /// Removes the first occurrence of a specific object from the filter.
+        /// Removes the first occurrence of a specific <see cref="Condition"/> from the filter.
         /// </summary>
         /// <param name="condition"></param>
         public void Remove(Condition condition)
@@ -71,7 +71,7 @@
         }
 
         /// <summary>
-        /// <see cref="Add(Condition)"/>
+        /// <see cref="Add(Condition)"/>.
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="condition"></param>
@@ -84,7 +84,7 @@
         }
 
         /// <summary>
-        /// <see cref="Remove(Condition)"/>
+        /// <see cref="Remove(Condition)"/>.
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="condition"></param>

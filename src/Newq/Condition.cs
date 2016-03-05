@@ -42,19 +42,19 @@ namespace Newq
             Target = target;
             LogicalOperator = logicalOperator;
         }
-        
+
         /// <summary>
-        /// 
+        /// Gets or sets <see cref="Source"/>.
         /// </summary>
         public object Source { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets <see cref="Target"/>.
         /// </summary>
         public object Target { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets <see cref="LogicalOperator"/>.
         /// </summary>
         public LogicalOperator LogicalOperator { get; set; }
         
@@ -93,9 +93,9 @@ namespace Newq
             
             return condition;
         }
-        
+
         /// <summary>
-        /// 
+        /// Returns a <see cref="Condition"/> that 'and' with a comparison.
         /// </summary>
         /// <param name="comparison"></param>
         /// <returns></returns>
@@ -103,9 +103,9 @@ namespace Newq
         {
             return And(new Condition(comparison, comparison));
         }
-        
+
         /// <summary>
-        /// 
+        /// Returns a <see cref="Condition"/> that 'and' with another condition.
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
@@ -113,9 +113,9 @@ namespace Newq
         {
             return new Condition(this, condition);
         }
-        
+
         /// <summary>
-        /// 
+        /// Returns a <see cref="Condition"/> that 'or' with a comparison.
         /// </summary>
         /// <param name="comparison"></param>
         /// <returns></returns>
@@ -123,9 +123,9 @@ namespace Newq
         {
             return Or(new Condition(comparison, comparison));
         }
-        
+
         /// <summary>
-        /// 
+        /// Returns a <see cref="Condition"/> that 'or' with another condition.
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>

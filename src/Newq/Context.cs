@@ -30,7 +30,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Gets <see cref="Tables"/>.
         /// </summary>
         public IReadOnlyList<Table> Tables
         {
@@ -38,7 +38,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Gets <see cref="Table"/> by index.
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
@@ -48,7 +48,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Gets <see cref="Table"/> by table name.
         /// </summary>
         /// <param name="tableName"></param>
         /// <returns></returns>
@@ -66,7 +66,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Gets <see cref="Column"/> by table name and column name.
         /// </summary>
         /// <param name="tableName"></param>
         /// <param name="columnName"></param>
@@ -85,7 +85,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Gets <see cref="KeyValuePair{TKey, TValue}"/> by table name, column name and sort order.
         /// </summary>
         /// <param name="tableName"></param>
         /// <param name="columnName"></param>
@@ -107,7 +107,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Determines whether a <see cref="Table"/> is in the context.
         /// </summary>
         /// <param name="tableName"></param>
         /// <returns></returns>
@@ -117,7 +117,7 @@
         }
 
         /// <summary>
-        /// Add a table to current database context.
+        /// Adds a <see cref="Table"/> to the end of the context.
         /// </summary>
         /// <param name="table"></param>
         public void Add(Table table)

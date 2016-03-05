@@ -26,17 +26,17 @@
         }
 
         /// <summary>
-        /// 
+        /// Gets or sets <see cref="Value"/>.
         /// </summary>
         public object Value { get; set; }
-        
+
         /// <summary>
-        /// 
+        /// Gets or sets <see cref="Type"/>.
         /// </summary>
         public PatternType Type { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets <see cref="Escape"/>.
         /// </summary>
         public char Escape { get; set; }
 

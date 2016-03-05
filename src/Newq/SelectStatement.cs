@@ -82,7 +82,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Returns a string that represents the current statement target.
         /// </summary>
         /// <returns></returns>
         protected override string GetTarget()
