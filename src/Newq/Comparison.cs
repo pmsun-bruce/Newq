@@ -89,13 +89,6 @@ namespace Newq
         /// <returns></returns>
         private string GetFirstValue()
         {
-            var value = Values[0].ToSqlValue();
-
-            if (value.Length < 2)
-            {
-                throw new Exception("value is null");
-            }
-
             return Values[0].ToSqlValue();
         }
 

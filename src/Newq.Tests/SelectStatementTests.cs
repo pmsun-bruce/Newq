@@ -72,6 +72,7 @@ namespace Newq.Tests
         {
             var t = new Table(typeof(Customer));
         }
+
         [TestMethod]
         public void Select3()
         {
