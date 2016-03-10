@@ -1,5 +1,7 @@
 ﻿namespace Newq
 {
+    using System;
+
     /// <summary>
     /// The JOIN clause is used to
     /// combine rows from two or more tables,
@@ -15,9 +17,15 @@
         /// <param name="type"></param>
         public JoinClause(Statement statement, Table table, JoinType type = JoinType.InnerJoin) : base(statement)
         {
+            Filter = new Filter(statement.Context);
             JoinTable = table;
             JoinType = type;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICustomizable<Action<Filter>> Filter { get; }
 
         /// <summary>
         /// Gets <see cref="JoinTable"/>.

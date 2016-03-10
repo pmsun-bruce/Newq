@@ -1,5 +1,7 @@
 ﻿namespace Newq
 {
+    using System;
+
     /// <summary>
     /// The ORDER BY clause is used to
     /// sort the result-set by one or more columns.
@@ -12,8 +14,13 @@
         /// <param name="statement"></param>
         public OrderByClause(Statement statement) : base(statement)
         {
-
+            Target = new Target(statement.Context);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICustomizable<Action<Target>> Target { get; }
 
         /// <summary>
         /// Returns a SQL-string that represents the current object.
@@ -30,17 +37,17 @@
         /// Returns a string that represents the current clause target.
         /// </summary>
         /// <returns></returns>
-        protected override string GetTarget()
+        protected string GetTarget()
         {
             var target = string.Empty;
-            var items = Target.GetTargetColumns();
+            var items = ((Target)Target).GetOrderByColumns();
 
             foreach (var item in items)
             {
-                target += string.Format("{0} {1}, ", item.Key, GetOrder(item.Value));
+                target += string.Format("{0} {1}, ", item.Column, GetOrder(item.Order));
             }
 
-            return target.Remove(target.Length - 2);
+            return target.Length > 0 ? target.Remove(target.Length - 2) : string.Empty;
         }
 
         /// <summary>

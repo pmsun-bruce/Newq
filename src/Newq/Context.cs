@@ -91,7 +91,7 @@
         /// <param name="columnName"></param>
         /// <param name="order"></param>
         /// <returns></returns>
-        public KeyValuePair<Column, SortOrder> this[string tableName, string columnName, SortOrder order]
+        public OrderByColumn this[string tableName, string columnName, SortOrder order]
         {
             get
             {
@@ -99,7 +99,7 @@
                 {
                     var column = new Column(tableName, columnName);
 
-                    return new KeyValuePair<Column, SortOrder>(column, order);
+                    return new OrderByColumn(column, order);
                 }
 
                 return tables[tableName][columnName, order];

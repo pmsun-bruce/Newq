@@ -1,12 +1,18 @@
 ﻿namespace Newq
 {
+    using System;
     using System.Collections.Generic;
 
     /// <summary>
     /// 
     /// </summary>
-    public class Filter
+    public class Filter : ICustomizable<Action<Filter>>
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        protected Action<Filter> handler;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Filter"/> class.
         /// </summary>
@@ -14,7 +20,7 @@
         public Filter(Context context)
         {
             Context = context;
-            Conditions = new List<Condition>();
+            Items = new List<Condition>();
         }
 
         /// <summary>
@@ -23,9 +29,26 @@
         public Context Context { get; protected set; }
 
         /// <summary>
-        /// Gets or sets <see cref="Conditions"/>
+        /// Gets or sets <see cref="Items"/>
         /// </summary>
-        public List<Condition> Conditions { get; protected set; }
+        public List<Condition> Items { get; protected set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="handler"></param>
+        public void SetHandler(Action<Filter> handler)
+        {
+            this.handler = handler;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Run()
+        {
+            handler(this);
+        }
 
         /// <summary>
         /// Returns a string that represents the current object.
@@ -35,9 +58,9 @@
         {
             var conditions = string.Empty;
 
-            if (Conditions.Count > 0)
+            if (Items.Count > 0)
             {
-                Conditions.ForEach(con => conditions += string.Format("{0} AND ", con));
+                Items.ForEach(con => conditions += string.Format("{0} AND ", con));
                 conditions = conditions.Remove(conditions.Length - 5);
             }
 
@@ -50,7 +73,7 @@
         /// <param name="condition"></param>
         public void Add(Condition condition)
         {
-            Conditions.Add(condition);
+            Items.Add(condition);
         }
 
         /// <summary>
@@ -59,7 +82,7 @@
         /// <param name="condition"></param>
         public void Remove(Condition condition)
         {
-            Conditions.Remove(condition);
+            Items.Remove(condition);
         }
 
         /// <summary>
@@ -67,7 +90,7 @@
         /// </summary>
         public void Clear()
         {
-            Conditions.Clear();
+            Items.Clear();
         }
 
         /// <summary>

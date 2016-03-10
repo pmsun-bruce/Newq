@@ -86,11 +86,11 @@
         /// FROM table_name
         /// </summary>
         /// <typeparam name="T">Any class</typeparam>
-        /// <param name="setTarget">Determine which column(s) to be selected from the table</param>
+        /// <param name="handler">Determine which column(s) to be selected from the table</param>
         /// <returns>SelectStatement to select all records within certain columns from the table without the keyword distinct</returns>
-        public SelectStatement Select<T>(Action<Target> setTarget)
+        public SelectStatement Select<T>(Action<Target> handler)
         {
-            return Select<T>(false, 0, false, setTarget);
+            return Select<T>(false, 0, false, handler);
         }
 
         /// <summary>
@@ -99,11 +99,11 @@
         /// </summary>
         /// <typeparam name="T">Any class</typeparam>
         /// <param name="topNumber"></param>
-        /// <param name="setTarget"></param>
+        /// <param name="handler"></param>
         /// <returns></returns>
-        public SelectStatement Select<T>(int topNumber, Action<Target> setTarget)
+        public SelectStatement Select<T>(int topNumber, Action<Target> handler)
         {
-            return Select<T>(false, topNumber, false, setTarget);
+            return Select<T>(false, topNumber, false, handler);
         }
 
         /// <summary>
@@ -113,11 +113,11 @@
         /// <typeparam name="T"></typeparam>
         /// <param name="topNumber"></param>
         /// <param name="isPercent"></param>
-        /// <param name="setTarget"></param>
+        /// <param name="handler"></param>
         /// <returns></returns>
-        public SelectStatement Select<T>(int topNumber, bool isPercent, Action<Target> setTarget)
+        public SelectStatement Select<T>(int topNumber, bool isPercent, Action<Target> handler)
         {
-            return Select<T>(false, topNumber, isPercent, setTarget);
+            return Select<T>(false, topNumber, isPercent, handler);
         }
 
         /// <summary>
@@ -128,9 +128,9 @@
         /// <param name="isDistinct"></param>
         /// <param name="topNumber"></param>
         /// <param name="isPercent"></param>
-        /// <param name="setTarget"></param>
+        /// <param name="handler"></param>
         /// <returns></returns>
-        public SelectStatement Select<T>(bool isDistinct, int topNumber, bool isPercent, Action<Target> setTarget)
+        public SelectStatement Select<T>(bool isDistinct, int topNumber, bool isPercent, Action<Target> handler)
         {
             var statement = new SelectStatement(new Table(typeof(T)));
 
@@ -138,7 +138,7 @@
             statement.IsDistinct = isDistinct;
             statement.TopNumber = topNumber;
             statement.IsPercent = isPercent;
-            setTarget(statement.Target);
+            statement.Target.SetHandler(handler);
 
             return statement;
         }
@@ -173,11 +173,11 @@
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="topNumber"></param>
-        /// <param name="setTarget"></param>
+        /// <param name="handler"></param>
         /// <returns></returns>
-        public SelectStatement SelectDistinct<T>(int topNumber, Action<Target> setTarget)
+        public SelectStatement SelectDistinct<T>(int topNumber, Action<Target> handler)
         {
-            return Select<T>(true, topNumber, false, setTarget);
+            return Select<T>(true, topNumber, false, handler);
         }
 
         /// <summary>
@@ -187,11 +187,11 @@
         /// <typeparam name="T"></typeparam>
         /// <param name="topNumber"></param>
         /// <param name="isPercent"></param>
-        /// <param name="setTarget"></param>
+        /// <param name="handler"></param>
         /// <returns></returns>
-        public SelectStatement SelectDistinct<T>(int topNumber, bool isPercent, Action<Target> setTarget)
+        public SelectStatement SelectDistinct<T>(int topNumber, bool isPercent, Action<Target> handler)
         {
-            return Select<T>(true, topNumber, isPercent, setTarget);
+            return Select<T>(true, topNumber, isPercent, handler);
         }
 
         /// <summary>
@@ -215,14 +215,14 @@
         /// SET column1 = value, column2 = value,...
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="setTarget"></param>
+        /// <param name="handler"></param>
         /// <returns></returns>
-        public UpdateStatement Update<T>(Action<Target> setTarget)
+        public UpdateStatement Update<T>(Action<Target> handler)
         {
             var statement = new UpdateStatement(new Table(typeof(T)));
 
             Statement = statement;
-            setTarget(statement.Target);
+            statement.Target.SetHandler(handler);
 
             return statement;
         }

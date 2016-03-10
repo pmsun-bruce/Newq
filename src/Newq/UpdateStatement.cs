@@ -15,8 +15,13 @@
         /// <param name="table"></param>
         public UpdateStatement(Table table) : base(table)
         {
-
+            Target = new Target(Context);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICustomizable<Action<Target>> Target { get; }
 
         /// <summary>
         /// Returns a SQL-string that represents the current object.
@@ -58,12 +63,12 @@
         /// Returns a string that represents the current statement target.
         /// </summary>
         /// <returns></returns>
-        protected override string GetTarget()
+        protected string GetTarget()
         {
             var target = string.Empty;
-            var items = Target.GetTargetObjects();
+            var items = ((Target)Target).Items;
 
-            if (items.Length == 0)
+            if (items.Count == 0)
             {
                 foreach (var col in Context[0].Columns)
                 {
@@ -95,11 +100,11 @@
         /// ON table_name1.column_name=table_name2.column_name
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="setFilter"></param>
+        /// <param name="handler"></param>
         /// <returns></returns>
-        public UpdateStatement Join<T>(Action<Filter> setFilter)
+        public UpdateStatement Join<T>(Action<Filter> handler)
         {
-            return Provider.Join<T>(this, JoinType.InnerJoin, setFilter) as UpdateStatement;
+            return Provider.Join<T>(this, JoinType.InnerJoin, handler) as UpdateStatement;
         }
 
         /// <summary>
@@ -111,11 +116,11 @@
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="type"></param>
-        /// <param name="setFilter"></param>
+        /// <param name="handler"></param>
         /// <returns></returns>
-        public UpdateStatement Join<T>(JoinType type, Action<Filter> setFilter)
+        public UpdateStatement Join<T>(JoinType type, Action<Filter> handler)
         {
-            return Provider.Join<T>(this, type, setFilter) as UpdateStatement;
+            return Provider.Join<T>(this, type, handler) as UpdateStatement;
         }
 
         /// <summary>
@@ -123,11 +128,11 @@
         /// SET column1 = value, column2 = value,...
         /// WHERE column_name operator value
         /// </summary>
-        /// <param name="setFilter"></param>
+        /// <param name="handler"></param>
         /// <returns></returns>
-        public WhereClause Where(Action<Filter> setFilter)
+        public WhereClause Where(Action<Filter> handler)
         {
-            return Provider.Filtrate(new WhereClause(this), setFilter) as WhereClause;
+            return Provider.Filtrate(new WhereClause(this), handler) as WhereClause;
         }
     }
 }

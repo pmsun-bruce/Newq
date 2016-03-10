@@ -99,12 +99,12 @@ namespace Newq
         }
 
         /// <summary>
-        /// Gets <see cref="KeyValuePair{TKey, TValue}"/> by column name and sort order.
+        /// Gets <see cref="OrderByColumn"/> by column name and sort order.
         /// </summary>
         /// <param name="columnName">name of the column</param>
         /// <param name="order"></param>
         /// <returns>an entity of column</returns>
-        public KeyValuePair<Column, SortOrder> this[string columnName, SortOrder order]
+        public OrderByColumn this[string columnName, SortOrder order]
         {
             get
             {
@@ -112,10 +112,10 @@ namespace Newq
                 {
                     var column = new Column(this, columnName);
 
-                    return new KeyValuePair<Column, SortOrder>(column, order);
+                    return new OrderByColumn(column, order);
                 }
 
-                return new KeyValuePair<Column, SortOrder>(columns[columnName], order);
+                return new OrderByColumn(columns[columnName], order);
             }
         }
 

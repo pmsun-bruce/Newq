@@ -14,8 +14,13 @@
         /// <param name="statement"></param>
         public GroupByClause(Statement statement) : base(statement)
         {
-
+            Target = new Target(statement.Context);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICustomizable<Action<Target>> Target { get; }
 
         /// <summary>
         /// Returns a SQL-string that represents the current object.
@@ -35,11 +40,11 @@
         /// GROUP BY column_name
         /// HAVING aggregate_function(column_name) operator value
         /// </summary>
-        /// <param name="setFilter"></param>
+        /// <param name="handler"></param>
         /// <returns></returns>
-        public HavingClause Having(Action<Filter> setFilter)
+        public HavingClause Having(Action<Filter> handler)
         {
-            return Provider.Filtrate(new HavingClause(Statement), setFilter) as HavingClause;
+            return Provider.Filtrate(new HavingClause(Statement), handler) as HavingClause;
         }
 
         /// <summary>
@@ -49,11 +54,16 @@
         /// GROUP BY column_name
         /// ORDER BY column_name [ASC|DESC]
         /// </summary>
-        /// <param name="setTarget"></param>
+        /// <param name="handler"></param>
         /// <returns></returns>
-        public OrderByClause OrderBy(Action<Target> setTarget)
+        public OrderByClause OrderBy(Action<Target> handler)
         {
-            return Provider.SetTarget(new OrderByClause(this), setTarget) as OrderByClause;
+            var clause = new OrderByClause(Statement);
+
+            Statement.Clauses.Add(clause);
+            clause.Target.SetHandler(handler);
+
+            return clause;
         }
     }
 }

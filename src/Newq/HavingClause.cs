@@ -6,7 +6,7 @@
     /// The HAVING clause was added to SQL 
     /// because the WHERE clause could not be used with aggregate functions.
     /// </summary>
-    public class HavingClause : Clause
+    public class HavingClause : WhereClause
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="HavingClause"/> class.
@@ -36,11 +36,16 @@
         /// HAVING aggregate_function(column_name) operator value
         /// ORDER BY column_name [ASC|DESC]
         /// </summary>
-        /// <param name="setTarget"></param>
+        /// <param name="handler"></param>
         /// <returns></returns>
-        public OrderByClause OrderBy(Action<Target> setTarget)
+        public OrderByClause OrderBy(Action<Target> handler)
         {
-            return Provider.SetTarget(new OrderByClause(Statement), setTarget) as OrderByClause;
+            var clause = new OrderByClause(Statement);
+
+            Statement.Clauses.Add(clause);
+            clause.Target.SetHandler(handler);
+
+            return clause;
         }
     }
 }

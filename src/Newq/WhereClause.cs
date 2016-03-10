@@ -1,5 +1,7 @@
 ﻿namespace Newq
 {
+    using System;
+
     /// <summary>
     /// The WHERE clause is used to
     /// extract only those records that fulfill a specified criterion.
@@ -12,8 +14,13 @@
         /// <param name="statement"></param>
         public WhereClause(Statement statement) : base(statement)
         {
-
+            Filter = new Filter(statement.Context);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICustomizable<Action<Filter>> Filter { get; }
 
         /// <summary>
         /// Returns a SQL-string that represents the current object.

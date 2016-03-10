@@ -1,17 +1,18 @@
 ﻿namespace Newq
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// Target collection of statement or clause.
     /// </summary>
-    public class Target
+    public class Target : ICustomizable<Action<Target>>
     {
         /// <summary>
         /// 
         /// </summary>
-        private Dictionary<object, SortOrder> items;
+        protected Action<Target> handler;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Target"/> class.
@@ -20,7 +21,7 @@
         public Target(Context context)
         {
             Context = context;
-            items = new Dictionary<object, SortOrder>();
+            Items = new List<object>();
         }
 
         /// <summary>
@@ -31,19 +32,41 @@
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
-        public object[] GetTargetObjects()
+        public List<object> Items { get; protected set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="handler"></param>
+        public void SetHandler(Action<Target> handler)
         {
-            return items.Keys.ToArray();
+            this.handler = handler;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Run()
+        {
+            handler(this);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public IReadOnlyDictionary<object, SortOrder> GetTargetColumns()
+        public IReadOnlyList<OrderByColumn> GetOrderByColumns()
         {
-            return items;
+            var list = new List<OrderByColumn>();
+
+            Items.ForEach(item => {
+                if (item is OrderByColumn)
+                {
+                    list.Add(item as OrderByColumn);
+                }
+            });
+
+            return list;
         }
 
         /// <summary>
@@ -54,11 +77,11 @@
         {
             var target = string.Empty;
 
-            if (items.Count > 0)
+            if (Items.Count > 0)
             {
-                foreach (var item in items)
+                foreach (var item in Items)
                 {
-                    target += string.Format("{0}, ", item.Key);
+                    target += string.Format("{0}, ", item);
                 }
 
                 target = target.Remove(target.Length - 2);
@@ -71,10 +94,18 @@
         /// Adds a object to the end of the target.
         /// </summary>
         /// <param name="item"></param>
-        /// <param name="order"></param>
-        public void Add(object item, SortOrder order = SortOrder.Unspecified)
+        public void Add(object item)
         {
-            items.Add(item, order);
+            Items.Add(item);
+        }
+
+        /// <summary>
+        /// Adds a object to the end of the target.
+        /// </summary>
+        /// <param name="item"></param>
+        public void Add(OrderByColumn item)
+        {
+            Items.Add(item);
         }
 
         /// <summary>
@@ -83,7 +114,16 @@
         /// <param name="item"></param>
         public void Remove(object item)
         {
+            Items.Remove(item);
+        }
 
+        /// <summary>
+        /// Removes the first occurrence of a specific object from the target.
+        /// </summary>
+        /// <param name="item"></param>
+        public void Remove(OrderByColumn item)
+        {
+            Items.Remove(item);
         }
 
         /// <summary>
@@ -91,11 +131,11 @@
         /// </summary>
         public void Clear()
         {
-            items.Clear();
+            Items.Clear();
         }
 
         /// <summary>
-        /// <see cref="Add(object, SortOrder)"/>
+        /// <see cref="Add(object)"/>
         /// </summary>
         /// <param name="target"></param>
         /// <param name="item"></param>
@@ -108,14 +148,14 @@
         }
 
         /// <summary>
-        /// <see cref="Add(object, SortOrder)"/>
+        /// <see cref="Add(OrderByColumn)"/>
         /// </summary>
         /// <param name="target"></param>
         /// <param name="item"></param>
         /// <returns></returns>
-        public static Target operator +(Target target, KeyValuePair<Column, SortOrder> item)
+        public static Target operator +(Target target, OrderByColumn item)
         {
-            target.Add(item.Key, item.Value);
+            target.Add(item);
 
             return target;
         }
@@ -127,6 +167,19 @@
         /// <param name="item"></param>
         /// <returns></returns>
         public static Target operator -(Target target, object item)
+        {
+            target.Remove(item);
+
+            return target;
+        }
+
+        /// <summary>
+        /// <see cref="Remove(OrderByColumn)"/>
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public static Target operator -(Target target, OrderByColumn item)
         {
             target.Remove(item);
 

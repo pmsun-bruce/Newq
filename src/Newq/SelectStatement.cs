@@ -13,8 +13,13 @@
         /// <param name="table"></param>
         public SelectStatement(Table table) : base(table)
         {
-
+            Target = new Target(Context);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICustomizable<Action<Target>> Target { get; }
 
         /// <summary>
         /// The DISTINCT keyword can be used to
@@ -85,12 +90,12 @@
         /// Returns a string that represents the current statement target.
         /// </summary>
         /// <returns></returns>
-        protected override string GetTarget()
+        protected string GetTarget()
         {
             var target = string.Empty;
-            var items = Target.GetTargetObjects();
+            var items = ((Target)Target).Items;
 
-            if (items.Length == 0)
+            if (items.Count == 0)
             {
                 foreach (var tab in Context.Tables)
                 {
@@ -131,9 +136,9 @@
         {
             var target = string.Empty;
             var alias = string.Empty;
-            var items = Target.GetTargetObjects();
+            var items = ((Target)Target).Items;
 
-            if (items.Length == 0)
+            if (items.Count == 0)
             {
                 foreach (var tab in Context.Tables)
                 {
@@ -186,11 +191,11 @@
         /// ON table_name1.column_name=table_name2.column_name
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="setFilter"></param>
+        /// <param name="handler"></param>
         /// <returns></returns>
-        public SelectStatement Join<T>(Action<Filter> setFilter)
+        public SelectStatement Join<T>(Action<Filter> handler)
         {
-            return Provider.Join<T>(this, JoinType.InnerJoin, setFilter) as SelectStatement;
+            return Provider.Join<T>(this, JoinType.InnerJoin, handler) as SelectStatement;
         }
 
         /// <summary>
@@ -201,11 +206,11 @@
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="type"></param>
-        /// <param name="setFilter"></param>
+        /// <param name="handler"></param>
         /// <returns></returns>
-        public SelectStatement Join<T>(JoinType type, Action<Filter> setFilter)
+        public SelectStatement Join<T>(JoinType type, Action<Filter> handler)
         {
-            return Provider.Join<T>(this, type, setFilter) as SelectStatement;
+            return Provider.Join<T>(this, type, handler) as SelectStatement;
         }
 
         /// <summary>
@@ -213,11 +218,11 @@
         /// FROM table_name
         /// WHERE column_name operator value
         /// </summary>
-        /// <param name="setFilter"></param>
+        /// <param name="handler"></param>
         /// <returns></returns>
-        public SelectWhereClause Where(Action<Filter> setFilter)
+        public SelectWhereClause Where(Action<Filter> handler)
         {
-            return Provider.Filtrate(new SelectWhereClause(this), setFilter) as SelectWhereClause;
+            return Provider.Filtrate(new SelectWhereClause(this), handler) as SelectWhereClause;
         }
 
         /// <summary>
@@ -226,11 +231,16 @@
         /// WHERE column_name operator value
         /// GROUP BY column_name
         /// </summary>
-        /// <param name="setTarget"></param>
+        /// <param name="handler"></param>
         /// <returns></returns>
-        public GroupByClause GroupBy(Action<Target> setTarget)
+        public GroupByClause GroupBy(Action<Target> handler)
         {
-            return Provider.SetTarget(new GroupByClause(this), setTarget) as GroupByClause;
+            var clause = new GroupByClause(this);
+
+            Clauses.Add(clause);
+            clause.Target.SetHandler(handler);
+
+            return clause;
         }
 
         /// <summary>
@@ -238,11 +248,16 @@
         /// FROM table_name
         /// ORDER BY column_name[ASC|DESC]
         /// </summary>
-        /// <param name="setTarget"></param>
+        /// <param name="handler"></param>
         /// <returns></returns>
-        public OrderByClause OrderBy(Action<Target> setTarget)
+        public OrderByClause OrderBy(Action<Target> handler)
         {
-            return Provider.SetTarget(new OrderByClause(this), setTarget) as OrderByClause;
+            var clause = new OrderByClause(this);
+
+            Clauses.Add(clause);
+            clause.Target.SetHandler(handler);
+
+            return clause;
         }
     }
 }

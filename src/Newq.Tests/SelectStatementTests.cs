@@ -35,7 +35,7 @@ namespace Newq.Tests
                 })
 
                 .OrderBy(target => {
-                    target.Add(target.Context["Customer", "Name"], SortOrder.Desc);
+                    target.Add(target.Context["Customer", "Name", SortOrder.Desc]);
                 });
 
             queryBuilder.Paginate(new Paginator());
