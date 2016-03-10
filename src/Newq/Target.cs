@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     /// <summary>
     /// Target collection of statement or clause.
@@ -46,9 +45,32 @@
         /// <summary>
         /// 
         /// </summary>
-        public void Run()
+        public bool Run()
         {
-            handler(this);
+            Items.Clear();
+
+            if (handler != null)
+            {
+                handler(this);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Returns a string that represents the current customization.
+        /// </summary>
+        /// <returns></returns>
+        public string GetCustomization()
+        {
+            var target = string.Empty;
+
+            Run();
+            Items.ForEach(item => target += string.Format("{0}, ", item));
+
+            return target.Length > 0 ? target.Remove(target.Length - 2) : target;
         }
 
         /// <summary>
@@ -67,27 +89,6 @@
             });
 
             return list;
-        }
-
-        /// <summary>
-        /// Returns a string that represents the current object.
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            var target = string.Empty;
-
-            if (Items.Count > 0)
-            {
-                foreach (var item in Items)
-                {
-                    target += string.Format("{0}, ", item);
-                }
-
-                target = target.Remove(target.Length - 2);
-            }
-
-            return target;
         }
 
         /// <summary>
@@ -124,14 +125,6 @@
         public void Remove(OrderByColumn item)
         {
             Items.Remove(item);
-        }
-
-        /// <summary>
-        /// Removes all objects from the target.
-        /// </summary>
-        public void Clear()
-        {
-            Items.Clear();
         }
 
         /// <summary>

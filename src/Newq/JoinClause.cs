@@ -79,11 +79,16 @@
         /// Returns a SQL-string that represents the current object.
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
+        public override string ToSql()
         {
-            return Filter.ToString().Length > 0
-                ? string.Format("{0} {1} ON {2} ", GetJoinType(), JoinTable, Filter)
-                : string.Empty;
+            var sql = Filter.GetCustomization();
+
+            if (sql.Length > 0)
+            {
+                sql = string.Format("{0} {1} ON {2} ", GetJoinType(), JoinTable, sql);
+            }
+
+            return sql;
         }
     }
 }

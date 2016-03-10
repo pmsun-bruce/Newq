@@ -67,18 +67,18 @@
         /// FROM table_name
         /// </summary>
         /// <typeparam name="T">Any class</typeparam>
-        /// <param name="topNumber">Number of the top records to select</param>
+        /// <param name="topRows">Number of the top records to select</param>
         /// <param name="isPercent">
-        /// Determine whether the topNumber represent the percentage,
+        /// Determine whether the topRows represent the percentage,
         /// default is false
         /// </param>
         /// <returns>
         /// SelectStatement to select certain quantity(percentage if isPercent is true)
         /// of the top records from the table
         /// </returns>
-        public SelectStatement Select<T>(int topNumber, bool isPercent = false)
+        public SelectStatement Select<T>(int topRows, bool isPercent = false)
         {
-            return Select<T>(false, topNumber, false, target => { });
+            return Select<T>(false, topRows, false, target => { });
         }
 
         /// <summary>
@@ -98,12 +98,12 @@
         /// FROM table_name
         /// </summary>
         /// <typeparam name="T">Any class</typeparam>
-        /// <param name="topNumber"></param>
+        /// <param name="topRows"></param>
         /// <param name="handler"></param>
         /// <returns></returns>
-        public SelectStatement Select<T>(int topNumber, Action<Target> handler)
+        public SelectStatement Select<T>(int topRows, Action<Target> handler)
         {
-            return Select<T>(false, topNumber, false, handler);
+            return Select<T>(false, topRows, false, handler);
         }
 
         /// <summary>
@@ -111,13 +111,13 @@
         /// FROM table_name
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="topNumber"></param>
+        /// <param name="topRows"></param>
         /// <param name="isPercent"></param>
         /// <param name="handler"></param>
         /// <returns></returns>
-        public SelectStatement Select<T>(int topNumber, bool isPercent, Action<Target> handler)
+        public SelectStatement Select<T>(int topRows, bool isPercent, Action<Target> handler)
         {
-            return Select<T>(false, topNumber, isPercent, handler);
+            return Select<T>(false, topRows, isPercent, handler);
         }
 
         /// <summary>
@@ -126,17 +126,17 @@
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="isDistinct"></param>
-        /// <param name="topNumber"></param>
+        /// <param name="topRows"></param>
         /// <param name="isPercent"></param>
         /// <param name="handler"></param>
         /// <returns></returns>
-        public SelectStatement Select<T>(bool isDistinct, int topNumber, bool isPercent, Action<Target> handler)
+        public SelectStatement Select<T>(bool isDistinct, int topRows, bool isPercent, Action<Target> handler)
         {
             var statement = new SelectStatement(new Table(typeof(T)));
 
             Statement = statement;
             statement.IsDistinct = isDistinct;
-            statement.TopNumber = topNumber;
+            statement.TopRows = topRows;
             statement.IsPercent = isPercent;
             statement.Target.SetHandler(handler);
 
@@ -159,12 +159,12 @@
         /// FROM table_name
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="topNumber"></param>
+        /// <param name="topRows"></param>
         /// <param name="isPercent"></param>
         /// <returns></returns>
-        public SelectStatement SelectDistinct<T>(int topNumber, bool isPercent = false)
+        public SelectStatement SelectDistinct<T>(int topRows, bool isPercent = false)
         {
-            return Select<T>(false, topNumber, isPercent, col => { });
+            return Select<T>(false, topRows, isPercent, col => { });
         }
 
         /// <summary>
@@ -172,12 +172,12 @@
         /// FROM table_name
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="topNumber"></param>
+        /// <param name="topRows"></param>
         /// <param name="handler"></param>
         /// <returns></returns>
-        public SelectStatement SelectDistinct<T>(int topNumber, Action<Target> handler)
+        public SelectStatement SelectDistinct<T>(int topRows, Action<Target> handler)
         {
-            return Select<T>(true, topNumber, false, handler);
+            return Select<T>(true, topRows, false, handler);
         }
 
         /// <summary>
@@ -185,13 +185,13 @@
         /// FROM table_name
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="topNumber"></param>
+        /// <param name="topRows"></param>
         /// <param name="isPercent"></param>
         /// <param name="handler"></param>
         /// <returns></returns>
-        public SelectStatement SelectDistinct<T>(int topNumber, bool isPercent, Action<Target> handler)
+        public SelectStatement SelectDistinct<T>(int topRows, bool isPercent, Action<Target> handler)
         {
-            return Select<T>(true, topNumber, isPercent, handler);
+            return Select<T>(true, topRows, isPercent, handler);
         }
 
         /// <summary>
@@ -258,15 +258,15 @@
         /// DELETE TOP number|percent FROM table_name 
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="topNumber"></param>
+        /// <param name="topRows"></param>
         /// <param name="isPercent"></param>
         /// <returns></returns>
-        public DeleteStatement Delete<T>(int topNumber, bool isPercent = false)
+        public DeleteStatement Delete<T>(int topRows, bool isPercent = false)
         {
             var statement = new DeleteStatement(new Table(typeof(T)));
 
             Statement = statement;
-            statement.TopNumber = topNumber;
+            statement.TopRows = topRows;
             statement.IsPercent = isPercent;
 
             return statement;

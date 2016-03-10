@@ -25,5 +25,14 @@
         /// 
         /// </summary>
         public SortOrder Order { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return string.Format("{0} {1}", Column, OrderByClause.GetOrder(Order));
+        }
     }
 }

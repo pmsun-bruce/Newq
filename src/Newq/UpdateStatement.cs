@@ -27,18 +27,9 @@
         /// Returns a SQL-string that represents the current object.
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
-        {
-            return string.Format("UPDATE {0} SET {1} ", Context[0], GetTarget());
-        }
-
-        /// <summary>
-        /// Returns a SQL-string that represents the current object.
-        /// </summary>
-        /// <returns></returns>
         public override string ToSql()
         {
-            var sql = this.ToString();
+            var sql = string.Format("UPDATE {0} SET {1} ", Context[0], GetTarget());
 
             if (Clauses.Count > 0)
             {

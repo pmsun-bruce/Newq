@@ -18,9 +18,9 @@
         }
 
         /// <summary>
-        /// Gets or sets <see cref="TopNumber"/>.
+        /// Gets or sets <see cref="TopRows"/>.
         /// </summary>
-        public int TopNumber { get; set; }
+        public int TopRows { get; set; }
 
         /// <summary>
         /// Gets or sets <see cref="IsPercent"/>.
@@ -31,23 +31,31 @@
         /// Returns a SQL-string that represents the current object.
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
+        public override string ToSql()
         {
-            return string.Format("DELETE {0} FROM {1} ", GetParameters(), Context[0]);
+            var sql = string.Format("DELETE {0} FROM {1} ", GetParameters(), Context[0]);
+
+            Clauses.ForEach(clause => sql += clause.ToSql());
+
+            return sql;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         private string GetParameters()
         {
-            var topClause = string.Empty;
+            var parameters = string.Empty;
 
-            if (TopNumber > 0)
+            if (TopRows > 0)
             {
-                topClause = IsPercent
-                    ? string.Format("TOP({0}) PERCENT ", TopNumber)
-                    : string.Format("TOP({0}) ", TopNumber);
+                parameters = IsPercent
+                    ? string.Format("TOP({0}) PERCENT ", TopRows)
+                    : string.Format("TOP({0}) ", TopRows);
             }
 
-            return topClause;
+            return parameters;
         }
 
         /// <summary>

@@ -19,15 +19,5 @@
         /// Gets <see cref="Statement"/>.
         /// </summary>
         public Statement Statement { get; }
-
-
-        /// <summary>
-        /// Returns a SQL-string that represents the current object.
-        /// </summary>
-        /// <returns></returns>
-        public override string ToSql()
-        {
-            return ToString();
-        }
     }
 }

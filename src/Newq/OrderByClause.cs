@@ -26,28 +26,16 @@
         /// Returns a SQL-string that represents the current object.
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
+        public override string ToSql()
         {
-            return GetTarget().Length > 0
-                ? string.Format("ORDER BY {0} ", GetTarget())
-                : string.Empty;
-        }
+            var sql = Target.GetCustomization();
 
-        /// <summary>
-        /// Returns a string that represents the current clause target.
-        /// </summary>
-        /// <returns></returns>
-        protected string GetTarget()
-        {
-            var target = string.Empty;
-            var items = ((Target)Target).GetOrderByColumns();
-
-            foreach (var item in items)
+            if (sql.Length > 0)
             {
-                target += string.Format("{0} {1}, ", item.Column, GetOrder(item.Order));
+                sql = string.Format("ORDER BY {0} ", sql);
             }
 
-            return target.Length > 0 ? target.Remove(target.Length - 2) : string.Empty;
+            return sql;
         }
 
         /// <summary>
@@ -55,7 +43,7 @@
         /// </summary>
         /// <param name="order"></param>
         /// <returns></returns>
-        private string GetOrder(SortOrder order)
+        public static string GetOrder(SortOrder order)
         {
             return order == SortOrder.Desc ? "DESC" : "ASC";
         }

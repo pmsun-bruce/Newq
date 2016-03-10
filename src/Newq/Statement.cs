@@ -45,17 +45,7 @@ namespace Newq
         /// Returns a SQL-string that represents the current object.
         /// </summary>
         /// <returns></returns>
-        public virtual string ToSql()
-        {
-            var sql = this.ToString();
-            
-            if (Clauses.Count > 0)
-            {
-                Clauses.ForEach(clause => sql += clause.ToSql());
-            }
-            
-            return sql;
-        }
+        public abstract string ToSql();
 
         /// <summary>
         /// Provide sql methods.

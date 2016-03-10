@@ -26,11 +26,16 @@
         /// Returns a SQL-string that represents the current object.
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
+        public override string ToSql()
         {
-            return Target.ToString().Length > 0
-                ? string.Format("GROUP BY {0} ", Target)
-                : string.Empty;
+            var sql = Target.GetCustomization();
+
+            if (sql.Length > 0)
+            {
+                sql = string.Format("GROUP BY {0} ", sql);
+            }
+
+            return sql;
         }
 
         /// <summary>

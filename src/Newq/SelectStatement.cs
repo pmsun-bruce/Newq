@@ -30,7 +30,7 @@
         /// <summary>
         /// 
         /// </summary>
-        public int TopNumber { get; set; }
+        public int TopRows { get; set; }
 
         /// <summary>
         /// 
@@ -46,18 +46,9 @@
         /// Returns a SQL-string that represents the current object.
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
-        {
-            return string.Format("SELECT {0}{1} FROM {2} ", GetParameters(), GetTarget(), Context[0]);
-        }
-
-        /// <summary>
-        /// Returns a SQL-string that represents the current object.
-        /// </summary>
-        /// <returns></returns>
         public override string ToSql()
         {
-            var sql = base.ToSql();
+            var sql = string.Format("SELECT {0}{1} FROM {2} ", GetParameters(), GetTarget(), Context[0]);
 
             if (Paginator != null)
             {
@@ -174,11 +165,11 @@
             var distinct = IsDistinct ? "DISTINCT " : string.Empty;
             var topClause = string.Empty;
 
-            if (TopNumber > 0)
+            if (TopRows > 0)
             {
                 topClause = IsPercent
-                    ? string.Format("TOP({0}) PERCENT ", TopNumber)
-                    : string.Format("TOP({0}) ", TopNumber);
+                    ? string.Format("TOP({0}) PERCENT ", TopRows)
+                    : string.Format("TOP({0}) ", TopRows);
             }
 
             return distinct + topClause;

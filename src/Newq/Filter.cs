@@ -45,26 +45,32 @@
         /// <summary>
         /// 
         /// </summary>
-        public void Run()
+        public bool Run()
         {
-            handler(this);
+            Items.Clear();
+
+            if (handler != null)
+            {
+                handler(this);
+
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
-        /// Returns a string that represents the current object.
+        /// Returns a string that represents the current customization.
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
+        public string GetCustomization()
         {
-            var conditions = string.Empty;
+            var filter = string.Empty;
 
-            if (Items.Count > 0)
-            {
-                Items.ForEach(con => conditions += string.Format("{0} AND ", con));
-                conditions = conditions.Remove(conditions.Length - 5);
-            }
+            Run();
+            Items.ForEach(item => filter += string.Format("{0} AND ", item));
 
-            return conditions;
+            return filter.Length > 0 ? filter.Remove(filter.Length - 5) : filter;
         }
 
         /// <summary>

@@ -26,9 +26,16 @@
         /// Returns a SQL-string that represents the current object.
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
+        public override string ToSql()
         {
-            return string.Format("WHERE {0} ", Filter);
+            var sql = Filter.GetCustomization();
+
+            if (sql.Length > 0)
+            {
+                sql = string.Format("WHERE {0} ", sql);
+            }
+
+            return sql;
         }
     }
 }

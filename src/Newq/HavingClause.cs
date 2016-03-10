@@ -21,11 +21,16 @@
         /// Returns a SQL-string that represents the current object.
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
+        public override string ToSql()
         {
-            return Filter.ToString().Length > 0
-                ? string.Format("Having {0} ", Filter)
-                : string.Empty;
+            var sql = Filter.GetCustomization();
+
+            if (sql.Length > 0)
+            {
+                sql = string.Format("HAVING {0} ", sql);
+            }
+
+            return sql;
         }
 
         /// <summary>

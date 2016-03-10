@@ -21,7 +21,7 @@
         /// Returns a SQL-string that represents the current object.
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
+        public override string ToSql()
         {
             var columns = string.Empty;
             var values = string.Empty;
