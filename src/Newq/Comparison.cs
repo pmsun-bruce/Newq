@@ -1,8 +1,8 @@
 namespace Newq
 {
+    using Extensions;
     using System;
     using System.Collections.Generic;
-    using Newq.Extensions;
 
     /// <summary>
     /// 

@@ -6,7 +6,7 @@
     public class OrderByColumn
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="OrderByColumn"/> class.
         /// </summary>
         /// <param name="column"></param>
         /// <param name="order"></param>

@@ -37,7 +37,7 @@ namespace Newq
         public Context Context { get; protected set; }
 
         /// <summary>
-        /// Clauses of statement.
+        /// Gets or sets <see cref="Clauses"/>.
         /// </summary>
         public List<Clause> Clauses { get; protected set; }
 

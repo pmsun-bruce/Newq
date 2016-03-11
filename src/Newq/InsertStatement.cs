@@ -1,9 +1,8 @@
 ﻿namespace Newq
 {
+    using Extensions;
     using System;
     using System.Collections.Generic;
-
-    using Newq.Extensions;
 
     /// <summary>
     /// The INSERT INTO statement is used to
@@ -21,7 +20,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Gets <see cref="ObjectList"/>.
         /// </summary>
         public List<object> ObjectList { get; }
 
@@ -46,7 +45,7 @@
 
                 foreach (var col in Context[0].Columns)
                 {
-                    values += string.Format("{0}, ", type.GetProperty(col.Name).GetValue(obj));
+                    values += string.Format("{0}, ", type.GetProperty(col.Name).GetValue(obj).ToSqlValue());
                 }
 
                 valueClause += string.Format("({0}), ", values.Remove(values.Length - 2));

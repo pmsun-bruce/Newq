@@ -1,6 +1,7 @@
 ﻿namespace Newq
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// The DELETE statement is used to

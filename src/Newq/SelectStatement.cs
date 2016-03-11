@@ -1,6 +1,7 @@
 ﻿namespace Newq
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// The SELECT statement is used to select data from a database.

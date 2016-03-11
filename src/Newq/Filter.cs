@@ -43,14 +43,13 @@
         }
 
         /// <summary>
-        /// 
+        /// Returns a result after customization be performed.
         /// </summary>
         public bool Perform()
         {
-            Items.Clear();
-
             if (customization != null)
             {
+                Items.Clear();
                 customization(this, context);
 
                 return true;

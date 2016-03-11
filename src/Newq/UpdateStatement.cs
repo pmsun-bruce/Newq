@@ -1,7 +1,8 @@
 ﻿namespace Newq
 {
+    using Extensions;
     using System;
-    using Newq.Extensions;
+    using System.Collections.Generic;
 
     /// <summary>
     /// The UPDATE statement is used to
@@ -21,12 +22,12 @@
         /// <summary>
         /// 
         /// </summary>
-        public object Object { get; set; }
+        public ICustomizable<Action<Target, Context>> Target { get; }
 
         /// <summary>
         /// 
         /// </summary>
-        public ICustomizable<Action<Target, Context>> Target { get; }
+        public object Object { get; set; }
 
         /// <summary>
         /// Returns a SQL-string that represents the current object.
@@ -128,7 +129,7 @@
         /// <returns></returns>
         public WhereClause Where(Action<Filter, Context> customization)
         {
-            return Provider.Filtrate(new WhereClause(this), customization) as WhereClause;
+            return Provider.Filtrate(new WhereClause(this), customization);
         }
     }
 }
