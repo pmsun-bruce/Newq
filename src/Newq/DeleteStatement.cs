@@ -47,16 +47,16 @@
         /// <returns></returns>
         private string GetParameters()
         {
-            var parameters = string.Empty;
+            var topClause = string.Empty;
 
             if (TopRows > 0)
             {
-                parameters = IsPercent
+                topClause = IsPercent
                     ? string.Format("TOP({0}) PERCENT ", TopRows)
                     : string.Format("TOP({0}) ", TopRows);
             }
 
-            return parameters;
+            return topClause;
         }
 
         /// <summary>

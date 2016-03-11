@@ -86,6 +86,8 @@
         /// <returns></returns>
         protected string GetTarget()
         {
+            Target.Perform();
+
             var target = string.Empty;
             var items = (Target as Target).Items;
 
@@ -128,6 +130,8 @@
         /// <returns></returns>
         protected string GetTargetAlias()
         {
+            Target.Perform();
+
             var target = string.Empty;
             var alias = string.Empty;
             var items = (Target as Target).Items;

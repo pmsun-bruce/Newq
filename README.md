@@ -5,29 +5,29 @@ New query builder for CSharp
 var queryBuilder = new QueryBuilder();
 
 queryBuilder
-    .Select<Customer>(target => {
-        target += target.Context["Provider", "Products"];
+    .Select<Customer>((target, context) => {
+        target += context["Provider", "Products"];
     })
 
-    .Join<Provider>(JoinType.LeftJoin, filter => {
-        filter += filter.Context["Customer", "Name"] == filter.Context["Provider", "Name"];
+    .Join<Provider>(JoinType.LeftJoin, (filter, context) => {
+        filter += context["Customer", "Name"] == context["Provider", "Name"];
     })
 
-    .Where(filter => {
-        filter += filter.Context["Customer", "City"].Like("New");
+    .Where((filter, context) => {
+        filter += context["Customer", "City"].Like("New");
     })
 
-    .GroupBy(target => {
-        target += target.Context["Provider", "Products"];
+    .GroupBy((target, context) => {
+        target += context["Provider", "Products"];
     })
 
-    .Having(filter => {
-        filter += filter.Context["Provider", "Name"].NotLike("New");
+    .Having((filter, context) => {
+        filter += context["Provider", "Name"].NotLike("New");
     })
 
-    .OrderBy(target => {
-        target += target.Context["Customer", "Name", SortOrder.Desc];
-        target += new KeyValuePair<Column, SortOrder>(target.Context["Customer", "Id"], SortOrder.Desc);
+    .OrderBy((target, context) => {
+        target += context["Customer", "Name", SortOrder.Desc];
+        target += context["Customer", "Id", SortOrder.Desc];
     });
 
 queryBuilder.Paginate(new Paginator());
@@ -39,8 +39,8 @@ var query = queryBuilder.ToString();
         [Provider.Products]
     FROM (
         SELECT
-            [Provider].[Products] AS [Provider.Products]
-            , ROW_NUMBER() OVER(ORDER BY [Customer].[Name] DESC, [Customer].[Id] DESC) AS [ROW_NUMBER]
+            [Provider].[Products] AS [Provider.Products],
+            ROW_NUMBER() OVER(ORDER BY [Customer].[Name] DESC, [Customer].[Id] DESC) AS [ROW_NUMBER]
         FROM
             [Customer]
         LEFT JOIN
@@ -51,7 +51,7 @@ var query = queryBuilder.ToString();
             [Customer].[City] LIKE '%New%'
         GROUP BY
             [Provider].[Products]
-        Having
+        HAVING
             [Provider].[Name] NOT LIKE '%New%'
     ) AS [$PAGINATOR]
     WHERE

@@ -62,14 +62,17 @@
         /// <returns></returns>
         protected string GetTarget()
         {
+            Target.Perform();
+
             var target = string.Empty;
+            var type = Object.GetType();
             var items = (Target as Target).Items;
 
             if (items.Count == 0)
             {
                 foreach (var col in Context[0].Columns)
                 {
-                    target += string.Format("{0} = {1}, ", col, col.Value.ToSqlValue());
+                    target += string.Format("{0} = {1}, ", col, type.GetProperty(col.Name).GetValue(Object).ToSqlValue());
                 }
             }
             else
@@ -81,7 +84,7 @@
                     if (item is Column)
                     {
                         col = item as Column;
-                        target += string.Format("{0} = {1}, ", col, col.Value.ToSqlValue());
+                        target += string.Format("{0} = {1}, ", col, type.GetProperty(col.Name).GetValue(Object).ToSqlValue());
                     }
                 }
             }
