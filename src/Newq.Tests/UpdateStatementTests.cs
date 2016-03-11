@@ -47,7 +47,7 @@ namespace Newq.Tests
 
             queryBuilder
                 .Update(customer)
-                .Join<Provider>(filter => filter.Add(filter.Context[0]["Name"].EqualTo(filter.Context[1]["Name"])));
+                .Join<Provider>((filter, context) => filter.Add(context[0]["Name"].EqualTo(context[1]["Name"])));
 
             var query = queryBuilder.ToString();
 

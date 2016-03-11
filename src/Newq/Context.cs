@@ -54,15 +54,7 @@
         /// <returns></returns>
         public Table this[string tableName]
         {
-            get
-            {
-                if (!Contains(tableName))
-                {
-                    return new Table(tableName);
-                }
-
-                return tables[tableName];
-            }
+            get { return tables[tableName]; }
         }
 
         /// <summary>
@@ -73,19 +65,11 @@
         /// <returns></returns>
         public Column this[string tableName, string columnName]
         {
-            get
-            {
-                if (!Contains(tableName))
-                {
-                    return new Column(tableName, columnName);
-                }
-
-                return tables[tableName][columnName];
-            }
+            get { return tables[tableName][columnName]; }
         }
 
         /// <summary>
-        /// Gets <see cref="KeyValuePair{TKey, TValue}"/> by table name, column name and sort order.
+        /// Gets <see cref="OrderByColumn"/> by table name, column name and sort order.
         /// </summary>
         /// <param name="tableName"></param>
         /// <param name="columnName"></param>
@@ -93,17 +77,7 @@
         /// <returns></returns>
         public OrderByColumn this[string tableName, string columnName, SortOrder order]
         {
-            get
-            {
-                if (!Contains(tableName))
-                {
-                    var column = new Column(tableName, columnName);
-
-                    return new OrderByColumn(column, order);
-                }
-
-                return tables[tableName][columnName, order];
-            }
+            get { return tables[tableName][columnName, order]; }
         }
 
         /// <summary>

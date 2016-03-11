@@ -8,18 +8,12 @@
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="handler"></param>
-        void SetHandler(T handler);
+        /// <param name="customization"></param>
+        void Customize(T customization);
 
         /// <summary>
-        /// Returns a result after running.
+        /// Returns a result after customization be performed.
         /// </summary>
-        bool Run();
-
-        /// <summary>
-        /// Returns a string that represents the current customization.
-        /// </summary>
-        /// <returns></returns>
-        string GetCustomization();
+        bool Perform();
     }
 }

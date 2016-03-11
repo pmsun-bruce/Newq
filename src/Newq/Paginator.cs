@@ -27,8 +27,9 @@
         {
             get
             {
-                var hasFraction = TotalRows % PageSize == 0;
-                var total = TotalRows / PageSize;
+                var pageSize = PageSize == 0 ? 1 : PageSize;
+                var hasFraction = TotalRows % pageSize == 0;
+                var total = TotalRows / pageSize;
 
                 return hasFraction ? total + 1 : total;
             }

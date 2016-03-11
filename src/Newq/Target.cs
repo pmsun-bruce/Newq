@@ -6,12 +6,17 @@
     /// <summary>
     /// Target collection of statement or clause.
     /// </summary>
-    public class Target : ICustomizable<Action<Target>>
+    public class Target : ICustomizable<Action<Target, Context>>
     {
         /// <summary>
         /// 
         /// </summary>
-        protected Action<Target> handler;
+        protected Action<Target, Context> customization;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected Context context;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Target"/> class.
@@ -19,14 +24,9 @@
         /// <param name="context"></param>
         public Target(Context context)
         {
-            Context = context;
+            this.context = context;
             Items = new List<object>();
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public Context Context { get; protected set; }
 
         /// <summary>
         /// 
@@ -36,22 +36,22 @@
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="handler"></param>
-        public void SetHandler(Action<Target> handler)
+        /// <param name="customization"></param>
+        public void Customize(Action<Target, Context> customization)
         {
-            this.handler = handler;
+            this.customization = customization;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public bool Run()
+        public bool Perform()
         {
             Items.Clear();
 
-            if (handler != null)
+            if (customization != null)
             {
-                handler(this);
+                customization(this, context);
 
                 return true;
             }
@@ -67,7 +67,7 @@
         {
             var target = string.Empty;
 
-            Run();
+            Perform();
             Items.ForEach(item => target += string.Format("{0}, ", item));
 
             return target.Length > 0 ? target.Remove(target.Length - 2) : target;

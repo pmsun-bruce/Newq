@@ -19,7 +19,7 @@
         /// <summary>
         /// 
         /// </summary>
-        public ICustomizable<Action<Target>> Target { get; }
+        public ICustomizable<Action<Target, Context>> Target { get; }
 
         /// <summary>
         /// The DISTINCT keyword can be used to
@@ -49,6 +49,8 @@
         public override string ToSql()
         {
             var sql = string.Format("SELECT {0}{1} FROM {2} ", GetParameters(), GetTarget(), Context[0]);
+
+            Clauses.ForEach(clause => sql += clause.ToSql());
 
             if (Paginator != null)
             {
@@ -84,7 +86,7 @@
         protected string GetTarget()
         {
             var target = string.Empty;
-            var items = ((Target)Target).Items;
+            var items = (Target as Target).Items;
 
             if (items.Count == 0)
             {
@@ -127,7 +129,7 @@
         {
             var target = string.Empty;
             var alias = string.Empty;
-            var items = ((Target)Target).Items;
+            var items = (Target as Target).Items;
 
             if (items.Count == 0)
             {
@@ -182,11 +184,11 @@
         /// ON table_name1.column_name=table_name2.column_name
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="handler"></param>
+        /// <param name="customization"></param>
         /// <returns></returns>
-        public SelectStatement Join<T>(Action<Filter> handler)
+        public SelectStatement Join<T>(Action<Filter, Context> customization)
         {
-            return Provider.Join<T>(this, JoinType.InnerJoin, handler) as SelectStatement;
+            return Provider.Join<T>(this, JoinType.InnerJoin, customization) as SelectStatement;
         }
 
         /// <summary>
@@ -197,11 +199,11 @@
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="type"></param>
-        /// <param name="handler"></param>
+        /// <param name="customization"></param>
         /// <returns></returns>
-        public SelectStatement Join<T>(JoinType type, Action<Filter> handler)
+        public SelectStatement Join<T>(JoinType type, Action<Filter, Context> customization)
         {
-            return Provider.Join<T>(this, type, handler) as SelectStatement;
+            return Provider.Join<T>(this, type, customization) as SelectStatement;
         }
 
         /// <summary>
@@ -209,11 +211,11 @@
         /// FROM table_name
         /// WHERE column_name operator value
         /// </summary>
-        /// <param name="handler"></param>
+        /// <param name="customization"></param>
         /// <returns></returns>
-        public SelectWhereClause Where(Action<Filter> handler)
+        public SelectWhereClause Where(Action<Filter, Context> customization)
         {
-            return Provider.Filtrate(new SelectWhereClause(this), handler) as SelectWhereClause;
+            return Provider.Filtrate(new SelectWhereClause(this), customization) as SelectWhereClause;
         }
 
         /// <summary>
@@ -222,14 +224,14 @@
         /// WHERE column_name operator value
         /// GROUP BY column_name
         /// </summary>
-        /// <param name="handler"></param>
+        /// <param name="customization"></param>
         /// <returns></returns>
-        public GroupByClause GroupBy(Action<Target> handler)
+        public GroupByClause GroupBy(Action<Target, Context> customization)
         {
             var clause = new GroupByClause(this);
 
             Clauses.Add(clause);
-            clause.Target.SetHandler(handler);
+            clause.Target.Customize(customization);
 
             return clause;
         }
@@ -239,14 +241,14 @@
         /// FROM table_name
         /// ORDER BY column_name[ASC|DESC]
         /// </summary>
-        /// <param name="handler"></param>
+        /// <param name="customization"></param>
         /// <returns></returns>
-        public OrderByClause OrderBy(Action<Target> handler)
+        public OrderByClause OrderBy(Action<Target, Context> customization)
         {
             var clause = new OrderByClause(this);
 
             Clauses.Add(clause);
-            clause.Target.SetHandler(handler);
+            clause.Target.Customize(customization);
 
             return clause;
         }

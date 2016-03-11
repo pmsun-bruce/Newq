@@ -6,12 +6,17 @@
     /// <summary>
     /// 
     /// </summary>
-    public class Filter : ICustomizable<Action<Filter>>
+    public class Filter : ICustomizable<Action<Filter, Context>>
     {
         /// <summary>
         /// 
         /// </summary>
-        protected Action<Filter> handler;
+        protected Action<Filter, Context> customization;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected Context context;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Filter"/> class.
@@ -19,14 +24,9 @@
         /// <param name="context"></param>
         public Filter(Context context)
         {
-            Context = context;
+            this.context = context;
             Items = new List<Condition>();
         }
-
-        /// <summary>
-        /// Gets or sets <see cref="Context"/>
-        /// </summary>
-        public Context Context { get; protected set; }
 
         /// <summary>
         /// Gets or sets <see cref="Items"/>
@@ -36,22 +36,22 @@
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="handler"></param>
-        public void SetHandler(Action<Filter> handler)
+        /// <param name="customization"></param>
+        public void Customize(Action<Filter, Context> customization)
         {
-            this.handler = handler;
+            this.customization = customization;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public bool Run()
+        public bool Perform()
         {
             Items.Clear();
 
-            if (handler != null)
+            if (customization != null)
             {
-                handler(this);
+                customization(this, context);
 
                 return true;
             }
@@ -67,7 +67,7 @@
         {
             var filter = string.Empty;
 
-            Run();
+            Perform();
             Items.ForEach(item => filter += string.Format("{0} AND ", item));
 
             return filter.Length > 0 ? filter.Remove(filter.Length - 5) : filter;

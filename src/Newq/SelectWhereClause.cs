@@ -23,14 +23,14 @@
         /// WHERE column_name operator value
         /// GROUP BY column_name
         /// </summary>
-        /// <param name="handler"></param>
+        /// <param name="customization"></param>
         /// <returns></returns>
-        public GroupByClause GroupBy(Action<Target> handler)
+        public GroupByClause GroupBy(Action<Target, Context> customization)
         {
             var clause = new GroupByClause(Statement);
 
             Statement.Clauses.Add(clause);
-            clause.Target.SetHandler(handler);
+            clause.Target.Customize(customization);
 
             return clause;
         }
@@ -41,14 +41,14 @@
         /// WHERE column_name operator value
         /// ORDER BY column_name[ASC|DESC]
         /// </summary>
-        /// <param name="handler"></param>
+        /// <param name="customization"></param>
         /// <returns></returns>
-        public OrderByClause OrderBy(Action<Target> handler)
+        public OrderByClause OrderBy(Action<Target, Context> customization)
         {
             var clause = new OrderByClause(Statement);
 
             Statement.Clauses.Add(clause);
-            clause.Target.SetHandler(handler);
+            clause.Target.Customize(customization);
 
             return clause;
         }

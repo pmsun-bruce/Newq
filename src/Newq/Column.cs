@@ -13,23 +13,11 @@ namespace Newq
         /// <param name="table"></param>
         /// <param name="name"></param>
         /// <param name="value"></param>
-        /// <param name="type"></param>
         public Column(Table table, string name, object value = null)
         {
             Table = table;
             Name = name;
             Value = value;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Column"/> class.
-        /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columnName"></param>
-        internal Column(string tableName, string columnName)
-        {
-            Table = new Table(tableName);
-            Name = columnName;
         }
 
         /// <summary>

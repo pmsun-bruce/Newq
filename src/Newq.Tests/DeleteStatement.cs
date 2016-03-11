@@ -14,11 +14,11 @@ namespace Newq.Tests
 
             queryBuilder
                 .Delete<Customer>()
-                .Where(con => {
-                    var cust = con.Context["Customer"];
+                .Where((filter, context) => {
+                    var cust = context["Customer"];
 
-                    con.Add(cust["City"].Between("New York", "Landon"));
-                    con.Add(cust["Name"].Like("Google").Or(cust["Name"].Like("Apple", PatternType.BeginWith)));
+                    filter.Add(cust["City"].Between("New York", "Landon"));
+                    filter.Add(cust["Name"].Like("Google").Or(cust["Name"].Like("Apple", PatternType.BeginWith)));
                 });
 
             /*  Result:

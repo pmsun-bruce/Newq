@@ -14,28 +14,28 @@ namespace Newq.Tests
             var queryBuilder = new QueryBuilder();
 
             queryBuilder
-                .Select<Customer>(target => {
-                    target.Add(target.Context["Provider", "Products"]);
+                .Select<Customer>((target, context) => {
+                    target.Add(context["Provider", "Products"]);
                 })
 
-                .Join<Provider>(JoinType.LeftJoin, filter => {
-                    filter.Add(filter.Context["Customer", "Name"].EqualTo(filter.Context["Provider", "Name"]));
+                .Join<Provider>(JoinType.LeftJoin, (filter, context) => {
+                    filter.Add(context["Customer", "Name"].EqualTo(context["Provider", "Name"]));
                 })
 
-                .Where(filter => {
-                    filter.Add(filter.Context["Customer", "City"].Like("New"));
+                .Where((filter, context) => {
+                    filter.Add(context["Customer", "City"].Like("New"));
                 })
 
-                .GroupBy(target => {
-                    target.Add(target.Context["Provider", "Products"]);
+                .GroupBy((target, context) => {
+                    target.Add(context["Provider", "Products"]);
                 })
 
-                .Having(filter => {
-                    filter.Add(filter.Context["Provider", "Name"].NotLike("New"));
+                .Having((filter, context) => {
+                    filter.Add(context["Provider", "Name"].NotLike("New"));
                 })
 
-                .OrderBy(target => {
-                    target.Add(target.Context["Customer", "Name", SortOrder.Desc]);
+                .OrderBy((target, context) => {
+                    target.Add(context["Customer", "Name", SortOrder.Desc]);
                 });
 
             queryBuilder.Paginate(new Paginator());
@@ -70,38 +70,32 @@ namespace Newq.Tests
         [TestMethod]
         public void Select2()
         {
-            var t = new Table(typeof(Customer));
-        }
-
-        [TestMethod]
-        public void Select3()
-        {
             var queryBuilder = new QueryBuilder();
 
             queryBuilder
-                .Select<Customer>(target => {
-                    target += target.Context["Provider", "Products"];
+                .Select<Customer>((target, context) => {
+                    target += context["Provider", "Products"];
                 })
 
-                .Join<Provider>(JoinType.LeftJoin, filter => {
-                    filter += filter.Context["Customer", "Name"] == filter.Context["Provider", "Name"];
+                .Join<Provider>(JoinType.LeftJoin, (filter, context) => {
+                    filter += context["Customer", "Name"] == context["Provider", "Name"];
                 })
 
-                .Where(filter => {
-                    filter += filter.Context["Customer", "City"].Like("New");
+                .Where((filter, context) => {
+                    filter += context["Customer", "City"].Like("New");
                 })
 
-                .GroupBy(target => {
-                    target += target.Context["Provider", "Products"];
+                .GroupBy((target, context) => {
+                    target += context["Provider", "Products"];
                 })
 
-                .Having(filter => {
-                    filter += filter.Context["Provider", "Name"].NotLike("New");
+                .Having((filter, context) => {
+                    filter += context["Provider", "Name"].NotLike("New");
                 })
 
-                .OrderBy(target => {
-                    target += target.Context["Customer", "Name", SortOrder.Desc];
-                    target += new KeyValuePair<Column, SortOrder>(target.Context["Customer", "Id"], SortOrder.Desc);
+                .OrderBy((target, context) => {
+                    target += context["Customer", "Name", SortOrder.Desc];
+                    target += new KeyValuePair<Column, SortOrder>(context["Customer", "Id"], SortOrder.Desc);
                 });
 
             queryBuilder.Paginate(new Paginator());

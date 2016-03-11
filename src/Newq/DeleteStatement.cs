@@ -65,11 +65,11 @@
         /// ON table_name1.column_name=table_name2.column_name
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="handler"></param>
+        /// <param name="customization"></param>
         /// <returns></returns>
-        public DeleteStatement Join<T>(Action<Filter> handler)
+        public DeleteStatement Join<T>(Action<Filter, Context> customization)
         {
-            return Provider.Join<T>(this, JoinType.InnerJoin, handler) as DeleteStatement;
+            return Provider.Join<T>(this, JoinType.InnerJoin, customization) as DeleteStatement;
         }
 
         /// <summary>
@@ -80,11 +80,11 @@
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="type"></param>
-        /// <param name="handler"></param>
+        /// <param name="customization"></param>
         /// <returns></returns>
-        public DeleteStatement Join<T>(JoinType type, Action<Filter> handler)
+        public DeleteStatement Join<T>(JoinType type, Action<Filter, Context> customization)
         {
-            return Provider.Join<T>(this, type, handler) as DeleteStatement;
+            return Provider.Join<T>(this, type, customization) as DeleteStatement;
         }
 
         /// <summary>
@@ -92,11 +92,11 @@
         /// FROM table_name
         /// WHERE column_name operator value
         /// </summary>
-        /// <param name="handler"></param>
+        /// <param name="customization"></param>
         /// <returns></returns>
-        public WhereClause Where(Action<Filter> handler)
+        public WhereClause Where(Action<Filter, Context> customization)
         {
-            return Provider.Filtrate(new WhereClause(this), handler);
+            return Provider.Filtrate(new WhereClause(this), customization);
         }
     }
 }

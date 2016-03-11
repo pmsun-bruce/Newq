@@ -25,7 +25,7 @@
         /// <summary>
         /// 
         /// </summary>
-        public ICustomizable<Action<Filter>> Filter { get; }
+        public ICustomizable<Action<Filter, Context>> Filter { get; }
 
         /// <summary>
         /// Gets <see cref="JoinTable"/>.
@@ -81,7 +81,7 @@
         /// <returns></returns>
         public override string ToSql()
         {
-            var sql = Filter.GetCustomization();
+            var sql = (Filter as Filter).GetCustomization();
 
             if (sql.Length > 0)
             {

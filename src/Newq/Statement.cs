@@ -58,9 +58,9 @@ namespace Newq
             /// <typeparam name="T"></typeparam>
             /// <param name="statement"></param>
             /// <param name="type"></param>
-            /// <param name="handler"></param>
+            /// <param name="customization"></param>
             /// <returns></returns>
-            public static Statement Join<T>(Statement statement, JoinType type, Action<Filter> handler)
+            public static Statement Join<T>(Statement statement, JoinType type, Action<Filter, Context> customization)
             {
                 var tableName = typeof(T).Name;
                 JoinClause clause = null;
@@ -77,7 +77,7 @@ namespace Newq
                 }
 
                 statement.Clauses.Add(clause);
-                clause.Filter.SetHandler(handler);
+                clause.Filter.Customize(customization);
 
                 return statement;
             }
@@ -86,12 +86,12 @@ namespace Newq
             /// 
             /// </summary>
             /// <param name="clause"></param>
-            /// <param name="handler"></param>
+            /// <param name="customization"></param>
             /// <returns></returns>
-            public static WhereClause Filtrate(WhereClause clause, Action<Filter> handler)
+            public static WhereClause Filtrate(WhereClause clause, Action<Filter, Context> customization)
             {
                 clause.Statement.Clauses.Add(clause);
-                clause.Filter.SetHandler(handler);
+                clause.Filter.Customize(customization);
 
                 return clause;
             }

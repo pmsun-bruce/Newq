@@ -21,7 +21,12 @@
         /// <summary>
         /// 
         /// </summary>
-        public ICustomizable<Action<Target>> Target { get; }
+        public object Object { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICustomizable<Action<Target, Context>> Target { get; }
 
         /// <summary>
         /// Returns a SQL-string that represents the current object.
@@ -57,7 +62,7 @@
         protected string GetTarget()
         {
             var target = string.Empty;
-            var items = ((Target)Target).Items;
+            var items = (Target as Target).Items;
 
             if (items.Count == 0)
             {
@@ -91,11 +96,11 @@
         /// ON table_name1.column_name=table_name2.column_name
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="handler"></param>
+        /// <param name="customization"></param>
         /// <returns></returns>
-        public UpdateStatement Join<T>(Action<Filter> handler)
+        public UpdateStatement Join<T>(Action<Filter, Context> customization)
         {
-            return Provider.Join<T>(this, JoinType.InnerJoin, handler) as UpdateStatement;
+            return Provider.Join<T>(this, JoinType.InnerJoin, customization) as UpdateStatement;
         }
 
         /// <summary>
@@ -107,11 +112,11 @@
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="type"></param>
-        /// <param name="handler"></param>
+        /// <param name="customization"></param>
         /// <returns></returns>
-        public UpdateStatement Join<T>(JoinType type, Action<Filter> handler)
+        public UpdateStatement Join<T>(JoinType type, Action<Filter, Context> customization)
         {
-            return Provider.Join<T>(this, type, handler) as UpdateStatement;
+            return Provider.Join<T>(this, type, customization) as UpdateStatement;
         }
 
         /// <summary>
@@ -119,11 +124,11 @@
         /// SET column1 = value, column2 = value,...
         /// WHERE column_name operator value
         /// </summary>
-        /// <param name="handler"></param>
+        /// <param name="customization"></param>
         /// <returns></returns>
-        public WhereClause Where(Action<Filter> handler)
+        public WhereClause Where(Action<Filter, Context> customization)
         {
-            return Provider.Filtrate(new WhereClause(this), handler) as WhereClause;
+            return Provider.Filtrate(new WhereClause(this), customization) as WhereClause;
         }
     }
 }

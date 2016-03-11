@@ -20,7 +20,7 @@
         /// <summary>
         /// 
         /// </summary>
-        public ICustomizable<Action<Target>> Target { get; }
+        public ICustomizable<Action<Target, Context>> Target { get; }
 
         /// <summary>
         /// Returns a SQL-string that represents the current object.
@@ -28,7 +28,7 @@
         /// <returns></returns>
         public override string ToSql()
         {
-            var sql = Target.GetCustomization();
+            var sql = (Target as Target).GetCustomization();
 
             if (sql.Length > 0)
             {

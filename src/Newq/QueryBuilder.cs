@@ -1,6 +1,7 @@
 ﻿namespace Newq
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Used to build SQL statement.
@@ -30,9 +31,9 @@
         }
 
         /// <summary>
-        /// Define whether the statement is paginable
+        /// Define whether the statement is paginable.
         /// </summary>
-        /// <param name="paginator">instance of Paginator</param>
+        /// <param name="paginator"></param>
         /// <returns>true when the statement is select statement, false if not</returns>
         public bool Paginate(Paginator paginator)
         {
@@ -59,7 +60,7 @@
         /// </returns>
         public SelectStatement Select<T>()
         {
-            return Select<T>(false, 0, false, col => { });
+            return Select<T>(false, 0, false, null);
         }
 
         /// <summary>
@@ -78,7 +79,7 @@
         /// </returns>
         public SelectStatement Select<T>(int topRows, bool isPercent = false)
         {
-            return Select<T>(false, topRows, false, target => { });
+            return Select<T>(false, topRows, false, null);
         }
 
         /// <summary>
@@ -86,11 +87,11 @@
         /// FROM table_name
         /// </summary>
         /// <typeparam name="T">Any class</typeparam>
-        /// <param name="handler">Determine which column(s) to be selected from the table</param>
+        /// <param name="customization">Determine which column(s) to be selected from the table</param>
         /// <returns>SelectStatement to select all records within certain columns from the table without the keyword distinct</returns>
-        public SelectStatement Select<T>(Action<Target> handler)
+        public SelectStatement Select<T>(Action<Target, Context> customization)
         {
-            return Select<T>(false, 0, false, handler);
+            return Select<T>(false, 0, false, customization);
         }
 
         /// <summary>
@@ -99,11 +100,11 @@
         /// </summary>
         /// <typeparam name="T">Any class</typeparam>
         /// <param name="topRows"></param>
-        /// <param name="handler"></param>
+        /// <param name="customization"></param>
         /// <returns></returns>
-        public SelectStatement Select<T>(int topRows, Action<Target> handler)
+        public SelectStatement Select<T>(int topRows, Action<Target, Context> customization)
         {
-            return Select<T>(false, topRows, false, handler);
+            return Select<T>(false, topRows, false, customization);
         }
 
         /// <summary>
@@ -113,11 +114,11 @@
         /// <typeparam name="T"></typeparam>
         /// <param name="topRows"></param>
         /// <param name="isPercent"></param>
-        /// <param name="handler"></param>
+        /// <param name="customization"></param>
         /// <returns></returns>
-        public SelectStatement Select<T>(int topRows, bool isPercent, Action<Target> handler)
+        public SelectStatement Select<T>(int topRows, bool isPercent, Action<Target, Context> customization)
         {
-            return Select<T>(false, topRows, isPercent, handler);
+            return Select<T>(false, topRows, isPercent, customization);
         }
 
         /// <summary>
@@ -128,9 +129,9 @@
         /// <param name="isDistinct"></param>
         /// <param name="topRows"></param>
         /// <param name="isPercent"></param>
-        /// <param name="handler"></param>
+        /// <param name="customization"></param>
         /// <returns></returns>
-        public SelectStatement Select<T>(bool isDistinct, int topRows, bool isPercent, Action<Target> handler)
+        public SelectStatement Select<T>(bool isDistinct, int topRows, bool isPercent, Action<Target, Context> customization)
         {
             var statement = new SelectStatement(new Table(typeof(T)));
 
@@ -138,7 +139,7 @@
             statement.IsDistinct = isDistinct;
             statement.TopRows = topRows;
             statement.IsPercent = isPercent;
-            statement.Target.SetHandler(handler);
+            statement.Target.Customize(customization);
 
             return statement;
         }
@@ -151,7 +152,7 @@
         /// <returns></returns>
         public SelectStatement SelectDistinct<T>()
         {
-            return Select<T>(true, 0, false, col => { });
+            return Select<T>(true, 0, false, null);
         }
 
         /// <summary>
@@ -164,7 +165,19 @@
         /// <returns></returns>
         public SelectStatement SelectDistinct<T>(int topRows, bool isPercent = false)
         {
-            return Select<T>(false, topRows, isPercent, col => { });
+            return Select<T>(true, topRows, isPercent, null);
+        }
+
+        /// <summary>
+        /// SELECT DISTINCT column_name(s)
+        /// FROM table_name
+        /// </summary>
+        /// <typeparam name="T">Any class</typeparam>
+        /// <param name="customization">Determine which column(s) to be selected from the table</param>
+        /// <returns>SelectStatement to select all records within certain columns from the table without the keyword distinct</returns>
+        public SelectStatement SelectDistinct<T>(Action<Target, Context> customization)
+        {
+            return Select<T>(true, 0, false, customization);
         }
 
         /// <summary>
@@ -173,11 +186,11 @@
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="topRows"></param>
-        /// <param name="handler"></param>
+        /// <param name="customization"></param>
         /// <returns></returns>
-        public SelectStatement SelectDistinct<T>(int topRows, Action<Target> handler)
+        public SelectStatement SelectDistinct<T>(int topRows, Action<Target, Context> customization)
         {
-            return Select<T>(true, topRows, false, handler);
+            return Select<T>(true, topRows, false, customization);
         }
 
         /// <summary>
@@ -187,11 +200,11 @@
         /// <typeparam name="T"></typeparam>
         /// <param name="topRows"></param>
         /// <param name="isPercent"></param>
-        /// <param name="handler"></param>
+        /// <param name="customization"></param>
         /// <returns></returns>
-        public SelectStatement SelectDistinct<T>(int topRows, bool isPercent, Action<Target> handler)
+        public SelectStatement SelectDistinct<T>(int topRows, bool isPercent, Action<Target, Context> customization)
         {
-            return Select<T>(true, topRows, isPercent, handler);
+            return Select<T>(true, topRows, isPercent, customization);
         }
 
         /// <summary>
@@ -203,9 +216,10 @@
         /// <returns></returns>
         public UpdateStatement Update<T>(T obj)
         {
-            var statement = new UpdateStatement(new Table(obj));
+            var statement = new UpdateStatement(new Table(typeof(T)));
 
             Statement = statement;
+            statement.Object = obj;
 
             return statement;
         }
@@ -215,14 +229,14 @@
         /// SET column1 = value, column2 = value,...
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="handler"></param>
+        /// <param name="customization"></param>
         /// <returns></returns>
-        public UpdateStatement Update<T>(Action<Target> handler)
+        public UpdateStatement Update<T>(Action<Target, Context> customization)
         {
             var statement = new UpdateStatement(new Table(typeof(T)));
 
             Statement = statement;
-            statement.Target.SetHandler(handler);
+            statement.Target.Customize(customization);
 
             return statement;
         }
@@ -230,16 +244,35 @@
         /// <summary>
         /// INSERT INTO table_name
         /// (column1, column2, column3,...)
-        /// VALUES(value1, value2, value3,....)
+        /// VALUES(value1, value2, value3,...)
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="obj"></param>
         /// <returns></returns>
         public InsertStatement Insert<T>(T obj)
         {
-            var statement = new InsertStatement(new Table(obj));
+            var statement = new InsertStatement(new Table(typeof(T)));
 
             Statement = statement;
+            statement.ObjectList.Add(obj);
+
+            return statement;
+        }
+
+        /// <summary>
+        /// INSERT INTO table_name
+        /// (column1, column2, column3,...)
+        /// VALUES(value1, value2, value3,...),(value1, value2, value3,...),...
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="objList"></param>
+        /// <returns></returns>
+        public InsertStatement Insert<T>(List<T> objList)
+        {
+            var statement = new InsertStatement(new Table(typeof(T)));
+
+            Statement = statement;
+            objList.ForEach(obj => statement.ObjectList.Add(obj));
 
             return statement;
         }
