@@ -24,6 +24,11 @@
         /// <param name="context"></param>
         public Target(Context context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             this.context = context;
             Items = new List<object>();
         }

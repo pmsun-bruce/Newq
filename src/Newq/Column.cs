@@ -1,5 +1,6 @@
 namespace Newq
 {
+    using System;
     using System.Collections.Generic;
 
     /// <summary>
@@ -12,12 +13,20 @@ namespace Newq
         /// </summary>
         /// <param name="table"></param>
         /// <param name="name"></param>
-        /// <param name="value"></param>
-        public Column(Table table, string name, object value = null)
+        public Column(Table table, string name)
         {
+            if (table == null)
+            {
+                throw new ArgumentNullException(nameof(table));
+            }
+
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentException(nameof(name) + " can't be null or empty");
+            }
+
             Table = table;
             Name = name;
-            Value = value;
         }
 
         /// <summary>
@@ -28,12 +37,7 @@ namespace Newq
         /// <summary>
         /// Gets or sets <see cref="Name"/>.
         /// </summary>
-        public string Name { get; protected set; }
-
-        /// <summary>
-        /// Gets or sets <see cref="Value"/>.
-        /// </summary>
-        public object Value { get; protected set; }
+        public string Name { get; }
 
         /// <summary>
         /// Gets <see cref="Alias"/>.
@@ -122,7 +126,7 @@ namespace Newq
         /// <param name="comparisonOperator"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        private Condition Compare(ComparisonOperator comparisonOperator, object value)
+        protected Condition Compare(ComparisonOperator comparisonOperator, object value)
         {
             var comparison = new Comparison(this, comparisonOperator, value);
 
@@ -135,7 +139,7 @@ namespace Newq
         /// <param name="comparisonOperator"></param>
         /// <param name="values"></param>
         /// <returns></returns>
-        private Condition Compare(ComparisonOperator comparisonOperator, object[] values)
+        protected Condition Compare(ComparisonOperator comparisonOperator, object[] values)
         {
             var comparison = new Comparison(this, comparisonOperator, values);
 
@@ -148,7 +152,7 @@ namespace Newq
         /// <param name="comparisonOperator"></param>
         /// <param name="values"></param>
         /// <returns></returns>
-        private Condition Compare(ComparisonOperator comparisonOperator, List<object> values)
+        protected Condition Compare(ComparisonOperator comparisonOperator, List<object> values)
         {
             var comparison = new Comparison(this, comparisonOperator, values);
 

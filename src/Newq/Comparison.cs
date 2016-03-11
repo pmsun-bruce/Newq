@@ -17,9 +17,14 @@ namespace Newq
         /// <param name="value"></param>
         public Comparison(Column column, ComparisonOperator comparisonOperator, object value)
         {
-            if ((object)column == null || value == null)
+            if ((object)column == null)
             {
-                throw new ArgumentException();
+                throw new ArgumentNullException(nameof(column));
+            }
+
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
             }
 
             Column = column;
@@ -35,9 +40,14 @@ namespace Newq
         /// <param name="values"></param>
         public Comparison(Column column, ComparisonOperator comparisonOperator, object[] values)
         {
-            if ((object)column == null || values == null || values.Length == 0)
+            if ((object)column == null)
             {
-                throw new ArgumentException();
+                throw new ArgumentNullException(nameof(column));
+            }
+
+            if (values == null || values.Length == 0)
+            {
+                throw new ArgumentException(nameof(values) + " can't be null or empty");
             }
 
             Column = column;
@@ -58,9 +68,14 @@ namespace Newq
         /// <param name="values"></param>
         public Comparison(Column column, ComparisonOperator comparisonOperator, List<object> values)
         {
-            if ((object)column == null || values == null || values.Count == 0)
+            if ((object)column == null)
             {
-                throw new ArgumentException();
+                throw new ArgumentNullException(nameof(column));
+            }
+
+            if (values == null || values.Count == 0)
+            {
+                throw new ArgumentException(nameof(values) + " can't be null or empty");
             }
 
             Column = column;
@@ -84,19 +99,19 @@ namespace Newq
         public List<object> Values { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets first condition parameter.
         /// </summary>
         /// <returns></returns>
-        private string GetFirstValue()
+        protected string GetFirstValue()
         {
             return Values[0].ToSqlValue();
         }
 
         /// <summary>
-        /// 
+        /// Gets IN condition parameters.
         /// </summary>
         /// <returns></returns>
-        private string GetInValues()
+        protected string GetInValues()
         {
             var values = string.Empty;
 
@@ -104,24 +119,29 @@ namespace Newq
 
             if (values.Length < 3)
             {
-                throw new Exception("values are null");
+                throw new Exception(nameof(values) + " can't be null or empty");
             }
 
             return values.Remove(values.Length - 2);
         }
 
         /// <summary>
-        /// 
+        /// Gets BETWEEN condition parameters.
         /// </summary>
         /// <returns></returns>
-        private string GetBetweenValues()
+        protected string GetBetweenValues()
         {
             var value1 = Values[0].ToSqlValue();
             var value2 = Values[1].ToSqlValue();
 
-            if (value1.Length == 0 || value2.Length == 0)
+            if (value1.Length == 0)
             {
-                throw new Exception("value is null");
+                throw new Exception(nameof(value1) + " can't be null or empty");
+            }
+
+            if (value2.Length == 0)
+            {
+                throw new Exception(nameof(value2) + " can't be null or empty");
             }
 
             return string.Format("{0} AND {1}", value1, value2);

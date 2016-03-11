@@ -45,7 +45,7 @@
         /// 
         /// </summary>
         /// <returns></returns>
-        private string GetParameters()
+        protected string GetParameters()
         {
             var topClause = string.Empty;
 

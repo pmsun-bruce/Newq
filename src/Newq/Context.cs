@@ -12,7 +12,7 @@
         /// <summary>
         /// 
         /// </summary>
-        private Dictionary<string, Table> tables;
+        protected Dictionary<string, Table> tables;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Context"/> class.

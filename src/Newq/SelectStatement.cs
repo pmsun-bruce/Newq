@@ -167,7 +167,7 @@
             return target.Remove(target.Length - 2);
         }
 
-        private string GetParameters()
+        protected string GetParameters()
         {
             var distinct = IsDistinct ? "DISTINCT " : string.Empty;
             var topClause = string.Empty;

@@ -1,5 +1,7 @@
 ﻿namespace Newq
 {
+    using System;
+
     /// <summary>
     /// 
     /// </summary>
@@ -11,6 +13,11 @@
         /// <param name="statement"></param>
         protected Clause(Statement statement)
         {
+            if (statement == null)
+            {
+                throw new ArgumentNullException(nameof(statement));
+            }
+
             Statement = statement;
             Context = statement.Context;
         }

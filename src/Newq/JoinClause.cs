@@ -41,7 +41,7 @@
         /// 
         /// </summary>
         /// <returns></returns>
-        private string GetJoinType()
+        protected string GetJoinType()
         {
             var type = string.Empty;
 

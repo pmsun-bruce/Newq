@@ -46,9 +46,9 @@
         /// <returns></returns>
         public override string ToString()
         {
-            if (Value == null)
+            if (Value == null || string.IsNullOrEmpty(Value.ToString()))
             {
-                throw new Exception("Value is null");
+                throw new Exception(nameof(Value) + " can't be null or empty");
             }
 
             var esc = char.IsWhiteSpace(Escape)

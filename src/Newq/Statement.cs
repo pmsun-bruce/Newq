@@ -62,20 +62,15 @@ namespace Newq
             /// <returns></returns>
             public static Statement Join<T>(Statement statement, JoinType type, Action<Filter, Context> customization)
             {
-                var tableName = typeof(T).Name;
+                var objType = typeof(T);
                 JoinClause clause = null;
 
-                if (statement.Context.Contains(tableName))
+                if (!statement.Context.Contains(objType.Name))
                 {
-                    clause = new JoinClause(statement, statement.Context[tableName], type);
-                }
-                else
-                {
-                    var table = new Table(typeof(T));
-                    statement.Context.Add(table);
-                    clause = new JoinClause(statement, table, type);
+                    statement.Context.Add(new Table(objType));
                 }
 
+                clause = new JoinClause(statement, statement.Context[objType.Name], type);
                 statement.Clauses.Add(clause);
                 clause.Filter.Customize(customization);
 

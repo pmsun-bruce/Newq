@@ -15,32 +15,42 @@ namespace Newq
         /// <param name="logicalOperator"></param>
         public Condition(Comparison source, Comparison target, LogicalOperator logicalOperator = LogicalOperator.And)
         {
-            if (source == null || target == null)
+            if (source == null)
             {
-                throw new ArgumentNullException("source or target is null");
+                throw new ArgumentNullException(nameof(source));
+            }
+
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
             }
 
             Source = source;
             Target = target;
-            LogicalOperator = logicalOperator;
+            Operator = logicalOperator;
         }
-        
+
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="Condition"/> class.
         /// </summary>
         /// <param name="source"></param>
         /// <param name="target"></param>
         /// <param name="logicalOperator"></param>
         public Condition(Condition source, Condition target, LogicalOperator logicalOperator = LogicalOperator.And)
         {
-            if (source == null || target == null)
+            if (source == null)
             {
-                throw new ArgumentNullException("source or target is null");
+                throw new ArgumentNullException(nameof(source));
+            }
+
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
             }
 
             Source = source;
             Target = target;
-            LogicalOperator = logicalOperator;
+            Operator = logicalOperator;
         }
 
         /// <summary>
@@ -54,16 +64,16 @@ namespace Newq
         public object Target { get; set; }
 
         /// <summary>
-        /// Gets or sets <see cref="LogicalOperator"/>.
+        /// Gets or sets <see cref="Operator"/>.
         /// </summary>
-        public LogicalOperator LogicalOperator { get; set; }
+        public LogicalOperator Operator { get; set; }
         
         /// <summary>
         /// 
         /// </summary>
         /// <param name="logicalOperator"></param>
         /// <returns></returns>
-        private string GetLinkType(LogicalOperator logicalOperator)
+        protected string GetOperator(LogicalOperator logicalOperator)
         {
             return logicalOperator == LogicalOperator.And ? "AND" : "OR";
         }
@@ -75,20 +85,19 @@ namespace Newq
         public override string ToString()
         {
             var condition = string.Empty;
-            
+
             if (Source == null || Target == null)
             {
-                return condition;
+                return string.Empty;
             }
-            
-            if (Source.Equals(Target))
+
+            if (ReferenceEquals(Source, Target))
             {
                 condition = Source.ToString();
             }
             else
             {
-                condition = string.Format("({0} {1} {2})",
-                    Source, GetLinkType(LogicalOperator), Target);
+                condition = string.Format("({0} {1} {2})", Source, GetOperator(Operator), Target);
             }
             
             return condition;

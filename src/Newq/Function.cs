@@ -16,6 +16,11 @@
         /// <param name="parameter"></param>
         public Function(string name, object parameter)
         {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentException(nameof(name) + " can't be null or empty");
+            }
+
             if (parameter == null)
             {
                 throw new ArgumentNullException(nameof(parameter));
@@ -104,7 +109,7 @@
         /// 
         /// </summary>
         /// <returns></returns>
-        private string GetParameters()
+        protected string GetParameters()
         {
             var param = string.Empty;
 

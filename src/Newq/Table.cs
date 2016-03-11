@@ -12,7 +12,7 @@ namespace Newq
         /// <summary>
         /// An dictionary used to get columns in the table.
         /// </summary>
-        private Dictionary<string, Column> columns;
+        protected Dictionary<string, Column> columns;
 
         /// <summary>
         /// Default primary key.
@@ -25,9 +25,30 @@ namespace Newq
         /// <param name="type">Type of the corresponding class</param>
         public Table(Type type)
         {
-            Name = type.Name;
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
             columns = new Dictionary<string, Column>();
-            SetColumns(type);
+            Name = type.Name;
+
+            Column column = null;
+            var defaultPK = type.GetProperty(DefaultPrimaryKey);
+            var properties = type.GetProperties().Where(p => p.CanRead && p.CanWrite && p.Name != DefaultPrimaryKey);
+
+            if (defaultPK != null)
+            {
+                column = new Column(this, DefaultPrimaryKey);
+                columns.Add(DefaultPrimaryKey, column);
+                PrimaryKey = new List<Column> { column };
+            }
+
+            foreach (var prop in properties)
+            {
+                column = new Column(this, prop.Name);
+                columns.Add(prop.Name, column);
+            }
         }
 
         /// <summary>
@@ -77,35 +98,6 @@ namespace Newq
         public OrderByColumn this[string columnName, SortOrder order]
         {
             get { return new OrderByColumn(columns[columnName], order); }
-        }
-
-        /// <summary>
-        /// Insert all columns and set primary key if needed
-        /// </summary>
-        /// <param name="type">Type of the corresponding class</param>
-        private void SetColumns(Type type)
-        {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
-
-            Column column = null;
-            var defaultPK = type.GetProperty(DefaultPrimaryKey);
-            var properties = type.GetProperties().Where(p => p.CanRead && p.CanWrite && p.Name != DefaultPrimaryKey);
-
-            if (defaultPK != null)
-            {
-                column = new Column(this, DefaultPrimaryKey);
-                columns.Add(DefaultPrimaryKey, column);
-                PrimaryKey = new List<Column> { column };
-            }
-
-            foreach (var prop in properties)
-            {
-                column = new Column(this, prop.Name);
-                columns.Add(prop.Name, column);
-            }
         }
 
         /// <summary>
