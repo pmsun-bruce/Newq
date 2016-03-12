@@ -10,6 +10,14 @@ namespace Newq
         /// <summary>
         /// Initializes a new instance of the <see cref="Condition"/> class.
         /// </summary>
+        public Condition()
+        {
+
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Condition"/> class.
+        /// </summary>
         /// <param name="source"></param>
         /// <param name="target"></param>
         /// <param name="logicalOperator"></param>
@@ -185,6 +193,40 @@ namespace Newq
         public static Condition operator |(Condition source, Condition target)
         {
             return source.Or(target);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="subquery"></param>
+        /// <returns></returns>
+        public static Condition Exists(QueryBuilder subquery)
+        {
+            var condition = new Syntax("EXISTS", subquery, false);
+
+            return new Condition
+            {
+                Source = condition,
+                Target = condition,
+                Operator = LogicalOperator.And,
+            };
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="subquery"></param>
+        /// <returns></returns>
+        public static Condition NotExists(QueryBuilder subquery)
+        {
+            var condition = new Syntax("NOT EXISTS", subquery, false);
+
+            return new Condition
+            {
+                Source = condition,
+                Target = condition,
+                Operator = LogicalOperator.And,
+            };
         }
     }
 

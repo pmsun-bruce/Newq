@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
@@ -57,7 +54,9 @@
     <Compile Include="GroupByClause.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="QueryBuilder.cs" />
+    <Compile Include="Syntax.cs" />
     <Compile Include="Target.cs" />
+    <Compile Include="UnionType.cs" />
     <Compile Include="UpdateStatement.cs" />
     <Compile Include="InsertStatement.cs" />
     <Compile Include="JoinClause.cs" />

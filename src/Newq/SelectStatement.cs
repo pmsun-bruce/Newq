@@ -18,7 +18,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Gets <see cref="Target"/>.
         /// </summary>
         public ICustomizable<Action<Target, Context>> Target { get; }
 
@@ -29,7 +29,7 @@
         public bool IsDistinct { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets <see cref="TopRows"/>.
         /// </summary>
         public int TopRows { get; set; }
 
@@ -44,12 +44,21 @@
         public Paginator Paginator { get; set; }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public UnionType? HasUnion { get; set; }
+
+        /// <summary>
         /// Returns a SQL-string that represents the current object.
         /// </summary>
         /// <returns></returns>
         public override string ToSql()
         {
-            var sql = string.Format("SELECT {0}{1} FROM {2} ", GetParameters(), GetTarget(), Context[0]);
+            var union = HasUnion.HasValue
+                      ? HasUnion == UnionType.Union ? "UNION " : "UNION ALL "
+                      : string.Empty;
+
+            var sql = string.Format("{0}SELECT {1}{2} FROM {3} ", union, GetParameters(), GetTarget(), Context[0]);
 
             Clauses.ForEach(clause => sql += clause.ToSql());
 
@@ -167,6 +176,10 @@
             return target.Remove(target.Length - 2);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         protected string GetParameters()
         {
             var distinct = IsDistinct ? "DISTINCT " : string.Empty;
@@ -256,6 +269,28 @@
             clause.Target.Customize(customization);
 
             return clause;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="customization"></param>
+        /// <returns></returns>
+        public SelectStatement Union<T>(Action<Target, Context> customization)
+        {
+            return Provider.Union<T>(this, customization);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="customization"></param>
+        /// <returns></returns>
+        public SelectStatement UnionAll<T>(Action<Target, Context> customization)
+        {
+            return Provider.Union<T>(this, customization, UnionType.UnionAll);
         }
     }
 }

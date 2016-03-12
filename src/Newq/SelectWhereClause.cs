@@ -52,5 +52,27 @@
 
             return clause;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="customization"></param>
+        /// <returns></returns>
+        public SelectStatement Union<T>(Action<Target, Context> customization)
+        {
+            return Provider.Union<T>(Statement as SelectStatement, customization);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="customization"></param>
+        /// <returns></returns>
+        public SelectStatement UnionAll<T>(Action<Target, Context> customization)
+        {
+            return Provider.Union<T>(Statement as SelectStatement, customization, UnionType.UnionAll);
+        }
     }
 }

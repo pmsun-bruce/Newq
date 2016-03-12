@@ -13,7 +13,8 @@ namespace Newq
         /// </summary>
         /// <param name="table"></param>
         /// <param name="name"></param>
-        public Column(Table table, string name)
+        /// <param name="value"></param>
+        public Column(Table table, string name, object value = null)
         {
             if (table == null)
             {
@@ -27,6 +28,7 @@ namespace Newq
 
             Table = table;
             Name = name;
+            Value = value;
         }
 
         /// <summary>
@@ -38,6 +40,11 @@ namespace Newq
         /// Gets or sets <see cref="Name"/>.
         /// </summary>
         public string Name { get; }
+
+        /// <summary>
+        /// Gets or sets <see cref="Value"/>.
+        /// </summary>
+        public object Value { get; set; }
 
         /// <summary>
         /// Gets <see cref="Alias"/>.

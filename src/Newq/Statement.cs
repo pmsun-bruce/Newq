@@ -28,7 +28,7 @@ namespace Newq
             }
 
             Context = new Context(table);
-            Clauses = new List<Clause>();
+            Clauses = new List<Statement>();
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Newq
         /// <summary>
         /// Gets or sets <see cref="Clauses"/>.
         /// </summary>
-        public List<Clause> Clauses { get; protected set; }
+        public List<Statement> Clauses { get; protected set; }
 
         /// <summary>
         /// Returns a SQL-string that represents the current object.
@@ -89,6 +89,38 @@ namespace Newq
                 clause.Filter.Customize(customization);
 
                 return clause;
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <typeparam name="T"></typeparam>
+            /// <param name="statement"></param>
+            /// <param name="customization"></param>
+            /// <param name="type"></param>
+            /// <returns></returns>
+            public static SelectStatement Union<T>(SelectStatement statement, Action<Target, Context> customization, UnionType type = UnionType.Union)
+            {
+                if (statement == null)
+                {
+                    throw new ArgumentNullException(nameof(statement));
+                }
+
+                var objType = typeof(T);
+                var unionStatement = new SelectStatement(new Table(objType));
+
+                foreach (var table in statement.Context.Tables)
+                {
+                    if (table.Name != objType.Name)
+                    {
+                        unionStatement.Context.Add(table);
+                    }
+                }
+
+                statement.Clauses.Add(unionStatement);
+                unionStatement.HasUnion = type;
+
+                return unionStatement;
             }
         }
     }
