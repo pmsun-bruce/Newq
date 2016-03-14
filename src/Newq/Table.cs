@@ -124,7 +124,7 @@ namespace Newq
             }
             else
             {
-                primarykey = columns.First().ToString();
+                primarykey = columns.First().Value.ToString();
             }
 
             return primarykey;
