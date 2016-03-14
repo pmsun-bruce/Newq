@@ -22,12 +22,80 @@
         public Statement Statement { get; protected set; }
 
         /// <summary>
+        /// Gets or sets <see cref="Paginator"/>.
+        /// </summary>
+        public Paginator Paginator { get; set; }
+
+        /// <summary>
         /// Returns a SQL-string that represents the current object.
         /// </summary>
         /// <returns></returns>
         public override string ToString()
         {
-            return Statement?.ToSql() ?? string.Empty;
+            var sql = Statement?.ToSql() ?? string.Empty;
+            
+            if (Paginator != null && Statement is SelectStatement)
+            {
+                var orderByIndex = sql.IndexOf(" ORDER BY ");
+                var orderByClause = string.Empty;
+                var originalTarget = sql.SubString(7, sql.IndexOf(" FROM ") - 7);
+                var newTarget = originalTarget;
+                var targetAlias = string.Empty;
+                
+                if (orderByIndex > -1)
+                {
+                    orderByClause = sql.SubString(orderByIndex + 10);
+                    
+                    var orderByColumns = orderByClause.Split(',');
+                    
+                    foreach (var column in orderByColumns)
+                    {
+                        var col = column.Replace(" ASC", "").Replace(" DESC", "");
+                        var alias = col.Replace("].[", ".");
+                        
+                        targetAlias += string.Format("{0}, ", alias);
+                        
+                        if (originalTarget.IndexOf(alias) == -1)
+                        {
+                            newTarget += string.Format(", {0} AS {1}", col, alias);
+                        }
+                    }
+                    
+                    orderByClause = orderByClause.Replace("].[", ".");
+                    sql = sql.Replace(originalTarget, newTarget);
+                }
+                else
+                {
+                    var index = originalTarget.IndexOf(", ");
+                    
+                    orderByClause = index == -1 ? originalTarget.SubString(originalTarget.IndexOf(" AS ") + 4)
+                                  : originalTarget.SubString(originalTarget.IndexOf(" AS ") + 4, index);
+                                  
+                    var columns = originalTarget.Split(',');
+                    
+                    foreach (var col in columns)
+                    {
+                        var asIndex = col.IndexOf(" AS ");
+                        var alias = asIndex > -1 ? col.SubString(asIndex + 4) : col.Trim();
+                        
+                        targetAlias += string.Format("{0}, ", alias);
+                    }
+                }
+                
+                if (targetAlias.Length > 2)
+                {
+                    targetAlias = targetAlias.Remove(targetAlias.Length - 2);
+                }
+                
+                sql = string.Format(
+                    "SELECT {0} FROM (" +
+                        "SELECT ROW_NUMBER() OVER(ORDER BY {1}) AS [$ROW_NUMBER], {0} FROM ({2}) AS [$ORIGINAL_QUERY]" +
+                    ") AS [$PAGINATOR] " +
+                    "WHERE [$PAGINATOR].[$ROW_NUMBER] BETWEEN {3} AND {4} ",
+                    targetAlias, orderByClause, sql.Trim(), Paginator.BeginRowNumber, Paginator.EndRowNumber);
+            }
+            
+            return sql;
         }
 
         /// <summary>
@@ -41,7 +109,7 @@
 
             if (Statement is SelectStatement)
             {
-                (Statement as SelectStatement).Paginator = paginator;
+                Paginator = paginator;
                 isPaginable = true;
             }
 
