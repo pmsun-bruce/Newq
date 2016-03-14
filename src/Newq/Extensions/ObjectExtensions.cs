@@ -22,7 +22,7 @@
             }
             else if (obj is DateTime)
             {
-                value = string.Format("'{0}'", ((DateTime)obj).ToString("yyyy-MM-dd hh:mm:ss"));
+                value = string.Format("'{0}'", ((DateTime)obj).ToString("yyyy-MM-dd hh:mm:ss.fff"));
             }
             else
             {

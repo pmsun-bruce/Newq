@@ -14,21 +14,31 @@ namespace Newq
         /// </summary>
         /// <param name="column"></param>
         /// <param name="comparisonOperator"></param>
-        /// <param name="value"></param>
-        public Comparison(Column column, ComparisonOperator comparisonOperator, object value)
+        public Comparison(Column column, ComparisonOperator comparisonOperator)
         {
             if ((object)column == null)
             {
                 throw new ArgumentNullException(nameof(column));
             }
 
+            Column = column;
+            Operator = comparisonOperator;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Comparison"/> class.
+        /// </summary>
+        /// <param name="column"></param>
+        /// <param name="comparisonOperator"></param>
+        /// <param name="value"></param>
+        public Comparison(Column column, ComparisonOperator comparisonOperator, object value)
+            : this(column, comparisonOperator)
+        {
             if (value == null)
             {
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Column = column;
-            Operator = comparisonOperator;
             Values = new List<object> { value };
         }
 
@@ -39,19 +49,13 @@ namespace Newq
         /// <param name="comparisonOperator"></param>
         /// <param name="values"></param>
         public Comparison(Column column, ComparisonOperator comparisonOperator, object[] values)
+            : this(column, comparisonOperator)
         {
-            if ((object)column == null)
-            {
-                throw new ArgumentNullException(nameof(column));
-            }
-
             if (values == null || values.Length == 0)
             {
                 throw new ArgumentException(nameof(values) + " can't be null or empty");
             }
 
-            Column = column;
-            Operator = comparisonOperator;
             Values = new List<object>();
 
             foreach (var obj in values)
@@ -67,19 +71,13 @@ namespace Newq
         /// <param name="comparisonOperator"></param>
         /// <param name="values"></param>
         public Comparison(Column column, ComparisonOperator comparisonOperator, List<object> values)
+            : this(column, comparisonOperator)
         {
-            if ((object)column == null)
-            {
-                throw new ArgumentNullException(nameof(column));
-            }
-
             if (values == null || values.Count == 0)
             {
                 throw new ArgumentException(nameof(values) + " can't be null or empty");
             }
 
-            Column = column;
-            Operator = comparisonOperator;
             Values = values;
         }
 
@@ -179,6 +177,10 @@ namespace Newq
                     return string.Format("{0} BETWEEN {1}", Column, GetBetweenValues());
                 case ComparisonOperator.NotBetween:
                     return string.Format("{0} NOT BETWEEN {1}", Column, GetBetweenValues());
+                case ComparisonOperator.IsNull:
+                    return string.Format("{0} IS NULL", Column);
+                case ComparisonOperator.IsNotNull:
+                    return string.Format("{0} IS NOT NULL", Column);
                 default:
                     return string.Empty;
             }

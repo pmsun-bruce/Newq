@@ -70,5 +70,15 @@ namespace Newq
         /// The values can be numbers, text, or dates.
         /// </summary>
         NotBetween,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        IsNull,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        IsNotNull,
     }
 }

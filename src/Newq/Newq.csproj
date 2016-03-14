@@ -38,6 +38,7 @@
     <Compile Include="Column.cs" />
     <Compile Include="Comparison.cs" />
     <Compile Include="Context.cs" />
+    <Compile Include="Customization.cs" />
     <Compile Include="Filter.cs" />
     <Compile Include="ICustomizable.cs" />
     <Compile Include="OrderByClause.cs" />

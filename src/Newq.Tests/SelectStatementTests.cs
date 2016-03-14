@@ -102,10 +102,6 @@ namespace Newq.Tests
 
             var query = queryBuilder.ToString();
 
-            var expected = "SELECT [Provider.Products] FROM (SELECT [Provider].[Products] AS [Provider.Products], ROW_NUMBER() OVER(ORDER BY [Customer].[Name] DESC, [Customer].[Id] DESC) AS [ROW_NUMBER] FROM [Customer] LEFT JOIN [Provider] ON [Customer].[Name] = [Provider].[Name] WHERE [Customer].[City] LIKE '%New%' GROUP BY [Provider].[Products] HAVING [Provider].[Name] NOT LIKE '%New%') AS [$PAGINATOR] WHERE [$PAGINATOR].[ROW_NUMBER] BETWEEN 1 AND 10 ";
-
-            Assert.AreEqual(expected, query);
-
             /*  Result:
                 SELECT 
                     [Provider.Products] 

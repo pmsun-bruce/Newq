@@ -38,21 +38,22 @@
             {
                 var orderByIndex = sql.IndexOf(" ORDER BY ");
                 var orderByClause = string.Empty;
-                var originalTarget = sql.SubString(7, sql.IndexOf(" FROM ") - 7);
+                var originalTarget = sql.Substring(7, sql.IndexOf(" FROM ") - 7);
                 var newTarget = originalTarget;
                 var targetAlias = string.Empty;
-                
+                var column = string.Empty;
+                var alias = string.Empty;
+                string[] targetColumns = null;
+
                 if (orderByIndex > -1)
                 {
-                    orderByClause = sql.SubString(orderByIndex + 10);
+                    orderByClause = sql.Substring(orderByIndex + 10).Trim();
+                    targetColumns = orderByClause.Split(',');
                     
-                    var orderByColumns = orderByClause.Split(',');
-                    
-                    foreach (var column in orderByColumns)
+                    foreach (var col in targetColumns)
                     {
-                        var col = column.Replace(" ASC", "").Replace(" DESC", "");
-                        var alias = col.Replace("].[", ".");
-                        
+                        column = col.Replace(" ASC", "").Replace(" DESC", "");
+                        alias = column.Trim().Replace("].[", ".");
                         targetAlias += string.Format("{0}, ", alias);
                         
                         if (originalTarget.IndexOf(alias) == -1)
@@ -67,18 +68,18 @@
                 else
                 {
                     var index = originalTarget.IndexOf(", ");
-                    
-                    orderByClause = index == -1 ? originalTarget.SubString(originalTarget.IndexOf(" AS ") + 4)
-                                  : originalTarget.SubString(originalTarget.IndexOf(" AS ") + 4, index);
-                                  
-                    var columns = originalTarget.Split(',');
-                    
-                    foreach (var col in columns)
+                    var asIndex = originalTarget.IndexOf(" AS ");
+
+                    orderByClause = index == -1 ? originalTarget.Substring(asIndex + 4)
+                                  : originalTarget.Substring(asIndex + 4, index - (asIndex + 4));
+
+                    targetColumns = originalTarget.Split(',');
+
+                    foreach (var col in targetColumns)
                     {
-                        var asIndex = col.IndexOf(" AS ");
-                        var alias = asIndex > -1 ? col.SubString(asIndex + 4) : col.Trim();
-                        
-                        targetAlias += string.Format("{0}, ", alias);
+                        asIndex = col.IndexOf(" AS ");
+                        alias = asIndex > -1 ? col.Substring(asIndex + 4) : col;
+                        targetAlias += string.Format("{0}, ", alias.Trim());
                     }
                 }
                 

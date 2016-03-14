@@ -6,7 +6,7 @@
     /// <summary>
     /// 
     /// </summary>
-    public class Filter : ICustomizable<Action<Filter, Context>>
+    public class Filter : Customization, ICustomizable<Action<Filter, Context>>
     {
         /// <summary>
         /// 
@@ -16,20 +16,14 @@
         /// <summary>
         /// 
         /// </summary>
-        protected Context context;
+        protected bool hasPerformed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Filter"/> class.
         /// </summary>
         /// <param name="context"></param>
-        public Filter(Context context)
+        public Filter(Context context) : base(context)
         {
-            if (context == null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-
-            this.context = context;
             Items = new List<Condition>();
         }
 
@@ -45,6 +39,7 @@
         public void Customize(Action<Filter, Context> customization)
         {
             this.customization = customization;
+            hasPerformed = false;
         }
 
         /// <summary>
@@ -52,29 +47,28 @@
         /// </summary>
         public bool Perform()
         {
-            if (customization != null)
+            if (!hasPerformed && customization != null)
             {
                 Items.Clear();
                 customization(this, context);
-
-                return true;
+                hasPerformed = true;
             }
 
-            return false;
+            return hasPerformed;
         }
 
         /// <summary>
         /// Returns a string that represents the current customization.
         /// </summary>
         /// <returns></returns>
-        public string GetCustomization()
+        public override string GetCustomization()
         {
             var filter = string.Empty;
 
             Perform();
             Items.ForEach(item => filter += string.Format("{0} AND ", item));
 
-            return filter.Length > 0 ? filter.Remove(filter.Length - 5) : filter;
+            return filter.Length > 0 ? filter.Remove(filter.Length - 5) : string.Empty;
         }
 
         /// <summary>

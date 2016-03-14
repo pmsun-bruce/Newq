@@ -41,11 +41,6 @@
         /// <summary>
         /// 
         /// </summary>
-        public Paginator Paginator { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
         public UnionType? HasUnion { get; set; }
 
         /// <summary>
@@ -61,30 +56,6 @@
             var sql = string.Format("{0}SELECT {1}{2} FROM {3} ", union, GetParameters(), GetTarget(), Context[0]);
 
             Clauses.ForEach(clause => sql += clause.ToSql());
-
-            if (Paginator != null)
-            {
-                var subQuery = string.Empty;
-                var index = sql.IndexOf(" ORDER BY ");
-                var rowNumberClause = string.Empty;
-
-                if (index > -1)
-                {
-                    var orderByClause = sql.Substring(index).Trim();
-
-                    rowNumberClause = string.Format(", ROW_NUMBER() OVER({0}) AS [ROW_NUMBER]", orderByClause);
-                    subQuery = sql.Substring(0, index + 1).Insert(sql.IndexOf(" FROM "), rowNumberClause);
-                }
-                else
-                {
-                    rowNumberClause = string.Format(", ROW_NUMBER() OVER(ORDER BY {0}) AS [ROW_NUMBER]", Context[0].GetPrimaryKey());
-                    subQuery = sql.Insert(sql.IndexOf(" FROM "), rowNumberClause);
-                }
-
-                sql = string.Format(
-                    "SELECT {0}{1} FROM ({2}) AS [$PAGINATOR] WHERE [$PAGINATOR].[ROW_NUMBER] BETWEEN {3} AND {4} ",
-                    GetParameters(), GetTargetAlias(), subQuery.Trim(), Paginator.BeginRowNumber, Paginator.EndRowNumber);
-            }
 
             return sql;
         }
@@ -112,20 +83,15 @@
             }
             else
             {
-                Column column;
-                Function function;
-
                 foreach (var item in items)
                 {
                     if (item is Column)
                     {
-                        column = item as Column;
-                        target += string.Format("{0} AS {1}, ", column, column.Alias);
+                        target += string.Format("{0} AS {1}, ", item, (item as Column).Alias);
                     }
                     else if (item is Function)
                     {
-                        function = item as Function;
-                        target += string.Format("{0} AS {1}, ", function, function.Alias);
+                        target += string.Format("{0} AS {1}, ", item, (item as Function).Alias);
                     }
                 }
             }
@@ -188,8 +154,8 @@
             if (TopRows > 0)
             {
                 topClause = IsPercent
-                    ? string.Format("TOP({0}) PERCENT ", TopRows)
-                    : string.Format("TOP({0}) ", TopRows);
+                          ? string.Format("TOP({0}) PERCENT ", TopRows)
+                          : string.Format("TOP({0}) ", TopRows);
             }
 
             return distinct + topClause;

@@ -6,7 +6,7 @@
     /// <summary>
     /// Target collection of statement or clause.
     /// </summary>
-    public class Target : ICustomizable<Action<Target, Context>>
+    public class Target : Customization, ICustomizable<Action<Target, Context>>
     {
         /// <summary>
         /// 
@@ -16,20 +16,14 @@
         /// <summary>
         /// 
         /// </summary>
-        protected Context context;
+        protected bool hasPerformed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Target"/> class.
         /// </summary>
         /// <param name="context"></param>
-        public Target(Context context)
+        public Target(Context context) : base(context)
         {
-            if (context == null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-
-            this.context = context;
             Items = new List<object>();
         }
 
@@ -45,6 +39,7 @@
         public void Customize(Action<Target, Context> customization)
         {
             this.customization = customization;
+            hasPerformed = false;
         }
 
         /// <summary>
@@ -52,29 +47,28 @@
         /// </summary>
         public bool Perform()
         {
-            if (customization != null)
+            if (!hasPerformed && customization != null)
             {
                 Items.Clear();
                 customization(this, context);
-
-                return true;
+                hasPerformed = true;
             }
 
-            return false;
+            return hasPerformed;
         }
 
         /// <summary>
         /// Returns a string that represents the current customization.
         /// </summary>
         /// <returns></returns>
-        public string GetCustomization()
+        public override string GetCustomization()
         {
             var target = string.Empty;
 
             Perform();
             Items.ForEach(item => target += string.Format("{0}, ", item));
 
-            return target.Length > 0 ? target.Remove(target.Length - 2) : target;
+            return target.Length > 0 ? target.Remove(target.Length - 2) : string.Empty;
         }
 
         /// <summary>

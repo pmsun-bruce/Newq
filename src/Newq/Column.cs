@@ -130,6 +130,28 @@ namespace Newq
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        public Condition IsNull()
+        {
+            var comparison = new Comparison(this, ComparisonOperator.IsNull);
+
+            return new Condition(comparison, comparison);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public Condition IsNotNull()
+        {
+            var comparison = new Comparison(this, ComparisonOperator.IsNotNull);
+
+            return new Condition(comparison, comparison);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="comparisonOperator"></param>
         /// <param name="value"></param>
         /// <returns></returns>
