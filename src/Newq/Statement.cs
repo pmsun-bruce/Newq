@@ -119,6 +119,7 @@ namespace Newq
 
                 statement.Clauses.Add(unionStatement);
                 unionStatement.HasUnion = type;
+                unionStatement.Target.Customize(customization);
 
                 return unionStatement;
             }
