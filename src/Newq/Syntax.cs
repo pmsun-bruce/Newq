@@ -29,6 +29,7 @@
 
             Name = name.ToUpper();
             Parameters = new List<object> { parameter };
+            WithinBrackets = withinBrackets;
         }
 
         /// <summary>
@@ -46,6 +47,7 @@
 
             Name = name.ToUpper();
             Parameters = parameters.ToList();
+            WithinBrackets = withinBrackets;
         }
 
         /// <summary>
@@ -63,6 +65,7 @@
 
             Name = name.ToUpper();
             Parameters = parameters;
+            WithinBrackets = withinBrackets;
         }
 
         /// <summary>
