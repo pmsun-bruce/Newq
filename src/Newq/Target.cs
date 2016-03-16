@@ -64,9 +64,20 @@
         public override string GetCustomization()
         {
             var target = string.Empty;
+            var targetItem = string.Empty;
 
             Perform();
-            Items.ForEach(item => target += string.Format("{0}, ", item));
+            Items.ForEach(item => {
+                if (item != null)
+                {
+                    targetItem = item.ToString();
+
+                    if (!string.IsNullOrEmpty(targetItem))
+                    {
+                        target += string.Format("{0}, ", targetItem);
+                    }
+                }
+            });
 
             return target.Length > 0 ? target.Remove(target.Length - 2) : string.Empty;
         }

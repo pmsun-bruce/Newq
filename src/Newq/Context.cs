@@ -69,6 +69,18 @@
         }
 
         /// <summary>
+        /// Gets <see cref="Column"/> by table name and column name.
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columnName"></param>
+        /// <param name="exclude"></param>
+        /// <returns></returns>
+        public Column this[string tableName, string columnName, Exclude exclude]
+        {
+            get { return tables[tableName][columnName, exclude]; }
+        }
+
+        /// <summary>
         /// Gets <see cref="OrderByColumn"/> by table name, column name and sort order.
         /// </summary>
         /// <param name="tableName"></param>

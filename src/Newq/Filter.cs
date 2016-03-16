@@ -64,9 +64,20 @@
         public override string GetCustomization()
         {
             var filter = string.Empty;
+            var filterItem = string.Empty;
 
             Perform();
-            Items.ForEach(item => filter += string.Format("{0} AND ", item));
+            Items.ForEach(item => {
+                if (item != null)
+                {
+                    filterItem = item.ToString();
+
+                    if (!string.IsNullOrEmpty(filterItem))
+                    {
+                        filter += string.Format("{0} AND ", item);
+                    }
+                }
+            });
 
             return filter.Length > 0 ? filter.Remove(filter.Length - 5) : string.Empty;
         }

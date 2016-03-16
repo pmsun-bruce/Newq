@@ -39,6 +39,7 @@
     <Compile Include="Comparison.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Customization.cs" />
+    <Compile Include="Exclude.cs" />
     <Compile Include="Filter.cs" />
     <Compile Include="ICustomizable.cs" />
     <Compile Include="OrderByClause.cs" />
@@ -69,6 +70,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Condition.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

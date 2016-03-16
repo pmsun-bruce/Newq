@@ -99,6 +99,14 @@ namespace Newq
                 return string.Empty;
             }
 
+            var source = Source.ToString();
+            var target = Target.ToString();
+
+            if (string.IsNullOrEmpty(source) || string.IsNullOrEmpty(target))
+            {
+                return source + target;
+            }
+
             if (ReferenceEquals(Source, Target))
             {
                 condition = Source.ToString();

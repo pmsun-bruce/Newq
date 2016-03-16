@@ -70,16 +70,6 @@ namespace Newq
         }
 
         /// <summary>
-        /// Gets an certain entity of column by its name with an indexer
-        /// </summary>
-        /// <param name="index">name of the column</param>
-        /// <returns>an entity of column</returns>
-        public Column this[int index]
-        {
-            get { return Columns[index]; }
-        }
-
-        /// <summary>
         /// Gets <see cref="Column"/> by column name.
         /// </summary>
         /// <param name="columnName">name of the column</param>
@@ -87,6 +77,24 @@ namespace Newq
         public Column this[string columnName]
         {
             get { return columns[columnName]; }
+        }
+
+        /// <summary>
+        /// Gets <see cref="Column"/> by column name.
+        /// </summary>
+        /// <param name="columnName">name of the column</param>
+        /// <param name="exclude"></param>
+        /// <returns>an entity of column</returns>
+        public Column this[string columnName, Exclude exclude]
+        {
+            get
+            {
+                var column = columns[columnName];
+
+                column.ExcludePattern = exclude;
+
+                return column;
+            }
         }
 
         /// <summary>

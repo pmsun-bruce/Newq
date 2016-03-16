@@ -1,5 +1,6 @@
 namespace Newq
 {
+    using Extensions;
     using System;
     using System.Collections.Generic;
 
@@ -47,6 +48,11 @@ namespace Newq
         public object Value { get; set; }
 
         /// <summary>
+        /// Gets or sets <see cref="ExcludePattern"/>.
+        /// </summary>
+        public Exclude? ExcludePattern { get; set; }
+
+        /// <summary>
         /// Gets <see cref="Alias"/>.
         /// </summary>
         public string Alias
@@ -80,6 +86,59 @@ namespace Newq
         public override string ToString()
         {
             return string.Format("[{0}].[{1}]", Table.Name, Name);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        protected bool IsExclude(object value)
+        {
+            var isExclude = false;
+
+            if (ExcludePattern.HasValue)
+            {
+                var sqlValue = value.ToSqlValue();
+
+                switch (ExcludePattern)
+                {
+                    case Exclude.Empty:
+                        isExclude = sqlValue == "''";
+                        break;
+                    case Exclude.WhiteSpace:
+                        isExclude = sqlValue == "''" || string.IsNullOrWhiteSpace(sqlValue.Replace("'", ""));
+                        break;
+                    case Exclude.Zero:
+                        var tryZero = sqlValue.Replace("'", "").Split('.')[0];
+
+                        if (!string.IsNullOrEmpty(tryZero) && tryZero.Length == 1)
+                        {
+                            isExclude = tryZero == "0";
+                        }
+                        break;
+                    case Exclude.MaxDateTime:
+                        var tryMaxDateTime = DateTime.MinValue;
+
+                        if (DateTime.TryParse(sqlValue.Replace("'", ""), out tryMaxDateTime))
+                        {
+                            isExclude = tryMaxDateTime == DateTime.MaxValue;
+                        }
+                        break;
+                    case Exclude.MinDateTime:
+                        var tryMinDateTime = DateTime.MaxValue;
+
+                        if (DateTime.TryParse(sqlValue.Replace("'", ""), out tryMinDateTime))
+                        {
+                            isExclude = tryMinDateTime == DateTime.MinValue;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return isExclude;
         }
 
         /// <summary>
@@ -157,6 +216,15 @@ namespace Newq
         /// <returns></returns>
         protected Condition Compare(ComparisonOperator comparisonOperator, object value)
         {
+            if (IsExclude(value))
+            {
+                return new Condition
+                {
+                    Source = null,
+                    Target = null,
+                };
+            }
+
             var comparison = new Comparison(this, comparisonOperator, value);
 
             return new Condition(comparison, comparison);
@@ -257,6 +325,15 @@ namespace Newq
         /// <returns></returns>
         public Condition Like(object value, PatternType type = PatternType.Fuzzy, char escape = ' ')
         {
+            if (IsExclude(value))
+            {
+                return new Condition
+                {
+                    Source = null,
+                    Target = null,
+                };
+            }
+
             return Compare(ComparisonOperator.Like, new Pattern(value, type, escape));
         }
 
@@ -269,6 +346,15 @@ namespace Newq
         /// <returns></returns>
         public Condition NotLike(object value, PatternType type = PatternType.Fuzzy, char escape = ' ')
         {
+            if (IsExclude(value))
+            {
+                return new Condition
+                {
+                    Source = null,
+                    Target = null,
+                };
+            }
+
             return Compare(ComparisonOperator.NotLike, new Pattern(value, type, escape));
         }
 
@@ -341,6 +427,15 @@ namespace Newq
         /// <returns></returns>
         public Condition Between(object value1, object value2)
         {
+            if (IsExclude(value1) || IsExclude(value2))
+            {
+                return new Condition
+                {
+                    Source = null,
+                    Target = null,
+                };
+            }
+
             return Compare(ComparisonOperator.Between, new object[] { value1, value2 });
         }
 
@@ -353,6 +448,15 @@ namespace Newq
         /// <returns></returns>
         public Condition NotBetween(object value1, object value2)
         {
+            if (IsExclude(value1) || IsExclude(value2))
+            {
+                return new Condition
+                {
+                    Source = null,
+                    Target = null,
+                };
+            }
+
             return Compare(ComparisonOperator.NotBetween, new object[] { value1, value2 });
         }
 
