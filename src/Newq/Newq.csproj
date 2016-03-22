@@ -42,14 +42,15 @@
     <Compile Include="Exclude.cs" />
     <Compile Include="Filter.cs" />
     <Compile Include="ICustomizable.cs" />
+    <Compile Include="ICustomItem.cs" />
     <Compile Include="OrderByClause.cs" />
     <Compile Include="Function.cs" />
     <Compile Include="JoinType.cs" />
     <Compile Include="ComparisonOperator.cs" />
     <Compile Include="OrderByColumn.cs" />
     <Compile Include="Paginator.cs" />
+    <Compile Include="LikePattern.cs" />
     <Compile Include="Pattern.cs" />
-    <Compile Include="PatternType.cs" />
     <Compile Include="SortOrder.cs" />
     <Compile Include="Statement.cs" />
     <Compile Include="HavingClause.cs" />

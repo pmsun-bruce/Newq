@@ -5,7 +5,7 @@ namespace Newq
     /// <summary>
     /// 
     /// </summary>
-    public class Condition
+    public class Condition : ICustomItem<Filter>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Condition"/> class.
@@ -75,7 +75,25 @@ namespace Newq
         /// Gets or sets <see cref="Operator"/>.
         /// </summary>
         public LogicalOperator Operator { get; set; }
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="customization"></param>
+        public void AppendTo(Filter customization)
+        {
+            customization.Items.Add(this);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string GetIdentifier()
+        {
+            return ToString();
+        }
+
         /// <summary>
         /// 
         /// </summary>

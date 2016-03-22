@@ -18,7 +18,7 @@ namespace Newq.Tests
                     var cust = context["Customer"];
 
                     filter.Add(cust["City"].Between("New York", "Landon"));
-                    filter.Add(cust["Name"].Like("Google").Or(cust["Name"].Like("Apple", PatternType.BeginWith)));
+                    filter.Add(cust["Name"].Like("Google").Or(cust["Name"].Like("Apple", Pattern.BeginWith)));
                 });
 
             /*  Result:

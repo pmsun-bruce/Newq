@@ -3,7 +3,7 @@
     /// <summary>
     /// 
     /// </summary>
-    public class OrderByColumn
+    public class OrderByColumn : ICustomItem<Target>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="OrderByColumn"/> class.
@@ -25,6 +25,24 @@
         /// 
         /// </summary>
         public SortOrder Order { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="customization"></param>
+        public void AppendTo(Target customization)
+        {
+            customization.Items.Add(this);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string GetIdentifier()
+        {
+            return ToString();
+        }
 
         /// <summary>
         /// 

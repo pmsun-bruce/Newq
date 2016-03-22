@@ -24,13 +24,13 @@
         /// <param name="context"></param>
         public Filter(Context context) : base(context)
         {
-            Items = new List<Condition>();
+            Items = new List<ICustomItem<Filter>>();
         }
 
         /// <summary>
         /// Gets or sets <see cref="Items"/>
         /// </summary>
-        public List<Condition> Items { get; protected set; }
+        public List<ICustomItem<Filter>> Items { get; protected set; }
 
         /// <summary>
         /// 
@@ -83,53 +83,45 @@
         }
 
         /// <summary>
-        /// Adds a <see cref="Condition"/> to the end of the filter.
+        /// Adds a <see cref="ICustomItem{T}"/> to the end of the filter.
         /// </summary>
-        /// <param name="condition"></param>
-        public void Add(Condition condition)
+        /// <param name="item"></param>
+        public void Add(ICustomItem<Filter> item)
         {
-            Items.Add(condition);
+            Items.Add(item);
         }
 
         /// <summary>
         /// Removes the first occurrence of a specific <see cref="Condition"/> from the filter.
         /// </summary>
-        /// <param name="condition"></param>
-        public void Remove(Condition condition)
+        /// <param name="item"></param>
+        public void Remove(ICustomItem<Filter> item)
         {
-            Items.Remove(condition);
+            Items.Remove(item);
         }
 
         /// <summary>
-        /// Removes all conditions from the filter.
-        /// </summary>
-        public void Clear()
-        {
-            Items.Clear();
-        }
-
-        /// <summary>
-        /// <see cref="Add(Condition)"/>.
+        /// <see cref="Add(ICustomItem{Filter})"/>.
         /// </summary>
         /// <param name="filter"></param>
-        /// <param name="condition"></param>
+        /// <param name="item"></param>
         /// <returns></returns>
-        public static Filter operator +(Filter filter, Condition condition)
+        public static Filter operator +(Filter filter, ICustomItem<Filter> item)
         {
-            filter.Add(condition);
+            filter.Add(item);
 
             return filter;
         }
 
         /// <summary>
-        /// <see cref="Remove(Condition)"/>.
+        /// <see cref="Remove(ICustomItem{Filter})"/>.
         /// </summary>
         /// <param name="filter"></param>
-        /// <param name="condition"></param>
+        /// <param name="item"></param>
         /// <returns></returns>
-        public static Filter operator -(Filter filter, Condition condition)
+        public static Filter operator -(Filter filter, ICustomItem<Filter> item)
         {
-            filter.Remove(condition);
+            filter.Remove(item);
 
             return filter;
         }

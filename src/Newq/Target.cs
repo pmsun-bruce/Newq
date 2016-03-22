@@ -24,13 +24,13 @@
         /// <param name="context"></param>
         public Target(Context context) : base(context)
         {
-            Items = new List<object>();
+            Items = new List<ICustomItem<Target>>();
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public List<object> Items { get; protected set; }
+        public List<ICustomItem<Target>> Items { get; protected set; }
 
         /// <summary>
         /// 
@@ -104,16 +104,7 @@
         /// Adds a object to the end of the target.
         /// </summary>
         /// <param name="item"></param>
-        public void Add(object item)
-        {
-            Items.Add(item);
-        }
-
-        /// <summary>
-        /// Adds a object to the end of the target.
-        /// </summary>
-        /// <param name="item"></param>
-        public void Add(OrderByColumn item)
+        public void Add(ICustomItem<Target> item)
         {
             Items.Add(item);
         }
@@ -122,27 +113,18 @@
         /// Removes the first occurrence of a specific object from the target.
         /// </summary>
         /// <param name="item"></param>
-        public void Remove(object item)
+        public void Remove(ICustomItem<Target> item)
         {
             Items.Remove(item);
         }
 
         /// <summary>
-        /// Removes the first occurrence of a specific object from the target.
-        /// </summary>
-        /// <param name="item"></param>
-        public void Remove(OrderByColumn item)
-        {
-            Items.Remove(item);
-        }
-
-        /// <summary>
-        /// <see cref="Add(object)"/>
+        /// <see cref="Add(ICustomItem{Target})"/>
         /// </summary>
         /// <param name="target"></param>
         /// <param name="item"></param>
         /// <returns></returns>
-        public static Target operator +(Target target, object item)
+        public static Target operator +(Target target, ICustomItem<Target> item)
         {
             target.Add(item);
 
@@ -150,38 +132,12 @@
         }
 
         /// <summary>
-        /// <see cref="Add(OrderByColumn)"/>
+        /// <see cref="Remove(ICustomItem{Target})"/>
         /// </summary>
         /// <param name="target"></param>
         /// <param name="item"></param>
         /// <returns></returns>
-        public static Target operator +(Target target, OrderByColumn item)
-        {
-            target.Add(item);
-
-            return target;
-        }
-
-        /// <summary>
-        /// <see cref="Remove(object)"/>
-        /// </summary>
-        /// <param name="target"></param>
-        /// <param name="item"></param>
-        /// <returns></returns>
-        public static Target operator -(Target target, object item)
-        {
-            target.Remove(item);
-
-            return target;
-        }
-
-        /// <summary>
-        /// <see cref="Remove(OrderByColumn)"/>
-        /// </summary>
-        /// <param name="target"></param>
-        /// <param name="item"></param>
-        /// <returns></returns>
-        public static Target operator -(Target target, OrderByColumn item)
+        public static Target operator -(Target target, ICustomItem<Target> item)
         {
             target.Remove(item);
 

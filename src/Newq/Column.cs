@@ -7,7 +7,7 @@ namespace Newq
     /// <summary>
     /// 
     /// </summary>
-    public class Column
+    public class Column : ICustomItem<Target>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Column"/> class.
@@ -58,6 +58,24 @@ namespace Newq
         public string Alias
         {
             get { return string.Format("[{0}.{1}]", Table.Name, Name); }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="customization"></param>
+        public void AppendTo(Target customization)
+        {
+            customization.Items.Add(this);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string GetIdentifier()
+        {
+            return ToString();
         }
 
         /// <summary>
@@ -323,7 +341,7 @@ namespace Newq
         /// <param name="type"></param>
         /// <param name="escape"></param>
         /// <returns></returns>
-        public Condition Like(object value, PatternType type = PatternType.Fuzzy, char escape = ' ')
+        public Condition Like(object value, Pattern type = Pattern.Fuzzy, char escape = ' ')
         {
             if (IsExclude(value))
             {
@@ -334,7 +352,7 @@ namespace Newq
                 };
             }
 
-            return Compare(ComparisonOperator.Like, new Pattern(value, type, escape));
+            return Compare(ComparisonOperator.Like, new LikePattern(value, type, escape));
         }
 
         /// <summary>
@@ -344,7 +362,7 @@ namespace Newq
         /// <param name="type"></param>
         /// <param name="escape"></param>
         /// <returns></returns>
-        public Condition NotLike(object value, PatternType type = PatternType.Fuzzy, char escape = ' ')
+        public Condition NotLike(object value, Pattern type = Pattern.Fuzzy, char escape = ' ')
         {
             if (IsExclude(value))
             {
@@ -355,7 +373,7 @@ namespace Newq
                 };
             }
 
-            return Compare(ComparisonOperator.NotLike, new Pattern(value, type, escape));
+            return Compare(ComparisonOperator.NotLike, new LikePattern(value, type, escape));
         }
 
         /// <summary>
