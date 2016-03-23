@@ -6,6 +6,12 @@ namespace Newq
     public enum JoinType
     {
         /// <summary>
+        /// The INNER JOIN selects all rows from both tables
+        /// as long as there is a match between the columns in both tables.
+        /// </summary>
+        InnerJoin,
+
+        /// <summary>
         /// The LEFT JOIN returns all rows from the left table (table1),
         /// with the matching rows in the right table (table2).
         /// The result is NULL in the right side when there is no match.
@@ -20,30 +26,15 @@ namespace Newq
         RightJoin,
 
         /// <summary>
-        /// The INNER JOIN selects all rows from both tables
-        /// as long as there is a match between the columns in both tables.
-        /// </summary>
-        InnerJoin,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        CrossJoin,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        LeftOuterJoin,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        RightOuterJoin,
-
-        /// <summary>
-        /// The FULL OUTER JOIN returns all rows from the left table (table1)
+        /// The FULL JOIN returns all rows from the left table (table1)
         /// and from the right table (table2).
         /// </summary>
-        FullOuterJoin,
+        FullJoin,
+
+        /// <summary>
+        /// The Cross JOIN returns all rows where each row from the left table (table1)
+        /// is combined with each row from the right table (table2).
+        /// </summary>
+        CrossJoin,
     }
 }

@@ -76,16 +76,57 @@
         /// <summary>
         /// DELETE
         /// FROM table_name1
-        /// JOIN table_name2
+        /// LEFT JOIN table_name2
         /// ON table_name1.column_name=table_name2.column_name
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="type"></param>
         /// <param name="customization"></param>
         /// <returns></returns>
-        public DeleteStatement Join<T>(JoinType type, Action<Filter, Context> customization)
+        public DeleteStatement LeftJoin<T>(Action<Filter, Context> customization)
         {
-            return Provider.Join<T>(this, type, customization) as DeleteStatement;
+            return Provider.Join<T>(this, JoinType.LeftJoin, customization) as DeleteStatement;
+        }
+
+        /// <summary>
+        /// DELETE
+        /// FROM table_name1
+        /// RIGHT JOIN table_name2
+        /// ON table_name1.column_name=table_name2.column_name
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="customization"></param>
+        /// <returns></returns>
+        public DeleteStatement RightJoin<T>(Action<Filter, Context> customization)
+        {
+            return Provider.Join<T>(this, JoinType.RightJoin, customization) as DeleteStatement;
+        }
+
+        /// <summary>
+        /// DELETE
+        /// FROM table_name1
+        /// FULL JOIN table_name2
+        /// ON table_name1.column_name=table_name2.column_name
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="customization"></param>
+        /// <returns></returns>
+        public DeleteStatement FullJoin<T>(Action<Filter, Context> customization)
+        {
+            return Provider.Join<T>(this, JoinType.FullJoin, customization) as DeleteStatement;
+        }
+
+        /// <summary>
+        /// DELETE
+        /// FROM table_name1
+        /// CROSS JOIN table_name2
+        /// ON table_name1.column_name=table_name2.column_name
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="customization"></param>
+        /// <returns></returns>
+        public DeleteStatement CrossJoin<T>(Action<Filter, Context> customization)
+        {
+            return Provider.Join<T>(this, JoinType.CrossJoin, customization) as DeleteStatement;
         }
 
         /// <summary>

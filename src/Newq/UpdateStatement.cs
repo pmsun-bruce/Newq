@@ -105,9 +105,9 @@
         }
 
         /// <summary>
-        /// UPDATE table_name
+        /// UPDATE table_name1
         /// SET column1 = value, column2 = value,...
-        /// FROM table_name
+        /// FROM table_name1
         /// INNER JOIN table_name2
         /// ON table_name1.column_name=table_name2.column_name
         /// </summary>
@@ -120,19 +120,63 @@
         }
 
         /// <summary>
-        /// UPDATE table_name
+        /// UPDATE table_name1
         /// SET column1 = value, column2 = value,...
-        /// FROM table_name
-        /// JOIN table_name2
+        /// FROM table_name1
+        /// LEFT JOIN table_name2
         /// ON table_name1.column_name=table_name2.column_name
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="type"></param>
         /// <param name="customization"></param>
         /// <returns></returns>
-        public UpdateStatement Join<T>(JoinType type, Action<Filter, Context> customization)
+        public UpdateStatement LeftJoin<T>(Action<Filter, Context> customization)
         {
-            return Provider.Join<T>(this, type, customization) as UpdateStatement;
+            return Provider.Join<T>(this, JoinType.LeftJoin, customization) as UpdateStatement;
+        }
+
+        /// <summary>
+        /// UPDATE table_name1
+        /// SET column1 = value, column2 = value,...
+        /// FROM table_name1
+        /// RIGHT JOIN table_name2
+        /// ON table_name1.column_name=table_name2.column_name
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="customization"></param>
+        /// <returns></returns>
+        public UpdateStatement RightJoin<T>(Action<Filter, Context> customization)
+        {
+            return Provider.Join<T>(this, JoinType.RightJoin, customization) as UpdateStatement;
+        }
+
+        /// <summary>
+        /// UPDATE table_name1
+        /// SET column1 = value, column2 = value,...
+        /// FROM table_name1
+        /// FULL JOIN table_name2
+        /// ON table_name1.column_name=table_name2.column_name
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="customization"></param>
+        /// <returns></returns>
+        public UpdateStatement FullJoin<T>(Action<Filter, Context> customization)
+        {
+            return Provider.Join<T>(this, JoinType.FullJoin, customization) as UpdateStatement;
+        }
+
+        /// <summary>
+        /// UPDATE table_name1
+        /// SET column1 = value, column2 = value,...
+        /// FROM table_name1
+        /// CROSS JOIN table_name2
+        /// ON table_name1.column_name=table_name2.column_name
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="customization"></param>
+        /// <returns></returns>
+        public UpdateStatement CrossJoin<T>(Action<Filter, Context> customization)
+        {
+            return Provider.Join<T>(this, JoinType.CrossJoin, customization) as UpdateStatement;
         }
 
         /// <summary>

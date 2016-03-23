@@ -43,36 +43,21 @@
         /// <returns></returns>
         protected string GetJoinType()
         {
-            var type = string.Empty;
-
             switch (JoinType)
             {
                 case JoinType.LeftJoin:
-                    type = "LEFT JOIN";
-                    break;
+                    return "LEFT JOIN";
                 case JoinType.RightJoin:
-                    type = "RIGHT JOIN";
-                    break;
+                    return "RIGHT JOIN";
                 case JoinType.InnerJoin:
-                    type = "INNER JOIN";
-                    break;
+                    return "JOIN";
+                case JoinType.FullJoin:
+                    return "FULL JOIN";
                 case JoinType.CrossJoin:
-                    type = "CROSS JOIN";
-                    break;
-                case JoinType.LeftOuterJoin:
-                    type = "LEFT OUTER JOIN";
-                    break;
-                case JoinType.RightOuterJoin:
-                    type = "RIGHT OUTER JOIN";
-                    break;
-                case JoinType.FullOuterJoin:
-                    type = "FULL OUTER JOIN";
-                    break;
+                    return "CROSS JOIN";
                 default:
-                    break;
+                    return string.Empty;
             }
-
-            return type;
         }
 
         /// <summary>
