@@ -27,7 +27,10 @@
         {
             get
             {
-                var pageSize = PageSize == 0 ? TotalRows : PageSize;
+                var pageSize = PageSize > 0
+                             ? PageSize
+                             : TotalRows > 0 ? TotalRows : 1;
+                             
                 var total = TotalRows / pageSize;
 
                 return TotalRows % pageSize == 0 ? total : total + 1;
