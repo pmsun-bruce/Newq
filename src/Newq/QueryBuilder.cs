@@ -43,22 +43,30 @@
                 var targetAlias = string.Empty;
                 var column = string.Empty;
                 var alias = string.Empty;
-                string[] targetColumns = null;
+                string[] targetColumns = originalTarget.Split(',');
 
+                foreach (var col in targetColumns)
+                {
+                    alias = col.IndexOf(" AS ") > -1 ? col.Substring(col.IndexOf(" AS ") + 4) : col;
+                    targetAlias += string.Format(",{0}", alias.Trim());
+                }
+                    
                 if (orderByIndex > -1)
                 {
                     orderByClause = sql.Substring(orderByIndex + 10).Trim();
-                    targetColumns = orderByClause.Split(',');
+                    sql = sql.Remove(orderByIndex);
                     
-                    foreach (var col in targetColumns)
+                    var orderByColumns = orderByClause.Split(',');
+                    
+                    foreach (var col in orderByColumns)
                     {
                         column = col.Replace(" ASC", "").Replace(" DESC", "");
                         alias = column.Trim().Replace("].[", ".");
-                        targetAlias += string.Format("{0}, ", alias);
                         
                         if (originalTarget.IndexOf(alias) == -1)
                         {
-                            newTarget += string.Format(", {0} AS {1}", col, alias);
+                            newTarget += string.Format(",{0} AS {1}", col, alias);
+                            targetAlias += string.Format(",{0}", alias);
                         }
                     }
                     
@@ -67,30 +75,21 @@
                 }
                 else
                 {
-                    var index = originalTarget.IndexOf(", ");
-                    var asIndex = originalTarget.IndexOf(" AS ");
+                    var firstTargetEndIndex = originalTarget.IndexOf(",");
+                    var aliasIndex = originalTarget.IndexOf(" AS ") + 4;
 
-                    orderByClause = index == -1 ? originalTarget.Substring(asIndex + 4)
-                                  : originalTarget.Substring(asIndex + 4, index - (asIndex + 4));
-
-                    targetColumns = originalTarget.Split(',');
-
-                    foreach (var col in targetColumns)
-                    {
-                        asIndex = col.IndexOf(" AS ");
-                        alias = asIndex > -1 ? col.Substring(asIndex + 4) : col;
-                        targetAlias += string.Format("{0}, ", alias.Trim());
-                    }
+                    orderByClause = firstTargetEndIndex == -1 ? originalTarget.Substring(aliasIndex)
+                                  : originalTarget.Substring(aliasIndex, firstTargetEndIndex - (aliasIndex));
                 }
                 
                 if (targetAlias.Length > 2)
                 {
-                    targetAlias = targetAlias.Remove(targetAlias.Length - 2);
+                    targetAlias = targetAlias.Substring(1);
                 }
                 
                 sql = string.Format(
                     "SELECT {0} FROM (" +
-                        "SELECT ROW_NUMBER() OVER(ORDER BY {1}) AS [$ROW_NUMBER], {0} FROM ({2}) AS [$ORIGINAL_QUERY]" +
+                        "SELECT ROW_NUMBER() OVER(ORDER BY {1}) AS [$ROW_NUMBER],{0} FROM ({2}) AS [$ORIGINAL_QUERY]" +
                     ") AS [$PAGINATOR] " +
                     "WHERE [$PAGINATOR].[$ROW_NUMBER] BETWEEN {3} AND {4} ",
                     targetAlias, orderByClause, sql.Trim(), Paginator.BeginRowNumber, Paginator.EndRowNumber);
