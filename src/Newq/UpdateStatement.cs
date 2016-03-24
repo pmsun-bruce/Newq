@@ -35,6 +35,7 @@
         /// <returns></returns>
         public override string ToSql()
         {
+            
             var sql = string.Format("UPDATE {0} SET {1} ", Context[0], GetTarget());
 
             if (Clauses.Count > 0)
