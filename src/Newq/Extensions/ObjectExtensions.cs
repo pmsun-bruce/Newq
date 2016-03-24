@@ -16,13 +16,18 @@
         {
             var value = string.Empty;
 
-            if (obj is string || obj == null)
+            if (obj is string)
             {
-                value = string.Format("'{0}'", obj);
+                value = obj.ToString().Replace("'", "''");
+                value = string.Format("'{0}'", value);
             }
             else if (obj is DateTime)
             {
                 value = string.Format("'{0}'", ((DateTime)obj).ToString("yyyy-MM-dd hh:mm:ss.fff"));
+            }
+            else if (obj == null)
+            {
+                value = "''";
             }
             else
             {
