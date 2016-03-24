@@ -10,6 +10,8 @@
     /// </summary>
     public class UpdateStatement : Statement
     {
+        protected Target target;
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateStatement"/> class.
         /// </summary>
@@ -22,12 +24,15 @@
         /// <summary>
         /// 
         /// </summary>
-        public ICustomizable<Action<Target, Context>> Target { get; }
+        public ICustomizable<Action<Target, Context>> Target
+        {
+            get { return target; }
+        }
 
         /// <summary>
         /// 
         /// </summary>
-        public object Object { get; set; }
+        public List<object> ObjectList { get; set; }
 
         /// <summary>
         /// Returns a SQL-string that represents the current object.
@@ -35,23 +40,47 @@
         /// <returns></returns>
         public override string ToSql()
         {
+            var targetStr = GetTarget();
             
-            var sql = string.Format("UPDATE {0} SET {1} ", Context[0], GetTarget());
-
+            if (targetStr.Length == 0)
+            {
+                return string.Empty;
+            }
+            
+            var sql = string.Format("UPDATE {0} SET {1} FROM {0} ", Context[0], GetTarget());
+            
+            if (ObjectList.Count > 1)
+            {
+                var type = ObjectList[0].GetType();
+                var values = string.Empty;
+                var val = string.Empty;
+                var items = string.Empty;
+                
+                ObjectList.ForEach(obj => {
+                    val += string.Format(",{0}", type.GetProperty(JoinOnPrimaryKey).GetValue(obj).ToSqlValue());
+                    
+                    target.Items.ForEach(item => {
+                        val += string.Format(",{0}", type.GetProperty((item as Column).Name).GetValue(obj).ToSqlValue());
+                    });
+                    
+                    values += string.Format(",({0})", val.Substring(1));
+                    val = string.Empty;
+                });
+                
+                target.Items.ForEach(item => {
+                    if (item != null)
+                    {
+                        items += string.Format(", {0}", (item as Column).Name);
+                    }
+                });
+                
+                sql += string.Format("JOIN (VALUES {0}) AS [$UPDATE_SOURCE]({1},{2}) ON {3} = [$UPDATE_SOURCE].[{1}] ",
+                    values.Substring(1), JoinOnPrimaryKey, items.Substring(1), Context[0][JoinOnPrimaryKey]);
+            }
+            
             if (Clauses.Count > 0)
             {
-                var isFirstJoinClause = true;
-
-                foreach (var cls in Clauses)
-                {
-                    if (cls is JoinClause && isFirstJoinClause)
-                    {
-                        sql += string.Format("FROM {0} ", Context[0]);
-                        isFirstJoinClause = false;
-                    }
-
-                    sql += cls.ToSql();
-                }
+                Clauses.ForEach(clause => sql += clause.ToSql());
             }
 
             return sql;
@@ -63,46 +92,36 @@
         /// <returns></returns>
         protected string GetTarget()
         {
-            var target = string.Empty;
-
-            if (Object == null)
+            Target.Perform();
+            
+            if (target.Items.Count == 0)
             {
-                Target.Perform();
-
-                var items = (Target as Target).Items;
-
-                if (items.Count == 0)
-                {
-                    foreach (var col in Context[0].Columns)
-                    {
-                        target += string.Format("{0} = {1}, ", col, col.Value.ToSqlValue());
-                    }
-                }
-                else
-                {
-                    Column col = null;
-
-                    foreach (var item in items)
-                    {
-                        if (item is Column)
-                        {
-                            col = item as Column;
-                            target += string.Format("{0} = {1}, ", col, col.Value.ToSqlValue());
-                        }
-                    }
-                }
+                return string.Empty;
             }
-            else
-            {
-                var type = Object.GetType();
+            
+            var targetStr = string.Empty;
+            var type = ObjectList[0].GetType();
+            object value = null;
 
-                foreach (var col in Context[0].Columns)
-                {
-                    target += string.Format("{0} = {1}, ", col, type.GetProperty(col.Name).GetValue(Object).ToSqlValue());
-                }
+            if (ObjectList.Count == 1)
+            {
+                target.Items.ForEach(col => {
+                    value = type.GetProperty((col as Column).Name).GetValue(ObjectList[0]);
+                    targetStr += string.Format(",{0] = {1}", col.GetTargetItem(), value.ToSqlValue());
+                });
+            }
+            else if (ObjectList.Count > 1)
+            {
+                target.Items.ForEach(col => {
+                    if (col != null)
+                    {
+                        value = string.Format("[$UPDATE_SOURCE].[{0}]", (col as Column).Name);
+                        targetStr += string.Format(",{0] = {1}", col.GetTargetItem(), value);
+                    }
+                });
             }
 
-            return target.Remove(target.Length - 2);
+            return targetStr.Length > 0 ? targetStr.Substring(1) : string.Empty;
         }
 
         /// <summary>
