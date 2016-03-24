@@ -23,7 +23,7 @@
         /// <returns></returns>
         public override string ToSql()
         {
-            var sql = (Filter as Filter).GetCustomization();
+            var sql = filter.GetCustomization();
 
             if (sql.Length > 0)
             {

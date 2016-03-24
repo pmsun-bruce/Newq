@@ -10,6 +10,11 @@
     public class JoinClause : Clause
     {
         /// <summary>
+        /// 
+        /// </summary>
+        protected Filter filter;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="JoinClause"/> class.
         /// </summary>
         /// <param name="statement"></param>
@@ -17,7 +22,7 @@
         /// <param name="type"></param>
         public JoinClause(Statement statement, Table table, JoinType type = JoinType.InnerJoin) : base(statement)
         {
-            Filter = new Filter(statement.Context);
+            filter = new Filter(statement.Context);
             JoinTable = table;
             JoinType = type;
         }
@@ -25,7 +30,10 @@
         /// <summary>
         /// 
         /// </summary>
-        public ICustomizable<Action<Filter, Context>> Filter { get; }
+        public ICustomizable<Action<Filter, Context>> Filter
+        {
+            get { return filter; }
+        }
 
         /// <summary>
         /// Gets <see cref="JoinTable"/>.
@@ -66,7 +74,7 @@
         /// <returns></returns>
         public override string ToSql()
         {
-            var sql = (Filter as Filter).GetCustomization();
+            var sql = filter.GetCustomization();
 
             if (sql.Length > 0)
             {

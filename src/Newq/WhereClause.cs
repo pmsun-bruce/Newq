@@ -9,18 +9,26 @@
     public class WhereClause : Clause
     {
         /// <summary>
+        /// 
+        /// </summary>
+        protected Filter filter;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="WhereClause"/> class.
         /// </summary>
         /// <param name="statement"></param>
         public WhereClause(Statement statement) : base(statement)
         {
-            Filter = new Filter(statement.Context);
+            filter = new Filter(statement.Context);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public ICustomizable<Action<Filter, Context>> Filter { get; }
+        public ICustomizable<Action<Filter, Context>> Filter
+        {
+            get { return filter; }
+        }
 
         /// <summary>
         /// Returns a SQL-string that represents the current object.
@@ -28,7 +36,7 @@
         /// <returns></returns>
         public override string ToSql()
         {
-            var sql = (Filter as Filter).GetCustomization();
+            var sql = filter.GetCustomization();
 
             if (sql.Length > 0)
             {

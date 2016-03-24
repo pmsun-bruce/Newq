@@ -281,13 +281,15 @@
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="obj"></param>
+        /// <param name="customization"></param>
         /// <returns></returns>
-        public UpdateStatement Update<T>(T obj)
+        public UpdateStatement Update<T>(T obj, Action<Target, Context> customization = null)
         {
             var statement = new UpdateStatement(new Table(typeof(T)));
 
             Statement = statement;
-            statement.Object = obj;
+            statement.Target.Customize(customization);
+            statement.ObjectList.Add(obj);
 
             return statement;
         }
@@ -297,14 +299,18 @@
         /// SET column1 = value, column2 = value,...
         /// </summary>
         /// <typeparam name="T"></typeparam>
+        /// <param name="objList"></param>
+        /// <param name="primaryKey"></param>
         /// <param name="customization"></param>
         /// <returns></returns>
-        public UpdateStatement Update<T>(Action<Target, Context> customization)
+        public UpdateStatement Update<T>(List<T> objList, string primaryKey, Action<Target, Context> customization = null)
         {
             var statement = new UpdateStatement(new Table(typeof(T)));
 
             Statement = statement;
             statement.Target.Customize(customization);
+            statement.JoinOnPrimaryKey = primaryKey;
+            objList.ForEach(obj => statement.ObjectList.Add(obj));
 
             return statement;
         }

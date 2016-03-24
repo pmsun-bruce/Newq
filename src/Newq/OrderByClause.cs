@@ -9,18 +9,26 @@
     public class OrderByClause : Clause
     {
         /// <summary>
+        /// 
+        /// </summary>
+        protected Target target;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="OrderByClause"/> class.
         /// </summary>
         /// <param name="statement"></param>
         public OrderByClause(Statement statement) : base(statement)
         {
-            Target = new Target(statement.Context);
+            target = new Target(statement.Context);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public ICustomizable<Action<Target, Context>> Target { get; }
+        public ICustomizable<Action<Target, Context>> Target
+        {
+            get { return target; }
+        }
 
         /// <summary>
         /// Returns a SQL-string that represents the current object.
@@ -28,7 +36,7 @@
         /// <returns></returns>
         public override string ToSql()
         {
-            var sql = (Target as Target).GetCustomization();
+            var sql = target.GetCustomization();
 
             if (sql.Length > 0)
             {
@@ -36,16 +44,6 @@
             }
 
             return sql;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="order"></param>
-        /// <returns></returns>
-        public static string GetOrder(SortOrder order)
-        {
-            return order == SortOrder.Desc ? "DESC" : "ASC";
         }
     }
 }

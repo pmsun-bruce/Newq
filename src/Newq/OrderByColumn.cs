@@ -50,7 +50,16 @@
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("{0} {1}", Column, OrderByClause.GetOrder(Order));
+            return string.Format("{0} {1}", Column, GetOrder());
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        protected string GetOrder()
+        {
+            return Order == SortOrder.Desc ? "DESC" : "ASC";
         }
     }
 }

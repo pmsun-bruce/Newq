@@ -10,6 +10,9 @@
     /// </summary>
     public class UpdateStatement : Statement
     {
+        /// <summary>
+        /// 
+        /// </summary>
         protected Target target;
         
         /// <summary>
@@ -18,7 +21,8 @@
         /// <param name="table"></param>
         public UpdateStatement(Table table) : base(table)
         {
-            Target = new Target(Context);
+            target = new Target(Context);
+            ObjectList = new List<object>();
         }
 
         /// <summary>
@@ -32,7 +36,12 @@
         /// <summary>
         /// 
         /// </summary>
-        public List<object> ObjectList { get; set; }
+        public List<object> ObjectList { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string JoinOnPrimaryKey { get; set; }
 
         /// <summary>
         /// Returns a SQL-string that represents the current object.
@@ -107,7 +116,7 @@
             {
                 target.Items.ForEach(col => {
                     value = type.GetProperty((col as Column).Name).GetValue(ObjectList[0]);
-                    targetStr += string.Format(",{0] = {1}", col.GetTargetItem(), value.ToSqlValue());
+                    targetStr += string.Format(",{0] = {1}", col.GetIdentifier(), value.ToSqlValue());
                 });
             }
             else if (ObjectList.Count > 1)
@@ -116,7 +125,7 @@
                     if (col != null)
                     {
                         value = string.Format("[$UPDATE_SOURCE].[{0}]", (col as Column).Name);
-                        targetStr += string.Format(",{0] = {1}", col.GetTargetItem(), value);
+                        targetStr += string.Format(",{0] = {1}", col.GetIdentifier(), value);
                     }
                 });
             }

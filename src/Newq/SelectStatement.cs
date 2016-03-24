@@ -9,18 +9,26 @@
     public class SelectStatement : Statement
     {
         /// <summary>
+        /// 
+        /// </summary>
+        protected Target target;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SelectStatement"/> class.
         /// </summary>
         /// <param name="table"></param>
         public SelectStatement(Table table) : base(table)
         {
-            Target = new Target(Context);
+            target = new Target(Context);
         }
 
         /// <summary>
         /// Gets <see cref="Target"/>.
         /// </summary>
-        public ICustomizable<Action<Target, Context>> Target { get; }
+        public ICustomizable<Action<Target, Context>> Target
+        {
+            get { return target; }
+        }
 
         /// <summary>
         /// The DISTINCT keyword can be used to
@@ -68,8 +76,8 @@
         {
             Target.Perform();
 
-            var target = string.Empty;
-            var items = (Target as Target).Items;
+            var targetStr = string.Empty;
+            var items = target.Items;
 
             if (items.Count == 0)
             {
@@ -77,7 +85,7 @@
                 {
                     foreach (var col in tab.Columns)
                     {
-                        target += string.Format("{0} AS {1}, ", col, col.Alias);
+                        targetStr += string.Format(",{0} AS {1}", col, col.Alias);
                     }
                 }
             }
@@ -87,16 +95,16 @@
                 {
                     if (item is Column)
                     {
-                        target += string.Format("{0} AS {1}, ", item, (item as Column).Alias);
+                        targetStr += string.Format(",{0} AS {1}", item, (item as Column).Alias);
                     }
                     else if (item is Function)
                     {
-                        target += string.Format("{0} AS {1}, ", item, (item as Function).Alias);
+                        targetStr += string.Format(",{0} AS {1}", item, (item as Function).Alias);
                     }
                 }
             }
 
-            return target.Remove(target.Length - 2);
+            return targetStr.Substring(1);
         }
 
         /// <summary>
@@ -107,9 +115,9 @@
         {
             Target.Perform();
 
-            var target = string.Empty;
+            var targetStr = string.Empty;
             var alias = string.Empty;
-            var items = (Target as Target).Items;
+            var items = target.Items;
 
             if (items.Count == 0)
             {
@@ -118,7 +126,7 @@
                     foreach (var col in tab.Columns)
                     {
                         alias = col.Alias;
-                        target += string.Format("{0}, ", alias);
+                        targetStr += string.Format(",{0}", alias);
                     }
                 }
             }
@@ -135,11 +143,11 @@
                         alias = (item as Function).Alias;
                     }
 
-                    target += string.Format("{0}, ", alias);
+                    targetStr += string.Format(",{0}", alias);
                 }
             }
 
-            return target.Remove(target.Length - 2);
+            return targetStr.Substring(1);
         }
 
         /// <summary>
