@@ -17,7 +17,8 @@
         /// Initializes a new instance of the <see cref="OrderByClause"/> class.
         /// </summary>
         /// <param name="statement"></param>
-        public OrderByClause(Statement statement) : base(statement)
+        public OrderByClause(Statement statement)
+            : base(statement)
         {
             target = new Target(statement.Context);
         }

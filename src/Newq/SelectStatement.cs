@@ -17,7 +17,8 @@
         /// Initializes a new instance of the <see cref="SelectStatement"/> class.
         /// </summary>
         /// <param name="table"></param>
-        public SelectStatement(Table table) : base(table)
+        public SelectStatement(Table table)
+            : base(table)
         {
             target = new Target(Context);
         }

@@ -17,7 +17,8 @@
         /// Initializes a new instance of the <see cref="GroupByClause"/> class.
         /// </summary>
         /// <param name="statement"></param>
-        public GroupByClause(Statement statement) : base(statement)
+        public GroupByClause(Statement statement)
+            : base(statement)
         {
             target = new Target(statement.Context);
         }

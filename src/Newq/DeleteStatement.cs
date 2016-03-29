@@ -13,9 +13,9 @@
         /// Initializes a new instance of the <see cref="DeleteStatement"/> class.
         /// </summary>
         /// <param name="table"></param>
-        public DeleteStatement(Table table) : base(table)
+        public DeleteStatement(Table table)
+            : base(table)
         {
-
         }
 
         /// <summary>

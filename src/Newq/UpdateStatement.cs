@@ -19,7 +19,8 @@
         /// Initializes a new instance of the <see cref="UpdateStatement"/> class.
         /// </summary>
         /// <param name="table"></param>
-        public UpdateStatement(Table table) : base(table)
+        public UpdateStatement(Table table)
+            : base(table)
         {
             target = new Target(Context);
             ObjectList = new List<object>();

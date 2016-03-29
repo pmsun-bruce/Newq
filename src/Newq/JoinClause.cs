@@ -20,7 +20,8 @@
         /// <param name="statement"></param>
         /// <param name="table"></param>
         /// <param name="type"></param>
-        public JoinClause(Statement statement, Table table, JoinType type = JoinType.InnerJoin) : base(statement)
+        public JoinClause(Statement statement, Table table, JoinType type = JoinType.InnerJoin)
+            : base(statement)
         {
             filter = new Filter(statement.Context);
             JoinTable = table;
@@ -51,21 +52,12 @@
         /// <returns></returns>
         protected string GetJoinType()
         {
-            switch (JoinType)
-            {
-                case JoinType.LeftJoin:
-                    return "LEFT JOIN";
-                case JoinType.RightJoin:
-                    return "RIGHT JOIN";
-                case JoinType.InnerJoin:
-                    return "JOIN";
-                case JoinType.FullJoin:
-                    return "FULL JOIN";
-                case JoinType.CrossJoin:
-                    return "CROSS JOIN";
-                default:
-                    return string.Empty;
-            }
+            return JoinType == JoinType.InnerJoin ? "JOIN"
+                : JoinType == JoinType.LeftJoin ? "LEFT JOIN"
+                : JoinType == JoinType.RightJoin ? "RIGHT JOIN"
+                : JoinType == JoinType.FullJoin ? "FULL JOIN"
+                : JoinType == JoinType.CrossJoin ? "CROSS JOIN"
+                : string.Empty;
         }
 
         /// <summary>

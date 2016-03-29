@@ -12,7 +12,6 @@ namespace Newq
         /// </summary>
         public Condition()
         {
-
         }
 
         /// <summary>

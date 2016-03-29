@@ -151,39 +151,21 @@ namespace Newq
         /// <returns></returns>
         public override string ToString()
         {
-            switch (Operator)
-            {
-                case ComparisonOperator.GreaterThan:
-                    return string.Format("{0} > {1}", Column, GetFirstValue());
-                case ComparisonOperator.GreaterThanOrEqualTo:
-                    return string.Format("{0} >= {1}", Column, GetFirstValue());
-                case ComparisonOperator.LessThan:
-                    return string.Format("{0} < {1}", Column, GetFirstValue());
-                case ComparisonOperator.LessThanOrEqualTo:
-                    return string.Format("{0} <= {1}", Column, GetFirstValue());
-                case ComparisonOperator.EqualTo:
-                    return string.Format("{0} = {1}", Column, GetFirstValue());
-                case ComparisonOperator.NotEqualTo:
-                    return string.Format("{0} != {1}", Column, GetFirstValue());
-                case ComparisonOperator.Like:
-                    return string.Format("{0} LIKE {1}", Column, GetFirstValue());
-                case ComparisonOperator.NotLike:
-                    return string.Format("{0} NOT LIKE {1}", Column, GetFirstValue());
-                case ComparisonOperator.In:
-                    return string.Format("{0} IN ({1})", Column, GetInValues());
-                case ComparisonOperator.NotIn:
-                    return string.Format("{0} NOT IN ({1})", Column, GetInValues());
-                case ComparisonOperator.Between:
-                    return string.Format("{0} BETWEEN {1}", Column, GetBetweenValues());
-                case ComparisonOperator.NotBetween:
-                    return string.Format("{0} NOT BETWEEN {1}", Column, GetBetweenValues());
-                case ComparisonOperator.IsNull:
-                    return string.Format("{0} IS NULL", Column);
-                case ComparisonOperator.IsNotNull:
-                    return string.Format("{0} IS NOT NULL", Column);
-                default:
-                    return string.Empty;
-            }
+            return Operator == ComparisonOperator.GreaterThan ? string.Format("{0} > {1}", Column, GetFirstValue())
+                : Operator == ComparisonOperator.GreaterThanOrEqualTo ? string.Format("{0} >= {1}", Column, GetFirstValue())
+                : Operator == ComparisonOperator.LessThan ? string.Format("{0} < {1}", Column, GetFirstValue())
+                : Operator == ComparisonOperator.LessThanOrEqualTo ? string.Format("{0} <= {1}", Column, GetFirstValue())
+                : Operator == ComparisonOperator.EqualTo ? string.Format("{0} = {1}", Column, GetFirstValue())
+                : Operator == ComparisonOperator.NotEqualTo ? string.Format("{0} != {1}", Column, GetFirstValue())
+                : Operator == ComparisonOperator.Like ? string.Format("{0} LIKE {1}", Column, GetFirstValue())
+                : Operator == ComparisonOperator.NotLike ? string.Format("{0} NOT LIKE {1}", Column, GetFirstValue())
+                : Operator == ComparisonOperator.In ? string.Format("{0} IN ({1})", Column, GetInValues())
+                : Operator == ComparisonOperator.NotIn ? string.Format("{0} NOT IN ({1})", Column, GetInValues())
+                : Operator == ComparisonOperator.Between ? string.Format("{0} BETWEEN {1}", Column, GetBetweenValues())
+                : Operator == ComparisonOperator.NotBetween ? string.Format("{0} NOT BETWEEN {1}", Column, GetBetweenValues())
+                : Operator == ComparisonOperator.IsNull ? string.Format("{0} IS NULL", Column)
+                : Operator == ComparisonOperator.IsNotNull ? string.Format("{0} IS NOT NULL", Column)
+                : string.Empty;
         }
     }
 }

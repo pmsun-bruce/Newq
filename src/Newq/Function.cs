@@ -12,9 +12,9 @@
         /// </summary>
         /// <param name="name"></param>
         /// <param name="parameter"></param>
-        public Function(string name, object parameter) : base(name, parameter)
+        public Function(string name, object parameter)
+            : base(name, parameter)
         {
-
         }
 
         /// <summary>
@@ -22,9 +22,9 @@
         /// </summary>
         /// <param name="name"></param>
         /// <param name="parameters"></param>
-        public Function(string name, object[] parameters) : base(name, parameters)
+        public Function(string name, object[] parameters)
+            : base(name, parameters)
         {
-
         }
 
         /// <summary>
@@ -32,9 +32,9 @@
         /// </summary>
         /// <param name="name"></param>
         /// <param name="parameters"></param>
-        public Function(string name, List<object> parameters) : base(name, parameters)
+        public Function(string name, List<object> parameters)
+            : base(name, parameters)
         {
-
         }
 
         /// <summary>

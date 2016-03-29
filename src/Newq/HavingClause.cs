@@ -12,7 +12,8 @@
         /// Initializes a new instance of the <see cref="HavingClause"/> class.
         /// </summary>
         /// <param name="statement"></param>
-        public HavingClause(Statement statement) : base(statement)
+        public HavingClause(Statement statement)
+            : base(statement)
         {
 
         }

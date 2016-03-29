@@ -13,7 +13,6 @@ namespace Newq
         /// </summary>
         protected Statement()
         {
-
         }
 
         /// <summary>

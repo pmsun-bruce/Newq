@@ -41,7 +41,6 @@ namespace Newq
             {
                 column = new Column(this, DefaultPrimaryKey);
                 columns.Add(DefaultPrimaryKey, column);
-                PrimaryKey = new List<Column> { column };
             }
 
             foreach (var prop in properties)
@@ -55,11 +54,6 @@ namespace Newq
         /// Gets or sets <see cref="Name"/>.
         /// </summary>
         public string Name { get; protected set; }
-
-        /// <summary>
-        /// Define which column in this should be the primary key.
-        /// </summary>
-        public List<Column> PrimaryKey { get; set; }
 
         /// <summary>
         /// A read-only list contains the columns in this.
@@ -115,27 +109,6 @@ namespace Newq
         public override string ToString()
         {
             return string.Format("[{0}]", Name);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public string GetPrimaryKey()
-        {
-            var primarykey = string.Empty;
-
-            if (PrimaryKey != null && PrimaryKey.Count > 0)
-            {
-                PrimaryKey.ForEach(pk => primarykey += string.Format("{0}, ", pk));
-                primarykey = primarykey.Remove(primarykey.Length - 2);
-            }
-            else
-            {
-                primarykey = columns.First().Value.ToString();
-            }
-
-            return primarykey;
         }
     }
 }

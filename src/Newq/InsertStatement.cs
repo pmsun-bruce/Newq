@@ -14,7 +14,8 @@
         /// Initializes a new instance of the <see cref="InsertStatement"/> class.
         /// </summary>
         /// <param name="table"></param>
-        public InsertStatement(Table table) : base(table)
+        public InsertStatement(Table table)
+            : base(table)
         {
             ObjectList = new List<object>();
         }

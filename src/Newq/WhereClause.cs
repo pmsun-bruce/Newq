@@ -17,7 +17,8 @@
         /// Initializes a new instance of the <see cref="WhereClause"/> class.
         /// </summary>
         /// <param name="statement"></param>
-        public WhereClause(Statement statement) : base(statement)
+        public WhereClause(Statement statement)
+            : base(statement)
         {
             filter = new Filter(statement.Context);
         }

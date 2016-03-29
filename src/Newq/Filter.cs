@@ -22,7 +22,8 @@
         /// Initializes a new instance of the <see cref="Filter"/> class.
         /// </summary>
         /// <param name="context"></param>
-        public Filter(Context context) : base(context)
+        public Filter(Context context)
+            : base(context)
         {
             Items = new List<ICustomItem<Filter>>();
         }
