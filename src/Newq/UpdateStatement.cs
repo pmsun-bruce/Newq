@@ -59,7 +59,7 @@
             
             var sql = string.Format("UPDATE {0} SET {1} FROM {0} ", Context[0], GetTarget());
             
-            if (ObjectList.Count > 1)
+            if (ObjectList.Count > 0 && string.IsNullOrWhiteSpace(JoinOnPrimaryKey))
             {
                 var type = ObjectList[0].GetType();
                 var values = string.Empty;
@@ -80,11 +80,11 @@
                 target.Items.ForEach(item => {
                     if (item != null)
                     {
-                        items += string.Format(", {0}", (item as Column).Name);
+                        items += string.Format(",[{0}]", (item as Column).Name);
                     }
                 });
                 
-                sql += string.Format("JOIN (VALUES {0}) AS [$UPDATE_SOURCE]({1},{2}) ON {3} = [$UPDATE_SOURCE].[{1}] ",
+                sql += string.Format("JOIN (VALUES {0}) AS [$UPDATE_SOURCE]([{1}],{2}) ON {3} = [$UPDATE_SOURCE].[{1}] ",
                     values.Substring(1), JoinOnPrimaryKey, items.Substring(1), Context[0][JoinOnPrimaryKey]);
             }
             
