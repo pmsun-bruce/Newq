@@ -1,4 +1,4 @@
-﻿namespace Newq.Tests
+﻿namespace Newq.Tests.Models
 {
     using System;
 

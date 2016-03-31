@@ -58,7 +58,7 @@
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Provider.cs" />
-    <Compile Include="Model.cs" />
+    <Compile Include="Models\Model.cs" />
     <Compile Include="SelectStatementTests.cs" />
     <Compile Include="InsertStatementTests.cs" />
     <Compile Include="DeleteStatementTests.cs" />

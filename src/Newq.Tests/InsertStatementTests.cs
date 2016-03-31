@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Newq.Tests
 {
     [TestClass]
-    public class InsertStatement
+    public class InsertStatementTests
     {
         [TestMethod]
         public void Insert1()
