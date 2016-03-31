@@ -113,14 +113,14 @@ namespace Newq
         {
             var values = string.Empty;
 
-            Values.ForEach(v => values += v.ToSqlValue() + ", ");
+            Values.ForEach(val => values += "," + val.ToSqlValue());
 
-            if (values.Length < 3)
+            if (values.Length < 4)
             {
                 throw new Exception(nameof(values) + " can't be null or empty");
             }
 
-            return values.Remove(values.Length - 2);
+            return values.Substring(1);
         }
 
         /// <summary>

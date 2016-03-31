@@ -104,10 +104,10 @@
 
             if (Parameters != null && Parameters.Count > 0)
             {
-                Parameters.ForEach(p => parameters += string.Format("{0}, ", p));
+                Parameters.ForEach(p => parameters += string.Format(",{0}", p));
             }
 
-            return parameters.Length > 0 ? parameters.Remove(parameters.Length - 2) : string.Empty;
+            return parameters.Length > 0 ? parameters.Substring(1) : string.Empty;
         }
     }
 }

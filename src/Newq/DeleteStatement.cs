@@ -34,7 +34,7 @@
         /// <returns></returns>
         public override string ToSql()
         {
-            var sql = string.Format("DELETE {0} FROM {1} ", GetParameters(), Context[0]);
+            var sql = string.Format("DELETE {0}FROM {1} ", GetParameters(), Context[0]);
 
             Clauses.ForEach(clause => sql += clause.ToSql());
 

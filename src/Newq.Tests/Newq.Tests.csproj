@@ -55,12 +55,13 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Models\Country.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Provider.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="SelectStatementTests.cs" />
-    <Compile Include="InsertStatement.cs" />
-    <Compile Include="DeleteStatement.cs" />
+    <Compile Include="InsertStatementTests.cs" />
+    <Compile Include="DeleteStatementTests.cs" />
     <Compile Include="UpdateStatementTests.cs" />
   </ItemGroup>
   <ItemGroup>

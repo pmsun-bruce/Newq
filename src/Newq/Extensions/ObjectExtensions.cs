@@ -18,12 +18,14 @@
 
             if (obj is string)
             {
-                value = obj.ToString().Replace("'", "''");
-                value = string.Format("'{0}'", value);
+                value = string.Format("'{0}'", obj.ToString().Replace("'", "''"));
             }
             else if (obj is DateTime)
             {
-                value = string.Format("'{0}'", ((DateTime)obj).ToString("yyyy-MM-dd hh:mm:ss.fff"));
+                var time = (DateTime)obj;
+
+                value = time.Year < 1753 ? "'1753-01-01 00:00:00.000'"
+                    : string.Format("'{0}'", time.ToString("yyyy-MM-dd hh:mm:ss.fff"));
             }
             else if (obj == null)
             {

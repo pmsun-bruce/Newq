@@ -75,12 +75,12 @@
 
                     if (!string.IsNullOrEmpty(filterItem))
                     {
-                        filter += string.Format("{0} AND ", item);
+                        filter += string.Format(" AND {0}", item);
                     }
                 }
             });
 
-            return filter.Length > 0 ? filter.Remove(filter.Length - 5) : string.Empty;
+            return filter.Length > 0 ? filter.Substring(5) : string.Empty;
         }
 
         /// <summary>

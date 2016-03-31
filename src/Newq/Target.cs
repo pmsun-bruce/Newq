@@ -74,12 +74,12 @@
 
                     if (!string.IsNullOrEmpty(targetItem))
                     {
-                        target += string.Format("{0}, ", targetItem);
+                        target += string.Format(",{0}", targetItem);
                     }
                 }
             });
 
-            return target.Length > 0 ? target.Remove(target.Length - 2) : string.Empty;
+            return target.Length > 0 ? target.Substring(1) : string.Empty;
         }
 
         /// <summary>

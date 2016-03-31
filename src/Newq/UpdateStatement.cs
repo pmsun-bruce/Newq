@@ -84,7 +84,7 @@
                     }
                 });
                 
-                sql += string.Format("JOIN (VALUES {0}) AS [$UPDATE_SOURCE]([{1}],{2}) ON {3} = [$UPDATE_SOURCE].[{1}] ",
+                sql += string.Format("JOIN (VALUES {0}) AS [$UPDATE_SOURCE] ([{1}],{2}) ON {3} = [$UPDATE_SOURCE].[{1}] ",
                     values.Substring(1), JoinOnPrimaryKey, items.Substring(1), Context[0][JoinOnPrimaryKey]);
             }
             

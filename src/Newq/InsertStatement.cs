@@ -38,7 +38,7 @@
 
             foreach (var col in Context[0].Columns)
             {
-                columns += string.Format("{0}, ", col);
+                columns += string.Format(",{0}", col);
             }
 
             ObjectList.ForEach(obj => {
@@ -46,16 +46,14 @@
 
                 foreach (var col in Context[0].Columns)
                 {
-                    values += string.Format("{0}, ", type.GetProperty(col.Name).GetValue(obj).ToSqlValue());
+                    values += string.Format(",{0}", type.GetProperty(col.Name).GetValue(obj).ToSqlValue());
                 }
 
-                valueClause += string.Format("({0}), ", values.Remove(values.Length - 2));
+                valueClause += string.Format(",({0})", values.Substring(1));
                 values = string.Empty;
             });
 
-            valueClause = string.Format("({0}) VALUES {1}",
-                columns.Remove(columns.Length - 2),
-                valueClause.Remove(valueClause.Length - 2));
+            valueClause = string.Format("({0}) VALUES {1}", columns.Substring(1), valueClause.Substring(1));
 
             return string.Format("INSERT INTO {0} {1} ", Context[0], valueClause);
         }
