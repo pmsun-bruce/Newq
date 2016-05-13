@@ -1,5 +1,9 @@
-# Newq
+Newq
+==========
+
 New query builder for CSharp
+
+### Usage
 
 ```csharp
 var queryBuilder = new QueryBuilder();
@@ -59,7 +63,8 @@ var query = queryBuilder.ToString();
 */
 ```
 
-# License
+### License
+
 Copyright 2015-2016 Andrew Lyu & Uriel Van
 
 Licensed under the Apache License, Version 2.0 (the "License");
