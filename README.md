@@ -14,7 +14,7 @@ queryBuilder
         target += context["Provider", "Products"];
     })
 
-    .Join<Provider>(JoinType.LeftJoin, (filter, context) => {
+    .LeftJoin<Provider>((filter, context) => {
         filter += context["Customer", "Name"] == context["Provider", "Name"];
     })
 
