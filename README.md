@@ -1,10 +1,8 @@
-Newq
-====
+# Newq
 
 New query builder for CSharp
 
-Usage
------
+## Usage
 
 ```csharp
 var queryBuilder = new QueryBuilder();
@@ -64,8 +62,7 @@ var query = queryBuilder.ToString();
 */
 ```
 
-License
--------
+## License
 
 ```
 Copyright 2015-2016 Andrew Lyu & Uriel Van
