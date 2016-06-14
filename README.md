@@ -1,5 +1,7 @@
 # Newq
 
+[![Build Status][travis-image]][travis-url]
+
 New query builder for CSharp
 
 ## Usage
@@ -79,3 +81,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ```
+
+[travis-image]: https://travis-ci.org/apemost/Newq.svg?branch=master
+[travis-url]: https://travis-ci.org/apemost/Newq
