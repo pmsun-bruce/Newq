@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Newq", "Newq\Newq.csproj", "{A78B7865-5857-422D-97AF-1A426EC8971F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Newq", "src\Newq\Newq.csproj", "{A78B7865-5857-422D-97AF-1A426EC8971F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Newq.Tests", "Newq.Tests\Newq.Tests.csproj", "{A7B37C1A-F986-44E0-890C-F80C709D10DE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Newq.Tests", "src\Newq.Tests\Newq.Tests.csproj", "{A7B37C1A-F986-44E0-890C-F80C709D10DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
