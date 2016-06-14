@@ -1,5 +1,13 @@
 language: csharp
-solution: src/Newq.sln
+
+solution: Newq.sln
+
+install:
+  - nuget restore Newq.sln
+
+script:
+  - xbuild Newq.sln
+
 notifications:
   email:
     - apemost@gmail.com
