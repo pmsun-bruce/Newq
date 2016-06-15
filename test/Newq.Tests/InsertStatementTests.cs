@@ -17,7 +17,7 @@
 namespace Newq.Tests
 {
     using System;
-    using System.Colletcions.Generic;
+    using System.Collections.Generic;
     using FakeItEasy;
     using Newq.Tests.Models;
     using Xunit;
