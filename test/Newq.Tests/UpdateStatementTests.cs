@@ -17,13 +17,13 @@
 namespace Newq.Tests
 {
     using System;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using FakeItEasy;
     using Newq.Tests.Models;
+    using Xunit;
 
-    [TestClass]
     public class UpdateStatementTests
     {
-        [TestMethod]
+        [Fact]
         public void Update1()
         {
             var customer = new Customer();
@@ -36,8 +36,8 @@ namespace Newq.Tests
                 .Update(customer);
 
             /*  Result:
-                UPDATE [Customer] 
-                SET 
+                UPDATE [Customer]
+                SET
                     [Customer].[Id] = ''
                     , [Customer].[Name] = ''
                     , [Customer].[City] = 'New York'
@@ -48,11 +48,11 @@ namespace Newq.Tests
                     , [Customer].[AuthorId] = ''
                     , [Customer].[EditorId] = ''
                     , [Customer].[CreatedDate] = '0001-01-01 12:00:00 000'
-                    , [Customer].[ModifiedDate] = '0001-01-01 12:00:00 000' 
+                    , [Customer].[ModifiedDate] = '0001-01-01 12:00:00 000'
             */
         }
 
-        [TestMethod]
+        [Fact]
         public void Update2()
         {
             var customer = new Customer();
@@ -68,9 +68,9 @@ namespace Newq.Tests
             var query = queryBuilder.ToString();
 
             /*  Result:
-                UPDATE 
-                    [Customer] 
-                SET 
+                UPDATE
+                    [Customer]
+                SET
                     [Customer].[Id] = ''
                     , [Customer].[Name] = ''
                     , [Customer].[City] = 'New York'
@@ -81,13 +81,13 @@ namespace Newq.Tests
                     , [Customer].[AuthorId] = ''
                     , [Customer].[EditorId] = ''
                     , [Customer].[CreatedDate] = '0001-01-01 12:00:00 000'
-                    , [Customer].[ModifiedDate] = '0001-01-01 12:00:00 000' 
+                    , [Customer].[ModifiedDate] = '0001-01-01 12:00:00 000'
                 FROM
-                    [Customer] 
-                INNER JOIN 
-                    [Provider] 
-                ON 
-                    [Customer].[Name] = [Provider].[Name] 
+                    [Customer]
+                INNER JOIN
+                    [Provider]
+                ON
+                    [Customer].[Name] = [Provider].[Name]
             */
         }
     }

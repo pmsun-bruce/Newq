@@ -27,3 +27,7 @@ Thumbs.db
 *.GhostDoc.xml
 Gemfile.lock
 .vs/
+packages/
+project.lock.json
+TestAssembly.dll
+.vscode/

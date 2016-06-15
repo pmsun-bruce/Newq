@@ -17,14 +17,13 @@
 namespace Newq.Tests
 {
     using System;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using FakeItEasy;
     using Newq.Tests.Models;
-    using System.Collections.Generic;
+    using Xunit;
 
-    [TestClass]
     public class SelectStatementTests
     {
-        [TestMethod]
+        [Fact]
         public void Select1()
         {
             var queryBuilder = new QueryBuilder();
@@ -59,31 +58,31 @@ namespace Newq.Tests
             var query = queryBuilder.ToString();
 
             /*  Result:
-                SELECT 
-                    [Provider.Products] 
+                SELECT
+                    [Provider.Products]
                 FROM (
-                    SELECT 
+                    SELECT
                         [Provider].[Products] AS [Provider.Products]
-                        , ROW_NUMBER() OVER(ORDER BY [Customer].[Name] DESC) AS [ROW_NUMBER] 
-                    FROM 
-                        [Customer] 
-                    LEFT JOIN 
-                        [Provider] 
-                    ON 
-                        [Customer].[Name] = [Provider].[Name] 
-                    WHERE 
-                        [Customer].[City] LIKE '%New%' 
-                    GROUP BY 
-                        [Provider].[Products] 
-                    Having 
-                        [Provider].[Name] NOT LIKE '%New%' 
-                ) AS [PAGINATOR] 
-                WHERE 
-                    [PAGINATOR].[ROW_NUMBER] BETWEEN 1 AND 10 
+                        , ROW_NUMBER() OVER(ORDER BY [Customer].[Name] DESC) AS [ROW_NUMBER]
+                    FROM
+                        [Customer]
+                    LEFT JOIN
+                        [Provider]
+                    ON
+                        [Customer].[Name] = [Provider].[Name]
+                    WHERE
+                        [Customer].[City] LIKE '%New%'
+                    GROUP BY
+                        [Provider].[Products]
+                    Having
+                        [Provider].[Name] NOT LIKE '%New%'
+                ) AS [PAGINATOR]
+                WHERE
+                    [PAGINATOR].[ROW_NUMBER] BETWEEN 1 AND 10
             */
         }
 
-        [TestMethod]
+        [Fact]
         public void Select2()
         {
             var queryBuilder = new QueryBuilder();
@@ -119,27 +118,27 @@ namespace Newq.Tests
             var query = queryBuilder.ToString();
 
             /*  Result:
-                SELECT 
-                    [Provider.Products] 
+                SELECT
+                    [Provider.Products]
                 FROM (
-                    SELECT 
+                    SELECT
                         [Provider].[Products] AS [Provider.Products],
                         ROW_NUMBER() OVER(ORDER BY [Customer].[Name] DESC, [Customer].[Id] DESC) AS [ROW_NUMBER]
-                    FROM 
-                        [Customer] 
-                    LEFT JOIN 
-                        [Provider] 
-                    ON 
-                        [Customer].[Name] = [Provider].[Name] 
-                    WHERE 
-                        [Customer].[City] LIKE '%New%' 
-                    GROUP BY 
-                        [Provider].[Products] 
-                    HAVING 
+                    FROM
+                        [Customer]
+                    LEFT JOIN
+                        [Provider]
+                    ON
+                        [Customer].[Name] = [Provider].[Name]
+                    WHERE
+                        [Customer].[City] LIKE '%New%'
+                    GROUP BY
+                        [Provider].[Products]
+                    HAVING
                         [Provider].[Name] NOT LIKE '%New%'
                 ) AS [$PAGINATOR]
                 WHERE
-                    [$PAGINATOR].[ROW_NUMBER] BETWEEN 1 AND 10 
+                    [$PAGINATOR].[ROW_NUMBER] BETWEEN 1 AND 10
             */
         }
     }
