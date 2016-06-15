@@ -101,7 +101,7 @@
     <Compile Include="UpdateStatementTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Newq\Newq.csproj">
+    <ProjectReference Include="..\..\src\Newq\Newq.csproj">
       <Project>{a78b7865-5857-422d-97af-1a426ec8971f}</Project>
       <Name>Newq</Name>
     </ProjectReference>
