@@ -1,8 +1,9 @@
 # Newq
 
 [![Build Status][travis-image]][travis-url]
+[![NuGet Version][nuget-image]][nuget-url]
 
-New query builder for CSharp
+A New query builder for CSharp.
 
 ## Usage
 
@@ -84,3 +85,5 @@ limitations under the License.
 
 [travis-image]: https://travis-ci.org/apemost/Newq.svg?branch=master
 [travis-url]: https://travis-ci.org/apemost/Newq
+[nuget-image]: http://img.shields.io/nuget/v/Newq.svg?style=flat
+[nuget-url]: https://www.nuget.org/packages/Newq/
