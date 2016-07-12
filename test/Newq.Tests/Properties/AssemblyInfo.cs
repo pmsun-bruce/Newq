@@ -12,22 +12,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+ 
+ 
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
-
-namespace Newq.Tests.Models
-{
-    using System;
-
-    public abstract class Model
-    {
-        public string Id { get; set; }
-        public string Remark { get; set; }
-        public int Status { get; set; }
-        public int Flag { get; set; }
-        public int Version { get; set; }
-        public string AuthorId { get; set; }
-        public string EditorId { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime ModifiedDate { get; set; }
-    }
-}
+[assembly: AssemblyTitle("Newq.Tests")]
+[assembly: AssemblyDescription("A New query builder for CSharp")]
+[assembly: AssemblyProduct("Newq.Tests")]
+[assembly: AssemblyCopyright("Copyright 2015-2016 Andrew Lyu and Uriel Van")]
+[assembly: ComVisible(false)]
+[assembly: Guid("dc794847-982a-4c09-8cbb-ce9c5f4bed44")]
+[assembly: AssemblyInformationalVersion("1.0.1")]
