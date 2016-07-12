@@ -25,9 +25,10 @@ _[Rr]e[Ss]harper*/
 Thumbs.db
 .idea
 *.GhostDoc.xml
-Gemfile.lock
 .vs/
 packages/
 project.lock.json
 TestAssembly.dll
 .vscode/
+.dotnet/
+TestResults/
