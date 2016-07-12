@@ -32,3 +32,4 @@ TestAssembly.dll
 .vscode/
 .dotnet/
 TestResults/
+*.nupkg
