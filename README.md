@@ -12,27 +12,27 @@ var queryBuilder = new QueryBuilder();
 
 queryBuilder
     .Select<Customer>((target, context) => {
-        target.Add(context["Provider", "Products"]);
+        target += context["Provider", "Products"];
     })
 
     .LeftJoin<Provider>((filter, context) => {
-        filter.Add(context["Customer", "Name"].EqualTo(context["Provider", "Name"]));
+        filter += context["Customer", "Name"].EqualTo(context["Provider", "Name"]);
     })
 
     .Where((filter, context) => {
-        filter.Add(context["Customer", "City"].Like("New"));
+        filter += context["Customer", "City"].Like("New");
     })
 
     .GroupBy((target, context) => {
-        target.Add(context["Provider", "Products"]);
+        target += context["Provider", "Products"];
     })
 
     .Having((filter, context) => {
-        filter.Add(context["Provider", "Name"].NotLike("New"));
+        filter += context["Provider", "Name"].NotLike("New");
     })
 
     .OrderBy((target, context) => {
-        target.Add(context["Customer", "Name", SortOrder.Desc]);
+        target += context["Customer", "Name", SortOrder.Desc];
     });
 
     queryBuilder.Paginate(new Paginator());
