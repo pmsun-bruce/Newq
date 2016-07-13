@@ -81,7 +81,7 @@ namespace Newq
                         
                         if (originalTarget.IndexOf(alias) == -1)
                         {
-                            newTarget += string.Format(",{0} AS {1}", col, alias);
+                            newTarget += string.Format(",{0} AS {1}", column, alias);
                             targetAlias += string.Format(",{0}", alias);
                         }
                     }

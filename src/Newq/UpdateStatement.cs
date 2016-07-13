@@ -119,15 +119,18 @@ namespace Newq
         protected string GetTarget()
         {
             Target.Perform();
-            
-            if (target.Items.Count == 0)
-            {
-                return string.Empty;
-            }
-            
+
             var targetStr = string.Empty;
             var type = ObjectList[0].GetType();
             object value = null;
+
+            if (target.Items.Count == 0)
+            {
+                foreach (var col in Context[0].Columns)
+                {
+                    target.Items.Add(col);
+                }
+            }
 
             if (ObjectList.Count == 1)
             {

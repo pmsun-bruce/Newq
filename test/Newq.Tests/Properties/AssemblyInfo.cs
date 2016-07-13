@@ -23,5 +23,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("Newq.Tests")]
 [assembly: AssemblyCopyright("Copyright 2015-2016 Andrew Lyu and Uriel Van")]
 [assembly: ComVisible(false)]
-[assembly: Guid("dc794847-982a-4c09-8cbb-ce9c5f4bed44")]
-[assembly: AssemblyVersion("1.0.2")]
+[assembly: Guid("09eee664-402b-4c8a-965b-df73a3468dd7")]
+[assembly: AssemblyVersion("1.0.3")]

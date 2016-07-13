@@ -98,12 +98,9 @@ namespace Newq
 
             if (items.Count == 0)
             {
-                foreach (var tab in Context.Tables)
+                foreach (var col in Context[0].Columns)
                 {
-                    foreach (var col in tab.Columns)
-                    {
-                        targetStr += string.Format(",{0} AS {1}", col, col.Alias);
-                    }
+                    targetStr += string.Format(",{0} AS {1}", col, col.Alias);
                 }
             }
             else

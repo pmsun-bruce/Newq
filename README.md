@@ -12,57 +12,65 @@ var queryBuilder = new QueryBuilder();
 
 queryBuilder
     .Select<Customer>((target, context) => {
-        target += context["Provider", "Products"];
+        target.Add(context["Provider", "Products"]);
     })
 
     .LeftJoin<Provider>((filter, context) => {
-        filter += context["Customer", "Name"] == context["Provider", "Name"];
+        filter.Add(context["Customer", "Name"].EqualTo(context["Provider", "Name"]));
     })
 
     .Where((filter, context) => {
-        filter += context["Customer", "City"].Like("New");
+        filter.Add(context["Customer", "City"].Like("New"));
     })
 
     .GroupBy((target, context) => {
-        target += context["Provider", "Products"];
+        target.Add(context["Provider", "Products"]);
     })
 
     .Having((filter, context) => {
-        filter += context["Provider", "Name"].NotLike("New");
+        filter.Add(context["Provider", "Name"].NotLike("New"));
     })
 
     .OrderBy((target, context) => {
-        target += context["Customer", "Name", SortOrder.Desc];
-        target += context["Customer", "Id", SortOrder.Desc];
+        target.Add(context["Customer", "Name", SortOrder.Desc]);
     });
 
-queryBuilder.Paginate(new Paginator());
+    queryBuilder.Paginate(new Paginator());
 
-var query = queryBuilder.ToString();
+    var result = queryBuilder.ToString();
 
-/*  Result:
+    /* result:
+
     SELECT
         [Provider.Products]
+        ,[Customer.Name]
     FROM (
         SELECT
-            [Provider].[Products] AS [Provider.Products],
-            ROW_NUMBER() OVER(ORDER BY [Customer].[Name] DESC, [Customer].[Id] DESC) AS [ROW_NUMBER]
-        FROM
-            [Customer]
-        LEFT JOIN
-            [Provider]
-        ON
-            [Customer].[Name] = [Provider].[Name]
-        WHERE
-            [Customer].[City] LIKE '%New%'
-        GROUP BY
-            [Provider].[Products]
-        HAVING
-            [Provider].[Name] NOT LIKE '%New%'
+            ROW_NUMBER() OVER(ORDER BY [Customer.Name] DESC) AS [$ROW_NUMBER]
+            ,[Provider.Products]
+            ,[Customer.Name]
+        FROM (
+            SELECT
+                [Provider].[Products] AS [Provider.Products]
+                ,[Customer].[Name] AS [Customer.Name]
+            FROM
+                [Customer]
+            LEFT JOIN
+                [Provider]
+            ON
+                [Customer].[Name] = [Provider].[Name]
+            WHERE
+                [Customer].[City] LIKE '%New%'
+            GROUP BY
+                [Provider].[Products]
+            HAVING
+                [Provider].[Name] NOT LIKE '%New%'
+        ) AS [$ORIGINAL_QUERY]
     ) AS [$PAGINATOR]
     WHERE
-        [$PAGINATOR].[ROW_NUMBER] BETWEEN 1 AND 10
-*/
+        [$PAGINATOR].[$ROW_NUMBER] BETWEEN 1 AND 10
+
+    */
 ```
 
 ## License

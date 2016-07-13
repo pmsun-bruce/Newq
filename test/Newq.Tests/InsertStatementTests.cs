@@ -16,10 +16,8 @@
 
 namespace Newq.Tests
 {
-    using System;
     using System.Collections.Generic;
-    using FakeItEasy;
-    using Newq.Tests.Models;
+    using Models;
     using Xunit;
 
     public class InsertStatementTests
@@ -39,9 +37,36 @@ namespace Newq.Tests
                 .Insert(customer);
 
             var result = queryBuilder.ToString();
-            var expected = "INSERT INTO [Customer] ([Customer].[Id],[Customer].[Name],[Customer].[City],[Customer].[Remark],[Customer].[Status],[Customer].[Flag],[Customer].[Version],[Customer].[AuthorId],[Customer].[EditorId],[Customer].[CreatedDate],[Customer].[ModifiedDate]) VALUES ('','','New York','Good Customer',0,0,0,'','','1753-01-01 00:00:00.000','1753-01-01 00:00:00.000') ";
+            var expected = 
+                "INSERT INTO " +
+                    "[Customer] " +
+                "(" +
+                    "[Customer].[Id]" +
+                    ",[Customer].[Name]" +
+                    ",[Customer].[City]" +
+                    ",[Customer].[Remark]" +
+                    ",[Customer].[Status]" +
+                    ",[Customer].[Flag]" +
+                    ",[Customer].[Version]" +
+                    ",[Customer].[AuthorId]" +
+                    ",[Customer].[EditorId]" +
+                    ",[Customer].[CreatedDate]" +
+                    ",[Customer].[ModifiedDate]" +
+                ") VALUES (" +
+                    "''" +
+                    ",''" +
+                    ",'New York'" +
+                    ",'Good Customer'" +
+                    ",0" +
+                    ",0" +
+                    ",0" +
+                    ",''" +
+                    ",''" +
+                    ",'1753-01-01 00:00:00.000'" +
+                    ",'1753-01-01 00:00:00.000'" +
+                ") ";
 
-            //Assert.AreEqual(expected, result);
+            Assert.Equal(expected, result);
         }
 
         [Fact]
@@ -66,9 +91,35 @@ namespace Newq.Tests
                 .Insert(list);
 
             var result = queryBuilder.ToString();
-            var expected = "INSERT INTO [Customer] ([Customer].[Id],[Customer].[Name],[Customer].[City],[Customer].[Remark],[Customer].[Status],[Customer].[Flag],[Customer].[Version],[Customer].[AuthorId],[Customer].[EditorId],[Customer].[CreatedDate],[Customer].[ModifiedDate]) VALUES ('','','New York','Good Customer',0,0,0,'','','1753-01-01 00:00:00.000','1753-01-01 00:00:00.000'),('','','New York','Good Customer',0,0,0,'','','1753-01-01 00:00:00.000','1753-01-01 00:00:00.000'),('','','New York','Good Customer',0,0,0,'','','1753-01-01 00:00:00.000','1753-01-01 00:00:00.000'),('','','New York','Good Customer',0,0,0,'','','1753-01-01 00:00:00.000','1753-01-01 00:00:00.000'),('','','New York','Good Customer',0,0,0,'','','1753-01-01 00:00:00.000','1753-01-01 00:00:00.000'),('','','New York','Good Customer',0,0,0,'','','1753-01-01 00:00:00.000','1753-01-01 00:00:00.000'),('','','New York','Good Customer',0,0,0,'','','1753-01-01 00:00:00.000','1753-01-01 00:00:00.000'),('','','New York','Good Customer',0,0,0,'','','1753-01-01 00:00:00.000','1753-01-01 00:00:00.000'),('','','New York','Good Customer',0,0,0,'','','1753-01-01 00:00:00.000','1753-01-01 00:00:00.000'),('','','New York','Good Customer',0,0,0,'','','1753-01-01 00:00:00.000','1753-01-01 00:00:00.000') ";
+            var expected = 
+                "INSERT INTO " +
+                    "[Customer] " +
+                "(" +
+                    "[Customer].[Id]" +
+                    ",[Customer].[Name]" +
+                    ",[Customer].[City]" +
+                    ",[Customer].[Remark]" +
+                    ",[Customer].[Status]" +
+                    ",[Customer].[Flag]" +
+                    ",[Customer].[Version]" +
+                    ",[Customer].[AuthorId]" +
+                    ",[Customer].[EditorId]" +
+                    ",[Customer].[CreatedDate]" +
+                    ",[Customer].[ModifiedDate]" +
+                ") " +
+                "VALUES " +
+                    "('','','New York','Good Customer',0,0,0,'','','1753-01-01 00:00:00.000','1753-01-01 00:00:00.000')" +
+                    ",('','','New York','Good Customer',0,0,0,'','','1753-01-01 00:00:00.000','1753-01-01 00:00:00.000')" +
+                    ",('','','New York','Good Customer',0,0,0,'','','1753-01-01 00:00:00.000','1753-01-01 00:00:00.000')" +
+                    ",('','','New York','Good Customer',0,0,0,'','','1753-01-01 00:00:00.000','1753-01-01 00:00:00.000')" +
+                    ",('','','New York','Good Customer',0,0,0,'','','1753-01-01 00:00:00.000','1753-01-01 00:00:00.000')" +
+                    ",('','','New York','Good Customer',0,0,0,'','','1753-01-01 00:00:00.000','1753-01-01 00:00:00.000')" +
+                    ",('','','New York','Good Customer',0,0,0,'','','1753-01-01 00:00:00.000','1753-01-01 00:00:00.000')" +
+                    ",('','','New York','Good Customer',0,0,0,'','','1753-01-01 00:00:00.000','1753-01-01 00:00:00.000')" +
+                    ",('','','New York','Good Customer',0,0,0,'','','1753-01-01 00:00:00.000','1753-01-01 00:00:00.000')" +
+                    ",('','','New York','Good Customer',0,0,0,'','','1753-01-01 00:00:00.000','1753-01-01 00:00:00.000') ";
 
-            //Assert.AreEqual(expected, result);
+            Assert.Equal(expected, result);
         }
     }
 }

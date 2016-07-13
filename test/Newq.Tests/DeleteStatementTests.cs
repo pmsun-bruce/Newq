@@ -16,9 +16,7 @@
 
 namespace Newq.Tests
 {
-    using System;
-    using FakeItEasy;
-    using Newq.Tests.Models;
+    using Models;
     using Xunit;
 
     public class DeleteStatementTests
@@ -38,9 +36,16 @@ namespace Newq.Tests
                 });
 
             var result = queryBuilder.ToString();
-            var expected = "DELETE FROM [Customer] WHERE [Customer].[City] BETWEEN 'New York' AND 'Landon' AND ([Customer].[Name] LIKE '%Google%' OR [Customer].[Name] LIKE 'Apple%') ";
+            var expected = 
+                "DELETE " +
+                "FROM " +
+                    "[Customer] " +
+                "WHERE " +
+                    "[Customer].[City] BETWEEN 'New York' AND 'Landon' " +
+                "AND " +
+                    "([Customer].[Name] LIKE '%Google%' OR [Customer].[Name] LIKE 'Apple%') ";
 
-            //Assert.AreEqual(expected, result);
+            Assert.Equal(expected, result);
         }
 
         [Fact]
@@ -54,7 +59,7 @@ namespace Newq.Tests
             var result = queryBuilder.ToString();
             var expected = "DELETE FROM [Customer] ";
 
-            //Assert.AreEqual(expected, result);
+            Assert.Equal(expected, result);
         }
 
         [Fact]
@@ -71,7 +76,7 @@ namespace Newq.Tests
             var result = queryBuilder.ToString();
             var expected = "DELETE FROM [Customer] ";
 
-            //Assert.AreEqual(expected, result);
+            Assert.Equal(expected, result);
         }
     }
 }
