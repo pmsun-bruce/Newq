@@ -73,9 +73,9 @@ namespace Newq
                 return string.Empty;
             }
             
-            var sql = string.Format("UPDATE {0} SET {1} FROM {0} ", Context[0], GetTarget());
+            var sql = string.Format("UPDATE {0} SET {1} FROM {0} ", Context[0], targetStr);
             
-            if (ObjectList.Count > 0 && string.IsNullOrWhiteSpace(JoinOnPrimaryKey))
+            if (ObjectList.Count > 0 && !string.IsNullOrWhiteSpace(JoinOnPrimaryKey))
             {
                 var type = ObjectList[0].GetType();
                 var values = string.Empty;
@@ -132,8 +132,11 @@ namespace Newq
             if (ObjectList.Count == 1)
             {
                 target.Items.ForEach(col => {
-                    value = type.GetProperty((col as Column).Name).GetValue(ObjectList[0]);
-                    targetStr += string.Format(",{0] = {1}", col.GetIdentifier(), value.ToSqlValue());
+                    if (col != null)
+                    {
+                        value = type.GetProperty((col as Column).Name).GetValue(ObjectList[0]);
+                        targetStr += string.Format(",{0} = {1}", col.GetIdentifier(), value.ToSqlValue());
+                    }
                 });
             }
             else if (ObjectList.Count > 1)
@@ -142,7 +145,7 @@ namespace Newq
                     if (col != null)
                     {
                         value = string.Format("[$UPDATE_SOURCE].[{0}]", (col as Column).Name);
-                        targetStr += string.Format(",{0] = {1}", col.GetIdentifier(), value);
+                        targetStr += string.Format(",{0} = {1}", col.GetIdentifier(), value);
                     }
                 });
             }
