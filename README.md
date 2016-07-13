@@ -3,7 +3,7 @@
 [![Build Status][travis-image]][travis-url]
 [![NuGet Version][nuget-image]][nuget-url]
 
-A New query builder for CSharp.
+A new query builder for CSharp.
 
 ## Usage
 
