@@ -5,6 +5,12 @@
 
 A new query builder for CSharp.
 
+## Install
+
+```
+PM> Install-Package Newq
+```
+
 ## Usage
 
 ```csharp
