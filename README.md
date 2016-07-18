@@ -5,12 +5,6 @@
 
 A new query builder for CSharp.
 
-## Install
-
-```
-PM> Install-Package Newq
-```
-
 ## Usage
 
 ```csharp
@@ -77,6 +71,14 @@ queryBuilder
         [$PAGINATOR].[$ROW_NUMBER] BETWEEN 1 AND 10
 
     */
+```
+
+## Installation
+
+To install, run the following command in the `Package Manager Console`:
+
+```
+PM> Install-Package Newq
 ```
 
 ## License
