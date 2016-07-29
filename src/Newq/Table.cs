@@ -51,7 +51,10 @@ namespace Newq
 
             Column column = null;
             var defaultPK = type.GetProperty(DefaultPrimaryKey);
-            var properties = type.GetProperties().Where(p => p.CanRead && p.CanWrite && p.Name != DefaultPrimaryKey);
+            var properties = type.GetProperties().Where(p => p.CanRead &&
+                                                             p.CanWrite &&
+                                                             p.PropertyType.Namespace == "System" &&
+                                                             p.Name != DefaultPrimaryKey);
 
             if (defaultPK != null)
             {
