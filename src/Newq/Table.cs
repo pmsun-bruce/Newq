@@ -21,7 +21,7 @@ namespace Newq
     using System.Linq;
 
     /// <summary>
-    /// Simulate tables in Sql
+    /// Simulate tables in Sql.
     /// </summary>
     public class Table
     {
@@ -128,6 +128,9 @@ namespace Newq
         }
     }
     
+    /// <summary>
+    /// Specify a property not a column.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
     public sealed class NonColumnAttribute : Attribute
     {
