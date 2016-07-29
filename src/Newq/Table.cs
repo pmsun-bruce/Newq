@@ -31,11 +31,6 @@ namespace Newq
         protected Dictionary<string, Column> columns;
 
         /// <summary>
-        /// Default primary key.
-        /// </summary>
-        public static string DefaultPrimaryKey = "Id";
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Table"/> class.
         /// </summary>
         /// <param name="type">Type of the corresponding class</param>
@@ -50,17 +45,11 @@ namespace Newq
             Name = type.Name;
 
             Column column = null;
-            var defaultPK = type.GetProperty(DefaultPrimaryKey);
-            var properties = type.GetProperties().Where(p => p.CanRead &&
-                                                             p.CanWrite &&
-                                                             p.PropertyType.Namespace == "System" &&
-                                                             p.Name != DefaultPrimaryKey);
-
-            if (defaultPK != null)
-            {
-                column = new Column(this, DefaultPrimaryKey);
-                columns.Add(DefaultPrimaryKey, column);
-            }
+            var properties = type.GetProperties()
+                .Where(p => p.CanRead &&
+                            p.CanWrite &&
+                            p.PropertyType.Namespace == "System" &&
+                            !p.CustomAttributes.Any(a => a.AttributeType == typeof(NonColumnAttribute)));
 
             foreach (var prop in properties)
             {
@@ -129,5 +118,10 @@ namespace Newq
         {
             return string.Format("[{0}]", Name);
         }
+    }
+    
+    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
+    public sealed NonColumnAttribute : Attribute
+    {
     }
 }
