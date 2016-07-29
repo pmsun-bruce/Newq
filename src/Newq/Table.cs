@@ -121,7 +121,7 @@ namespace Newq
     }
     
     [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
-    public sealed NonColumnAttribute : Attribute
+    public sealed class NonColumnAttribute : Attribute
     {
     }
 }
