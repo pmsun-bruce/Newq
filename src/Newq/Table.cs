@@ -45,11 +45,19 @@ namespace Newq
             Name = type.Name;
 
             Column column = null;
+            var defaultPK = "Id";
             var properties = type.GetProperties()
                 .Where(p => p.CanRead &&
                             p.CanWrite &&
                             p.PropertyType.Namespace == "System" &&
                             !p.CustomAttributes.Any(a => a.AttributeType == typeof(NonColumnAttribute)));
+
+            if (properties.Any(p => p.Name == defaultPK))
+            {
+                column = new Column(this, defaultPK);
+                columns.Add(defaultPK, column);
+                properties = properties.Where(p => p.Name != defaultPK);
+            }
 
             foreach (var prop in properties)
             {
