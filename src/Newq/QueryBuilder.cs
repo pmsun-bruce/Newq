@@ -48,7 +48,12 @@ namespace Newq
         /// <returns></returns>
         public override string ToString()
         {
-            var sql = Statement?.ToSql() ?? string.Empty;
+            if (Statement == null)
+            {
+                return string.Empty;
+            }
+            
+            var sql = Statement.ToSql();
             
             if (Paginator != null && Statement is SelectStatement)
             {
