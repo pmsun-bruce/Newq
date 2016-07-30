@@ -3,7 +3,7 @@
 [![Build Status][travis-image]][travis-url]
 [![NuGet Version][nuget-image]][nuget-url]
 
-A new query builder for CSharp.
+A new query builder for CSharp on .NET and Mono.
 
 ## Usage
 
@@ -15,8 +15,8 @@ queryBuilder
         target += context["Provider", "Products"];
     })
 
-    .LeftJoin<Provider>((filter, context) => {
-        filter += context["Customer", "Name"].EqualTo(context["Provider", "Name"]);
+    .LeftJoin<Provider>((on, context) => {
+        on += context["Customer", "Name"] == context["Provider", "Name"];
     })
 
     .Where((filter, context) => {
