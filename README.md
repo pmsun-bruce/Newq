@@ -1,6 +1,7 @@
 # Newq
 
 [![Build Status][travis-image]][travis-url]
+[![Build Status][appveyor-image]][appveyor-url]
 [![NuGet Version][nuget-image]][nuget-url]
 
 A new query builder for CSharp on .NET and Mono.
@@ -101,5 +102,7 @@ limitations under the License.
 
 [travis-image]: https://travis-ci.org/apemost/Newq.svg?branch=master
 [travis-url]: https://travis-ci.org/apemost/Newq
+[appveyor-image]: https://ci.appveyor.com/api/projects/status/4trdjumrr47e6213/branch/master?svg=true
+[appveyor-url]: https://ci.appveyor.com/project/apemost/newq/branch/master
 [nuget-image]: http://img.shields.io/nuget/v/Newq.svg?style=flat
 [nuget-url]: https://www.nuget.org/packages/Newq/
