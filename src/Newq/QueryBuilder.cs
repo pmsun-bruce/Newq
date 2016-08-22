@@ -324,14 +324,18 @@ namespace Newq
         /// <param name="primaryKey"></param>
         /// <param name="customization"></param>
         /// <returns></returns>
-        public UpdateStatement Update<T>(List<T> objList, string primaryKey, Action<Target, Context> customization = null)
+        public UpdateStatement Update<T>(IEnumerable<T> objList, string primaryKey, Action<Target, Context> customization = null)
         {
             var statement = new UpdateStatement(new Table(typeof(T)));
 
             Statement = statement;
             statement.Target.Customize(customization);
             statement.JoinOnPrimaryKey = primaryKey;
-            objList.ForEach(obj => statement.ObjectList.Add(obj));
+
+            foreach (var obj in objList)
+            {
+                statement.ObjectList.Add(obj);
+            }
 
             return statement;
         }
@@ -362,18 +366,22 @@ namespace Newq
         /// <typeparam name="T"></typeparam>
         /// <param name="objList"></param>
         /// <returns></returns>
-        public InsertStatement Insert<T>(List<T> objList)
+        public InsertStatement Insert<T>(IEnumerable<T> objList)
         {
             var statement = new InsertStatement(new Table(typeof(T)));
 
             Statement = statement;
-            objList.ForEach(obj => statement.ObjectList.Add(obj));
+
+            foreach (var obj in objList)
+            {
+                statement.ObjectList.Add(obj);
+            }
 
             return statement;
         }
 
         /// <summary>
-        /// DELETE FROM table_name 
+        /// DELETE FROM table_name
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
@@ -383,7 +391,7 @@ namespace Newq
         }
 
         /// <summary>
-        /// DELETE TOP number|percent FROM table_name 
+        /// DELETE TOP number|percent FROM table_name
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="topRows"></param>
