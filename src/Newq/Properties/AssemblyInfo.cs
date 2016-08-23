@@ -24,7 +24,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("Copyright 2015-2016 Andrew Lyu and Uriel Van")]
 [assembly: ComVisible(false)]
 [assembly: Guid("dc794847-982a-4c09-8cbb-ce9c5f4bed44")]
-[assembly: AssemblyVersion("1.0.6")]
+[assembly: AssemblyVersion("1.0.7")]
 
 [assembly: InternalsVisibleTo("Newq.Tests, PublicKey=00240000048000009400000" +
     "00602000000240000525341310004000001000100edfd7ba6eaee4a4a9176b0395c8d87" +
