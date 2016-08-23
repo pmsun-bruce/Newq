@@ -350,32 +350,29 @@ namespace Newq
         /// <returns></returns>
         public InsertStatement Insert<T>(T obj)
         {
-            var statement = new InsertStatement(new Table(typeof(T)));
-
-            Statement = statement;
-            statement.ObjectList.Add(obj);
-
-            return statement;
-        }
-
-        /// <summary>
-        /// INSERT INTO table_name
-        /// (column1, column2, column3,...)
-        /// VALUES(value1, value2, value3,...),(value1, value2, value3,...),...
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="objList"></param>
-        /// <returns></returns>
-        public InsertStatement Insert<T>(IEnumerable<T> objList)
-        {
-            var statement = new InsertStatement(new Table(typeof(T)));
-
-            Statement = statement;
-
-            foreach (var obj in objList)
+            InsertStatement statement = null;
+            
+            if (obj is IEnumerable)
             {
+                var enumerator = ((IEnumerable)obj).GetEnumerator();
+                
+                while(enumerator.MoveNext())
+                {
+                    if (statement == null)
+                    {
+                        statement = new InsertStatement(new Table(enumerator.Current.GetType()));
+                    }
+                    
+                    statement.ObjectList.Add(obj);
+                }
+            }
+            else
+            {
+                statement = new InsertStatement(new Table(typeof(T)));
                 statement.ObjectList.Add(obj);
             }
+
+            Statement = statement;
 
             return statement;
         }
