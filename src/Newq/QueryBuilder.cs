@@ -364,7 +364,7 @@ namespace Newq
                         statement = new InsertStatement(new Table(enumerator.Current.GetType()));
                     }
                     
-                    statement.ObjectList.Add(obj);
+                    statement.ObjectList.Add(enumerator.Current);
                 }
             }
             else
