@@ -14,14 +14,15 @@
  */
 
 
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
+namespace Newq.Attributes
+{
+    using System;
 
-[assembly: AssemblyTitle("Newq.Tests")]
-[assembly: AssemblyDescription("A new query builder for CSharp")]
-[assembly: AssemblyProduct("Newq.Tests")]
-[assembly: AssemblyCopyright("Copyright 2015-2016 Andrew Lyu and Uriel Van")]
-[assembly: ComVisible(false)]
-[assembly: Guid("09eee664-402b-4c8a-965b-df73a3468dd7")]
-[assembly: AssemblyVersion("1.1.0")]
+    /// <summary>
+    /// Specify a property is a primary key.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
+    public sealed class PrimaryKeyAttribute : Attribute
+    {
+    }
+}

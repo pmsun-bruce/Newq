@@ -16,6 +16,7 @@
 
 namespace Newq
 {
+    using Attributes;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -31,6 +32,11 @@ namespace Newq
         protected Dictionary<string, Column> columns;
 
         /// <summary>
+        /// The primary key of current table.
+        /// </summary>
+        protected List<Column> primaryKey = new List<Column>();
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Table"/> class.
         /// </summary>
         /// <param name="type">Type of the corresponding class</param>
@@ -42,22 +48,75 @@ namespace Newq
             }
 
             columns = new Dictionary<string, Column>();
-            Name = type.Name;
 
-            Column column = null;
+            var tableAttributes = type.GetCustomAttributes(typeof(TableAttribute), true);
+
+            if (tableAttributes.Length > 0)
+            {
+                Name = ((TableAttribute)tableAttributes[0]).TableName;
+            }
+            else
+            {
+                Name = type.Name;
+            }
+
             var defaultPK = "Id";
-            var properties = type.GetProperties()
-                .Where(p => p.CanRead &&
-                            p.CanWrite &&
-                            p.PropertyType.Namespace == "System" &&
-                            !p.CustomAttributes.Any(a => a.AttributeType == typeof(NonColumnAttribute)));
+            Column column = null;
+            object[] columnAttributes = null;
 
-            if (properties.Any(p => p.Name == defaultPK))
+            var primaryKeyProperties = type.GetProperties()
+                .Where(prop => prop.CanRead &&
+                               prop.CanWrite &&
+                               prop.PropertyType.Namespace == "System" &&
+                               prop.CustomAttributes.Any(attr => attr.AttributeType == typeof(PrimaryKeyAttribute)) &&
+                               !prop.CustomAttributes.Any(attr => attr.AttributeType == typeof(ColumnIgnoreAttribute)));
+
+            foreach (var prop in primaryKeyProperties)
+            {
+                columnAttributes = prop.GetCustomAttributes(typeof(ColumnAttribute), false);
+
+                if (columnAttributes.Length > 0)
+                {
+                    column = new Column(this, ((ColumnAttribute)columnAttributes[0]).ColumnName);
+                }
+                else
+                {
+                    column = new Column(this, prop.Name);
+                }
+
+                columns.Add(column.Name, column);
+                primaryKey.Add(column);
+            }
+
+            var properties = type.GetProperties()
+                .Where(prop => prop.CanRead &&
+                               prop.CanWrite &&
+                               prop.PropertyType.Namespace == "System" &&
+                               !prop.CustomAttributes.Any(attr => attr.AttributeType == typeof(ColumnIgnoreAttribute)));
+
+            if (primaryKey.Count == 0 && properties.Any(p => p.Name == defaultPK))
             {
                 column = new Column(this, defaultPK);
-                columns.Add(defaultPK, column);
-                properties = properties.Where(p => p.Name != defaultPK);
+                columns.Add(column.Name, column);
             }
+
+            properties = properties.Where(prop => {
+                var attrs = prop.GetCustomAttributes(typeof(ColumnAttribute), false);
+
+                if (attrs.Length > 0)
+                {
+                    column = new Column(this, ((ColumnAttribute)columnAttributes[0]).ColumnName);
+                }
+                else
+                {
+                    column = new Column(this, prop.Name);
+                }
+
+                return prop.Name != defaultPK &&
+                    (attrs.Length == 0
+                        ? !primaryKey.Any(pk => pk.Name == prop.Name)
+                        : !primaryKey.Any(pk => pk.Name == ((ColumnAttribute)columnAttributes[0]).ColumnName));
+            });
 
             foreach (var prop in properties)
             {
@@ -77,6 +136,14 @@ namespace Newq
         public IReadOnlyList<Column> Columns
         {
             get { return columns.Values.ToList(); }
+        }
+
+        /// <summary>
+        /// Gets primary key of current table.
+        /// </summary>
+        public IReadOnlyList<Column> PrimaryKey
+        {
+            get { return primaryKey; }
         }
 
         /// <summary>
@@ -126,13 +193,5 @@ namespace Newq
         {
             return string.Format("[{0}]", Name);
         }
-    }
-    
-    /// <summary>
-    /// Specify a property not a column.
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
-    public sealed class NonColumnAttribute : Attribute
-    {
     }
 }

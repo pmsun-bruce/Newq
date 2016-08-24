@@ -197,7 +197,7 @@ namespace Newq.Tests
                     "[Customer] " +
                 "LEFT JOIN " +
                     "[Provider] " +
-                "ON " + 
+                "ON " +
                     "[Customer].[Name] = [Provider].[Name] " +
                 "WHERE " +
                     "[Customer].[City] LIKE '%New%' " +
@@ -258,6 +258,63 @@ namespace Newq.Tests
                 "ORDER BY " +
                     "[Customer].[Name] DESC" +
                     ",[Customer].[Id] DESC ";
+
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void Select5()
+        {
+            var queryBuilder = new QueryBuilder();
+
+            queryBuilder
+                .Select<Person>();
+
+            var result = queryBuilder.ToString();
+            var expected =
+                "SELECT " +
+                    "[PERSION].[ID] AS [PERSION.ID]" +
+                    ",[PERSION].[Name] AS [PERSION.Name] " +
+                "FROM " +
+                    "[PERSION] ";
+
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void Select6()
+        {
+            var queryBuilder = new QueryBuilder();
+
+            queryBuilder
+                .Select<Man>();
+
+            var result = queryBuilder.ToString();
+            var expected =
+                "SELECT " +
+                    "[PERSION].[ID] AS [PERSION.ID]" +
+                    ",[PERSION].[Name] AS [PERSION.Name] " +
+                "FROM " +
+                    "[PERSION] ";
+
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void Select7()
+        {
+            var queryBuilder = new QueryBuilder();
+
+            queryBuilder
+                .Select<Woman>();
+
+            var result = queryBuilder.ToString();
+            var expected =
+                "SELECT " +
+                    "[Woman].[ID] AS [Woman.ID]" +
+                    ",[Woman].[Name] AS [Woman.Name] " +
+                "FROM " +
+                    "[Woman] ";
 
             Assert.Equal(expected, result);
         }
