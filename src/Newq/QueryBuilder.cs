@@ -307,36 +307,30 @@ namespace Newq
         /// <returns></returns>
         public UpdateStatement Update<T>(T obj, Action<Target, Context> customization = null)
         {
-            var statement = new UpdateStatement(new Table(typeof(T)));
+            UpdateStatement statement = null;
 
-            Statement = statement;
-            statement.Target.Customize(customization);
-            statement.ObjectList.Add(obj);
-
-            return statement;
-        }
-
-        /// <summary>
-        /// UPDATE table_name
-        /// SET column1 = value, column2 = value,...
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="objList"></param>
-        /// <param name="primaryKey"></param>
-        /// <param name="customization"></param>
-        /// <returns></returns>
-        public UpdateStatement Update<T>(IEnumerable<T> objList, string primaryKey, Action<Target, Context> customization = null)
-        {
-            var statement = new UpdateStatement(new Table(typeof(T)));
-
-            Statement = statement;
-            statement.Target.Customize(customization);
-            statement.JoinOnPrimaryKey = primaryKey;
-
-            foreach (var obj in objList)
+            if (obj is IEnumerable)
             {
+                var enumerator = ((IEnumerable)obj).GetEnumerator();
+
+                while (enumerator.MoveNext())
+                {
+                    if (statement == null)
+                    {
+                        statement = new UpdateStatement(new Table(enumerator.Current.GetType()));
+                    }
+
+                    statement.ObjectList.Add(enumerator.Current);
+                }
+            }
+            else
+            {
+                statement = new UpdateStatement(new Table(typeof(T)));
                 statement.ObjectList.Add(obj);
             }
+
+            Statement = statement;
+            statement.Target.Customize(customization);
 
             return statement;
         }

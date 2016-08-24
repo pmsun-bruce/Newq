@@ -49,7 +49,7 @@ namespace Newq
 
             columns = new Dictionary<string, Column>();
 
-            var tableAttributes = type.GetCustomAttributes(typeof(TableAttribute), true);
+            var tableAttributes = type.GetCustomAttributes(typeof(TableAttribute), false);
 
             if (tableAttributes.Length > 0)
             {

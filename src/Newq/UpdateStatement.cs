@@ -58,7 +58,14 @@ namespace Newq
         /// <summary>
         /// 
         /// </summary>
-        public string JoinOnPrimaryKey { get; set; }
+        public string JoinOnPrimaryKey
+        {
+            get
+            {
+                return Context.Tables[0].PrimaryKey.Count == 0 ? null
+                    : Context.Tables[0].PrimaryKey[0].Name;
+            }
+        }
 
         /// <summary>
         /// Returns a SQL-string that represents the current object.
