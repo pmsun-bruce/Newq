@@ -13,13 +13,12 @@
  * limitations under the License.
  */
 
-
 namespace Newq
 {
     using System;
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public abstract class Clause : Statement
     {

@@ -13,7 +13,6 @@
  * limitations under the License.
  */
 
-
 namespace Newq
 {
     using Attributes;

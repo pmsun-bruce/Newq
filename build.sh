@@ -14,9 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 CURRENT_DIR="$(dirname $0)"
-
 
 nuget restore "$CURRENT_DIR"/Newq.sln
 xbuild /p:Configuration=Release Newq.sln

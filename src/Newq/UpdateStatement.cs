@@ -13,7 +13,6 @@
  * limitations under the License.
  */
 
-
 namespace Newq
 {
     using Extensions;
@@ -30,7 +29,7 @@ namespace Newq
         /// 
         /// </summary>
         protected Target target;
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateStatement"/> class.
         /// </summary>

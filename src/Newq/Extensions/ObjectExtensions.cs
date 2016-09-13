@@ -13,18 +13,17 @@
  * limitations under the License.
  */
 
-
 namespace Newq.Extensions
 {
     using System;
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public static class ObjectExtensions
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>

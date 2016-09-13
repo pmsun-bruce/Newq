@@ -13,7 +13,6 @@
  * limitations under the License.
  */
 
-
 namespace Newq
 {
     /// <summary>
@@ -30,7 +29,7 @@ namespace Newq
         /// 
         /// </summary>
         WhiteSpace,
-        
+
         /// <summary>
         /// 
         /// </summary>
